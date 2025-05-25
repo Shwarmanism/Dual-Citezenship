@@ -1,0 +1,381 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 45px;
+  background-color: #21005d;
+  justify-content: end;
+  align-items: center;
+  font-family: Roboto;
+  color: white;
+  gap: 25px;
+  font-size: 10px;
+}
+
+.header-left-most{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.CalendarBlank{
+  width: 15px;
+  margin-right: 10px;
+}
+
+.header-center{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.PhoneCall{
+  width: 15px;
+  margin-right: 10px;
+}
+
+.header-right-most{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 200px;
+}
+
+.PhilippineCircle{
+  width: 20px;
+  margin-left: 10px;
+}
+
+.immigration-email{
+  text-decoration: underline;
+}
+
+.below-header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+  background-color: white;
+  align-items: center;
+  justify-content: left;
+}
+
+.below-header-left{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  margin-left: 100px;
+}
+
+.ImmigrationIcon{
+  width: 65px;
+  height: auto;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.below-header-left-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: .3;
+  font-family: Roboto;
+  padding-bottom: 10px;
+  font-weight: bold;
+  margin-right: 135px;
+}
+
+.republic-philippines{
+  font-size: 12px;
+}
+
+.bureau-immigration {
+  font-size: 20px;
+  margin: 0;
+}
+
+.below-header-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 14px;
+  width: auto;
+  gap: 30px;
+  margin-left: 240px;
+}
+
+.Home, .About, .Visas, .Services, .eServices{
+  color: gray;
+  text-decoration: none;
+}
+
+.below-header-right{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contact{
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 14px;
+  color: #21005d;
+  margin-left: 10px;
+}
+
+.Phone{
+  width: 30px;
+  margin-left: 45px;
+}
+
+.Phone{
+  width: 30px;
+  margin-left: 45px;
+}
+
+.eServices-image{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 400px;
+  background-color: black;
+}
+
+.eServices-png{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-align{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  font-family: Lato;
+  padding-left: 200px;
+  padding-top: 150px;
+  font-weight: bold;
+  color: white;
+}
+
+.overlay-text-1{
+  font-size: 58px;
+}
+
+.overlay-text-2{
+  font-family: Lato;
+  color: white;
+  font-size: 20px;
+  padding-left: 600px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.eServices-orange{
+  font-family: lato;
+  color: orange;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.IconBackground{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  height: 650px;
+  position: relative;
+  border: none;
+  z-index: 1;
+}
+
+.IconBackground-png{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.body-picture-1{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 500px;
+}
+
+.register{
+  position: absolute;
+  top: 1025px;
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+  margin-top: 0px;
+  margin-left: 150px;
+  height: 700px;
+  width: 1200px;
+  background-color: white;
+  border: none;
+  z-index: 2;
+}
+
+.icons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70px;
+  background-color: white;
+  padding-bottom: 25px;
+}
+
+.login-button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: Lato;
+  font-size: 40px;
+  font-style: bold;
+  width: 500px;
+  height: 60px;
+  margin-top: 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: rgba(235, 230, 230);
+  border: solid;
+  border-width: 3px;
+  border-color: rgb(233, 229, 229);
+  color: rgba(128, 128, 128, 0.578);
+}
+
+
+.register-button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: Lato;  
+  font-size: 40px;
+  font-style: bold;
+  text-align: center;
+  width: 500px;
+  height: 60px;
+  margin-top: 10px;
+  background-color: white;
+  border: solid;
+  border-width: 3px;
+  border-color: rgb(233, 229, 229);
+  color: black;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.account-type{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: auto;
+  font-family: Lato;
+  font-size: 18px;
+}
+
+.account-text{
+  margin-left: 25px;
+  margin-bottom: 5px;
+}
+
+.account{
+  margin-left: 25px;
+  width: 570px;
+  height: 70px;
+  font-family: Lato;
+  font-size: 18px;
+  padding-left: 10px;
+  color: gray;
+  background-color: rgb(234, 232, 232);
+  border-radius: 5px;
+  border: none;
+}
+
+.first-row, .second-row, .third-row, .fourth-row, .fifth-row, .sixth-row, .seventh-row{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  font-family: Lato;
+  border: none;
+}
+
+.prefix, .first-name, .suffix, .last-name, .middle-name, .birth-date, .sex, .civil-status, .country-birth, .country-citizenship, .contact-number, .format-number, .email-address, .verify-email, .password, .verify-password{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 25px;  
+  font-size: 18px;
+}
+
+.prefix-input, .first-name-input, .last-name-input, .middle-name-input, .suffix-input, .birth-date-input, .sex-input, .civil-status-input, .country-birth-input, .country-citizenship-input, .contact-number-input, .email-address-input, .verify-email-input, .password-input, .verify-password-input{
+  width: 260px;
+  height: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: rgb(234, 232, 232) ;
+  border: none;
+  padding-left: 10px;
+}
+
+.sex-input, .civil-status-input{
+  width: 270px;
+  height: 70px;
+  margin-left: 0px;
+}
+
+.sex-text, .civil-status-text{
+  margin-bottom: 5px;
+}
+
+.format{
+  margin-top: 60px;
+  font-style: italic;
+}
+
+.register-email{
+  margin-top: 59px;
+  margin-left: 25px;
+  width: 570px;
+  height: 70px;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  color: white;
+  background-color: rgb(40, 130, 199);
+}
+
+.footer{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.FooterPNG{
+  margin-top: 700px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+

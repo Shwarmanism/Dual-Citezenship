@@ -37,7 +37,6 @@ def register():
         date_of_birth = request.form.get('date_of_birth')
         dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
         contact_number = request.form.get('contact_number')
-
         
         email, password = verification()
 

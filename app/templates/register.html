@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>eService Register</title>
+    <link rel="stylesheet" href="src/eServices_Register.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-left-most">
+        <img src="src/Images/CalendarBlank.png" class="CalendarBlank">
+        <p>MON - FRI: 08:00 AM - 17:30 PM</p>
+      </div>
+      <div class="header-center">
+        <img src="src/Images/PhoneCall.png" class="PhoneCall">
+        <p>Hotline: (+632) 8-465-2400</p>
+      </div>
+      <div class="header-right-most">
+        <p>Support: <span class="immigration-email">xinfo@immigration.gov.ph</span></p>
+        <img src="src/Images/PhilippineCircle.png" class="PhilippineCircle">
+      </div>
+    </div>
+    <div class="below-header">
+      <div class="below-header-left">
+        <img src="src/Images/ImmigrationIcon.png" class="ImmigrationIcon">
+        <div class="below-header-left-text">
+          <p class="republic-philippines">Republic of the Philippines</p>
+          <p class="bureau-immigration">Bureau of Immigration</p>
+        </div>
+      </div>
+      <div class="below-header-center">
+        <a href="#" class="Home">Home</a>
+        <a href="#" class="About">About</a>
+        <a href="#" class="Services">Services</a>
+        <a href="#" class="Visas">Visas</a>
+        <a href="#" class="eServices">eServices</a>
+      </div>
+      <div class="below-header-right">
+        <img src="src/Images/Phone.png" class="Phone">
+        <p class="contact">Contact us</p>
+      </div>
+    </div>
+    <div class="eServices-image">
+      <img src="src/Images/eServices.png" class="eServices-png">
+      <div class="text-align">
+        <p class="overlay-text-1">eServices</p>
+        <a href="#" class="overlay-text-2">Home</a>
+        <p class="overlay-text-3">&#10132 <span class="eServices-orange">eServices</span></p>
+      </div>
+    </div>
+    <div class="IconBackground">
+      <img src="src/Images/IconBackground.png" class="IconBackground-png">
+    </div>
+      <div class="register">
+        <div class="icons">
+          <button class="login-button">
+            <p>Login</p>
+          </button>
+          <button class="register-button">
+            <p>Register</p>
+          </button>
+        </div>
+        <div class="first-row">
+          <div class="account-type">
+            <p class="account-text">Account Type</p>
+            <select name="Account Type" id="select-account" class="account">
+              <option value="" disabled selected>Select Value</option>
+              <option value="Individual">Individual</option>
+              <option value="Administrator">Administrator</option>
+            </select>
+          </div>
+          <div class="sex">
+            <p class="sex-text">Sex</p>
+            <select name="Sex" id="Sex" class="sex-input">
+              <option value="" disabled selected>Select Value</option>
+              <option value='M'>Male</option>
+              <option value='F'>Female</option>
+            </select>
+          </div>
+          <div class="civil-status">
+            <p class="civil-status-text">Civil Status</p>
+            <select name="Civil-Status" id="Civil-Status" class="civil-status-input">
+              <option value="" disabled selected>Select Value</option>
+              <option value='M'>Married</option>
+              <option value='S'>Single</option>
+              <option value='W'>Widowed</option>
+              <option value='D'>Divorced</option>
+            </select>
+          </div>
+        </div>
+        <div class="second-row">
+          <div class="middle-name">
+            <p class="middle-name-text">Middle Name</p>
+            <input type="text" class="middle-name-input">
+          </div>
+          <div class="last-name">
+            <p class="last-name-text">Last Name</p>
+            <input type="text" class="last-name-input">
+          </div>
+          <div class="country-birth">
+            <p class="country-birth-text">Country of Birth</p>
+            <input type="text" class="country-birth-input">
+          </div>
+          <div class="country-citizenship">
+            <p class="country-citizenship-text">Country of Citizenship</p>
+            <input type="text" class="country-citizenship-input">
+          </div>
+        </div>
+        <div class="third-row">
+          <div class="suffix">
+            <p class="suffix-text">Suffix</p>
+            <input type="text" class="suffix-input">
+          </div>
+          <div class="birth-date">
+            <p class="birth-date-text">Date of Birth</p>
+            <input type="date" class="birth-date-input">
+          </div>
+          <div class="contact-number">
+            <p class="contact-number-text">Contact Number</p>
+            <input type="text" class="contact-number-input">
+          </div>
+          <div class="format-number">
+            <p class="format">Format: [+][Country Code] [Number] (e.g, +19123456789)</p>
+          </div>
+        </div>
+        <div class="fourth-row">
+          <div class="email-address">
+            <p class="email-address-text">Email Address</p>
+            <input type="text" class="email-address-input">
+          </div>
+          <div class="verify-email">
+            <p class="verify-email-text">Verify Email Address</p>
+            <input type="text" class="verify-email-input">
+          </div>
+        </div>
+        <div class="sixth-row">
+          <div class="password">
+            <p class="password-text">Password</p>
+            <input type="text" class="password-input">
+          </div>
+          <div class="verify-password">
+            <p class="verify-password-text">Verify Password</p>
+            <input type="text" class="verify-password-input">
+          </div>
+          <button class="register-email">Register</button>
+        </div>
+      </div>
+    <div class="footer">
+      <img src="src/Images/Footer.png" class="FooterPNG">
+    </div>
+  </body>
+</html>

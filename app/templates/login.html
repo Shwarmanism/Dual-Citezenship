@@ -2,28 +2,28 @@
 <html>
   <head>
     <title>eService Login</title>
-    <link rel="stylesheet" href="src/eServices_Login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='eServices_Login.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital@0;1&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="header">
       <div class="header-left-most">
-        <img src="src/Images/CalendarBlank.png" class="CalendarBlank">
+        <img src="{{ url_for('static', filename='Images/CalendarBlank.png') }}" class="CalendarBlank">
         <p>MON - FRI: 08:00 AM - 17:30 PM</p>
       </div>
       <div class="header-center">
-        <img src="src/Images/PhoneCall.png" class="PhoneCall">
+        <img src="{{ url_for('static', filename='Images/PhoneCall.png') }}" class="PhoneCall">
         <p>Hotline: (+632) 8-465-2400</p>
       </div>
       <div class="header-right-most">
         <p>Support: <span class="immigration-email">xinfo@immigration.gov.ph</span></p>
-        <img src="src/Images/PhilippineCircle.png" class="PhilippineCircle">
+        <img src="{{ url_for('static', filename='Images/PhilippineCircle.png') }}" class="PhilippineCircle">
       </div>
     </div>
     <div class="below-header">
       <div class="below-header-left">
-        <img src="src/Images/ImmigrationIcon.png" class="ImmigrationIcon">
+        <img src="{{ url_for('static', filename='Images/ImmigrationIcon.png') }}" class="ImmigrationIcon">
         <div class="below-header-left-text">
           <p class="republic-philippines">Republic of the Philippines</p>
           <p class="bureau-immigration">Bureau of Immigration</p>
@@ -37,12 +37,12 @@
         <a href="#" class="eServices">eServices</a>
       </div>
       <div class="below-header-right">
-        <img src="src/Images/Phone.png" class="Phone">
+        <img src="{{ url_for('static', filename='Images/Phone.png') }}" class="Phone">
         <p class="contact">Contact us</p>
       </div>
     </div>
     <div class="eServices-image">
-      <img src="src/Images/eServices.png" class="eServices-png">
+      <img src="{{ url_for('static', filename='Images/eServices.png') }}" class="eServices-png">
       <div class="text-align">
         <p class="overlay-text-1">eServices</p>
         <a href="#" class="overlay-text-2">Home</a>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="IconBackground">
-      <img src="src/Images/IconBackground.png" class="IconBackground-png">
+      <img src="{{ url_for('static', filename='Images/IconBackground.png') }}" class="IconBackground-png">
     </div>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -93,7 +93,7 @@
       </div>
     </div>
     <div class="footer">
-      <img src="src/Images/Footer.png" class="FooterPNG">
+      <img src="{{ url_for('static', filename='Images/footer.png') }}" class="FooterPNG">
     </div>
   </body>
 </html>

@@ -52,6 +52,15 @@
     <div class="IconBackground">
       <img src="src/Images/IconBackground.png" class="IconBackground-png">
     </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="flash-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     <div class="login-container">
       <div class="login">
         <p class="Sign-in-text">Sign in to your Account</p>
@@ -63,22 +72,24 @@
             <p>Register</p>
           </button>
         </div>
-        <div class="email">
+       <form class="email" action="/login" method="POST">
           <p class="email-text">Email Address</p>
-          <input type="text" class="email-enter" placeholder="Email Address">
+          <input type="text" name="email" class="email-enter" placeholder="Email Address" required>
+
           <p class="email-text">Password</p>
-          <input type="text" class="email-enter" placeholder="Password">
+          <input type="password" name="password" class="email-enter" placeholder="Password" required>
+
           <div class="remember-me">
             <input type="checkbox" class="remember-checkbox" name="remember" id="me">
             <p>Remember me?</p>
           </div>
-          <p class="reminder-text">Please sign in to access your account and manage your immigration services securely. If you are a new user, kindly create an account to start using our online services quickly and conveniently.
-              Your privacy and security are our top priorities.For assistance, please contact our support team.
-          </p>
-          <button class="login-click-button">
+
+          <p class="reminder-text">Please sign in to access your account and manage your immigration services securely. ...</p>
+
+          <button class="login-click-button" type="submit">
             Log in
           </button>
-        </div>
+        </form>
       </div>
     </div>
     <div class="footer">

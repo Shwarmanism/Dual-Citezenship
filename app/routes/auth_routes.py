@@ -27,42 +27,42 @@ def login():
 @auth.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        
-        account_type = request.form.get('account_type')
-        first_name = request.form.get('first_name')
-        middle_name = request.form.get('middle_name')
-        last_name = request.form.get('last_name')
-        prefix = request.form.get('prefix')
-        suffix = request.form.get('suffix')
-        date_of_birth = request.form.get('date_of_birth')
-        dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
-        contact_number = request.form.get('contact_number')
-        
-        email, password = verification()
+        form_data = request.form.to_dict()
 
-        existing_user = User.queary.filter_by(User.email == email).first()
+        date_of_birth = form_data.get('date_of_birth')
+        try:
+            dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
+        except Exception:
+            flash("Invalid date format.", "danger")
+            return render_template("register.html", form=form_data)
+
+        email, password = verification()
+        if not email or not password:
+            return render_template("register.html", form=form_data)
+
+        existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            flash("Username or email is already exist.", "anger")
-            return redirect(url_for(auth.register))
-        
+            flash("Email already exists.", "danger")
+            return render_template("register.html", form=form_data)
+
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-        new_user=User(
-            account_type=account_type,
-            first_name=first_name,
-            middle_name=middle_name,
-            last_name=last_name,
-            prefix=prefix,
-            suffix=suffix,
+        new_user = User(
+            account_type=form_data.get("account_type"),
+            first_name=form_data.get("first_name"),
+            middle_name=form_data.get("middle_name"),
+            last_name=form_data.get("last_name"),
+            suffix=form_data.get("suffix"),
             date_of_birth=dob,
-            contact_number=contact_number,
-            email=email, 
-            password=hashed_password)
+            contact_number=form_data.get("contact_number"),
+            email=email,
+            password=hashed_password
+        )
 
         db.session.add(new_user)
-        db.seesion.commut()
+        db.session.commit()
 
-        flash("Registered Successfully. Please log in.", "success")
+        flash("Registered successfully.", "success")
         return redirect(url_for("auth.login"))
 
     return render_template("register.html")
@@ -70,20 +70,19 @@ def register():
 def verification():
     email = request.form.get('email')
     verify_email = request.form.get('verify_email')
-
-    if email != verify_email:
-        flash("Email does not match!", "danger")
-        return render_template("register.html", email=email, password=password)
-            
     password = request.form.get('password')
     verify_password = request.form.get('verify_password')
 
+    if email != verify_email:
+        flash("Email addresses do not match.", "danger")
+        return None, None
+
     if password != verify_password:
-        flash("Password does not match!", "anger")
-        return render_template("register.hmtl", email=email, password=password)
-    
+        flash("Passwords do not match.", "danger")
+        return None, None
+
     return email, password
-        
+
 @auth.route("/logout")
 @login_required
 def logout():

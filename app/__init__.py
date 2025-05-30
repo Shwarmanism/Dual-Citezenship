@@ -21,8 +21,7 @@ def create_app():
 
     login_manager.login_view = 'auth.login'
     login_manager.login_message = 'info'
-
-    # ✅ MOVE THIS IMPORT INSIDE create_app
+    
     from app.models import User
 
     @login_manager.user_loader

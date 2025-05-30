@@ -66,8 +66,10 @@ def petition():
                 # Handle spouse details if relation is "Spouse"
                 if member_data['relation'].lower() == "spouse":
                     spouse_address = member_data.get('spouse_address')
+                    spouse_id = "S-1"
                     spouse_detail = SpouseDetails(
                         family_id=family_id,
+                        spouse_id=spouse_id,
                         spouse_address=spouse_address
                     )
                     db.session.add(spouse_detail)

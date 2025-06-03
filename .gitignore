@@ -1,0 +1,47 @@
+# === Python bytecode ===
+__pycache__/
+*.py[cod]
+*$py.class
+
+# === Virtual environment ===
+.venv/
+env/
+venv/
+
+# === Environment variables ===
+.env
+.env.*
+
+# === IDEs and editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Logs and local databases ===
+*.log
+*.sqlite3
+*.db
+*.bak
+
+# === Testing and coverage ===
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+
+# === Build and distribution ===
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+
+# === Jupyter Notebook Checkpoints ===
+.ipynb_checkpoints/

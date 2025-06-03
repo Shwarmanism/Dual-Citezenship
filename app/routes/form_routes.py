@@ -3,6 +3,7 @@ from app import db
 from app.models import User, Applicant, Child, FamilyMember, Overseas, Philippines, SpouseDetails
 from flask_login import login_required, current_user
 import datetime
+from database.config import mysql_path
 
 bp_form = Blueprint('form', __name__)
 
@@ -42,7 +43,8 @@ def petition():
                 applicant_mobile_no=applicant_mobile_no,
                 applicant_email=applicant_email,
                 applicant_occupation=applicant_occupation,
-                work_address=work_address
+                work_address=work_address,
+                ph_citizenship_id=None
             )
 
             db.session.add(applicant)
@@ -50,44 +52,53 @@ def petition():
             entry_no = applicant.entry_no
 
             # --- Family Members ---
-            family_members_data = request.form.getlist('family_members') 
+            no_of_family_members = int(request.form.get('no_of_family_members', 0))
+            for i in range(no_of_family_members):
+                relation = request.form.get(f'relation_{i}')
+                family_name = request.form.get(f'family_name_{i}')
+                citizenship = request.form.get(f'citizenship_{i}')
+                family_id = f"F-{i+1}"
+                spouse_id = None
 
-            for idx, member_data in enumerate(family_members_data, start=1):
-                family_id = f"F-{idx}"
+                # If relation is spouse, generate spouse_id
+                if relation and relation.lower() == 'spouse':
+                    spouse_id = f"S-{i+1}"
+                else:
+                    spouse_id = None
+
                 family_member = FamilyMember(
                     entry_no=entry_no,
                     family_id=family_id,
-                    relation=member_data['relation'],
-                    family_name=member_data['family_name'],
-                    citizenship=member_data['citizenship']
+                    spouse_id=spouse_id,
+                    relation=relation,
+                    family_name=family_name,
+                    citizenship=citizenship
                 )
                 db.session.add(family_member)
 
-                # Handle spouse details if relation is "Spouse"
-                if member_data['relation'].lower() == "spouse":
-                    spouse_address = member_data.get('spouse_address')
-                    spouse_id = "S-1"
+                # If spouse, add spouse details
+                if spouse_id:
+                    spouse_address = request.form.get(f'spouse_address_{i}')
                     spouse_detail = SpouseDetails(
-                        family_id=family_id,
                         spouse_id=spouse_id,
-                        spouse_address=spouse_address
+                        spouse_address=spouse_address or ''
                     )
                     db.session.add(spouse_detail)
 
             # --- Overseas Citizenship ---
-            applicant_foreign_citizenship = request.form.get('applicant_foreign_citizenship')
-            mode_of_acquisition = request.form.get('mode_of_acquisition')
-            date_of_acquisition_raw = request.form.get('date_of_acquisition')
-            date_of_acquisition = datetime.datetime.strptime(date_of_acquisition_raw, "%Y-%m-%d").date() if date_of_acquisition_raw else None
-            natural_cert_numbers = request.form.get('natural_cert_numbers')
-            foreign_passport_no = request.form.get('foreign_passport_no')
-            issuance_of_foreign_passport = request.form.get('issuance_of_foreign_passport')
-            place_of_issuance = request.form.get('supporting_documents_former')
-            foreign_docs = request.form.get('supporting_documents_current')
-
             no_of_citizenship = int(request.form.get('no_of_citizenship', 0))
             for i in range(no_of_citizenship):
                 overseas_id = f"FC-{i+1}"
+                applicant_foreign_citizenship = request.form.get(f'applicant_foreign_citizenship_{i}')
+                mode_of_acquisition = request.form.get(f'mode_of_acquisition_{i}')
+                date_of_acquisition_raw = request.form.get(f'date_of_acquisition_{i}')
+                date_of_acquisition = datetime.datetime.strptime(date_of_acquisition_raw, "%Y-%m-%d").date() if date_of_acquisition_raw else None
+                natural_cert_numbers = request.form.get(f'natural_cert_numbers_{i}')
+                foreign_passport_no = request.form.get(f'foreign_passport_no_{i}')
+                issuance_of_foreign_passport = request.form.get(f'issuance_of_foreign_passport_{i}')
+                place_of_issuance = request.form.get(f'place_of_issuance_{i}')
+                foreign_docs = request.form.get(f'foreign_docs_{i}')
+
                 overseas = Overseas(
                     entry_no=entry_no,
                     overseas_id=overseas_id,
@@ -96,24 +107,28 @@ def petition():
                     date_of_acquisition=date_of_acquisition,
                     natural_cert_numbers=natural_cert_numbers,
                     foreign_passport_no=foreign_passport_no,
-                    issuance_of_foreign_passport=issuance_of_foreign_passport,
+                    date_of_issuance=issuance_of_foreign_passport,
                     place_of_issuance=place_of_issuance,
                     foreign_docs=foreign_docs
                 )
                 db.session.add(overseas)
+                db.session.flush()
 
             # --- Philippine Citizenship ---
+            ph_citizenship_id = "PH-1"  # Or generate as you want
             ph_mode_of_acquisition = request.form.get('ph_mode_of_acquisition')
             ph_docs = request.form.get('ph_docs')
 
             philippines = Philippines(
-                ph_id="PH-1",
-                entry_no=entry_no,
-                ph_mode_of_acquisition=ph_mode_of_acquisition,
+                ph_citizenship_id=ph_citizenship_id,
+                ph_mode_of_aquisition=ph_mode_of_acquisition,
                 ph_docs=ph_docs
             )
+            
             db.session.add(philippines)
+            db.session.flush()
 
+            applicant.ph_citizenship_id=ph_citizenship_id
             # --- Children ---
             child_petition = request.form.get('child_petition')
             if child_petition == 'on':
@@ -125,14 +140,14 @@ def petition():
                         entry_no=entry_no,
                         child_id=f"C-{i+1}",
                         child_name=request.form.get(f'child_name_{i}'),
-                        child_gender=request.form.get(f'child_gender_{i}'),
-                        child_csa=request.form.get(f'child_cs_{i}'),
+                        gender=request.form.get(f'child_gender_{i}'),
+                        civil_status=request.form.get(f'child_cs_{i}'),
                         child_DB=child_DB,
                         child_PB=request.form.get(f'child_PB_{i}'),
-                        child_country_pa=request.form.get(f'child_country_pa_{i}'),
+                        country_pa=request.form.get(f'child_country_pa_{i}'),
                         child_citizenship=request.form.get(f'child_citizenship_{i}'),
                         child_supporting_docs=request.form.get(f'child_supporting_docs_{i}'),
-                        child_immagration_docs=request.form.get(f'child_immgration_docs_{i}')
+                        immigration_docs=request.form.get(f'child_immigration_docs_{i}')
                     )
                     db.session.add(child)
 

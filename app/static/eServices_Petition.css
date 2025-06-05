@@ -1,0 +1,620 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 45px;
+  background-color: #21005d;
+  justify-content: end;
+  align-items: center;
+  font-family: Roboto;
+  color: white;
+  gap: 25px;
+  font-size: 10px;
+}
+
+.header-left-most{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.CalendarBlank{
+  width: 15px;
+  margin-right: 10px;
+}
+
+.header-center{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.PhoneCall{
+  width: 15px;
+  margin-right: 10px;
+}
+
+.header-right-most{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 200px;
+}
+
+.PhilippineCircle{
+  width: 20px;
+  margin-left: 10px;
+}
+
+.immigration-email{
+  text-decoration: underline;
+}
+
+.below-header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+  background-color: white;
+  align-items: center;
+  justify-content: left;
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: gray;
+}
+
+.below-header-left{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  margin-left: 100px;
+}
+
+.ImmigrationIcon{
+  width: 65px;
+  height: auto;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.below-header-left-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: .3;
+  font-family: Roboto;
+  padding-bottom: 10px;
+  font-weight: bold;
+  margin-right: 135px;
+}
+
+.republic-philippines{
+  font-size: 12px;
+}
+
+.bureau-immigration {
+  font-size: 20px;
+  margin: 0;
+}
+
+.below-header-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 14px;
+  width: auto;
+  gap: 30px;
+  margin-left: 240px;
+}
+
+.Home, .About, .Visas, .Services, .eServices{
+  color: gray;
+  text-decoration: none;
+}
+
+.below-header-right{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contact{
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 14px;
+  color: #21005d;
+  margin-left: 10px;
+}
+
+.Phone{
+  width: 30px;
+  margin-left: 45px;
+}
+
+.Phone{
+  width: 30px;
+  margin-left: 45px;
+}
+
+.petition-container{
+  display: flex;  
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  border: none;
+  font-family: Lato;
+}
+
+.first-box{
+  display: flex;
+  flex-direction: row;
+  align-items:flex-start;
+  justify-content: flex-start;
+  
+  border: none;
+  width: auto;
+  height: 600px;  
+}
+
+.second-box{
+  display: flex;
+  flex-direction: row;
+  align-items:flex-start;
+  justify-content: flex-start;
+  
+  border: none;
+  width: auto;
+  height: 450px;
+}
+
+.second-box-left{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: flex-start;
+  
+  border: none;
+  width: 900px;
+  height: 450px;
+}
+
+.second-box-right{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: flex-start;
+  
+  border: none;
+  width: 600px;
+  height: 450px;
+  gap: 10px;
+}
+
+.third-box{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: flex-start;
+  
+  border: none;
+  width: auto;
+  height: 900px;
+  gap: 10px;
+}
+
+.fourth-box, .fifth-box{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  
+  border: none;
+  width: 100%;
+  height: auto;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.child-container{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: flex-start;
+  
+  border: solid;
+  width: 100%;
+  height: auto;
+  gap: 20px;
+  border-width: 2px; 
+  border-color: black
+}
+
+.citizenship-container{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: flex-start;
+  
+  border: solid;
+  width: 100%;
+  height: auto;
+  gap: 20px;
+  border-width: 2px; 
+  border-color: black;
+}
+
+.arrow-button{
+  position: absolute;
+  margin-top: 70px;
+  margin-left: 10px;
+  width: 30px;
+  border: none;
+  background-color: white;
+  z-index: 2;
+}
+
+.ArrowLeft{
+  width: auto;
+  height: 20px;
+}
+
+.ImmigrationLogo{
+  position: relative;
+  margin-top: 20px;
+  width: auto;
+  height: 250px; 
+  z-index: 1;
+}
+
+.first-box-content{
+  display: flex;  
+  flex-direction: column;
+  border: none;
+  width: 100%;
+  height: 600px;
+  font-family: Lato;
+}
+
+.entry-number, .title-text, .number-1{
+  margin-bottom: 0px;
+  font-size: 18px;
+}
+
+.title-text{
+  margin-top: 3px;
+  margin-left: 5px;
+  font-size: 37px;
+  font-weight: 5  00;
+}
+
+.number-1{
+  margin-top: 10px;
+  font-weight: bold;
+  margin-left: 7px;
+}
+
+.number-2, .second-name-yes, .second-name-no, .number-2-d, .third-row-text, .number-3, .number-4, .number-5, .number-6{
+  margin-left: 7px;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.number-4{
+  margin-left: 155px;
+}
+
+.number-3{
+  margin-left: 0px;
+}
+
+.radio-button{
+  margin-top: 15px;
+}
+
+
+.first-row, .second-row-text, .second-row, .number-2-docs, .third-row-text, .third-row, .gender, .fourth-row, .child-third-text, .child-third-input{
+  display: flex;  
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+}
+
+.fourth-row{
+  gap: 10px;
+}
+
+.third-row-text{
+  gap: 35px
+}
+
+
+.first-name{
+  display: flex;  
+  flex-direction: column;
+  align-items: start;
+  margin-left: 40px;
+}
+
+.first-name-input, .birthday, .birth-place-input, .first-name-family-input, .citizenship-family-input, .applicant-info-input, .address, .person-info-input, .person-info-input1, .citizenship-number-input, .citizenship-input1, .citizenship-input2, .citizenship-input3, .child-name-input, .child-birthday, .child-birthplace-input, .child-citizenship-input, .child-residence-input{
+  width: 1100px;
+  height: 40px;
+  border: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgb(169, 168, 168);
+}
+
+.name-document{
+  margin-left: 50px;
+  margin-top: 5px;
+}
+
+.name-document-input, .civil-status-others, .philippine-citizenship-others, .citizenship-document-others, .child-civil-status-others{
+  width: 300px;
+  border: solid;
+  height: 20px;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgb(169, 168, 168);
+}
+
+.birthday{
+  align-items: center;
+  margin-left: 40px;
+  width: 300px;
+  margin-right: 45px;
+  height: 45px;
+}
+
+.birth-place-input{
+  width: 400px;
+}
+
+.civil-status-choice{
+  margin-top: 25px;
+}
+
+.civil-status{
+  margin-top: 10px;
+}
+
+.first-name-family{
+  margin-top: 0px;
+  margin-left: 45px;
+}
+
+.first-name-family-input{
+  width: 800px;
+}
+
+.a7, .a10{
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+
+.second-box-right-first{
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  margin-top: 70px;
+}
+
+.citizenship-family-input{
+  width: 250px;
+  margin-right: 20px;
+}
+
+.second-box-left-first, .second-box-left-second, .second-box-left-third{
+  margin-bottom: 20px;
+}
+
+.third-box-first, .third-box-fifth{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.philippine-citizenship-others, .citizenship-document-others{
+  margin-top: 13px;
+}
+
+.third-box-second{
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.third-box-second-choice{
+  display: flex;
+  flex-direction: row;
+  margin-left: 50px;
+  gap: 10px;
+}
+
+.address{
+  width: 1350px;
+  margin-left: 45px;
+  margin-top: 20px;
+}
+
+.person-info{
+  display: flex;
+  flex-direction: column;
+}
+
+.person-info-input, .person-info-input1{
+  width: 302px;
+  margin-top: 20px;
+  margin-left: 30px;
+}
+
+.person-info-input1{
+  margin-left: 45px;
+}
+
+.question{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 50px;
+}
+
+.citizenship-question{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.citizenship-number-input{
+  width: 50px;
+  height: 20px;
+  margin-top: 5px;
+}
+
+.citizenship-first{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.citizenship-question{
+  margin-left: 10px;
+}
+
+.citizenship-num, .child-num{
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;  
+}
+
+.citizenship-first-text, .citizenship-first-input{
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.citizenship-text{
+  margin-right: 50px;
+}
+
+.citizenship-first-input{
+  width: 1400px;
+  margin-left: 45px;
+}
+
+.citizenship-input2, .citizenship-input3{
+  margin-left: 50px;
+}
+
+.citizenship-input3{
+  height: 45  px;
+}
+
+.submit{
+  width: 70px;
+  height: 20px;
+  margin-top: 5px;
+}
+
+.citizenship-text-2{
+  margin-left: 90px;
+  margin-right: 255px;  
+}
+
+.child-first{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.child-first-text{
+  display: flex;
+  flex-direction: row;
+  margin-left: 45px;
+  gap: 20px;
+}
+
+.a24-name{
+  margin-right: 650px;
+}
+
+.child-name-input{
+  width: 800px;
+  margin-left: 45px;
+}
+
+.child-second, .child-fifth{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.child-civil-status-others, .c24{
+  margin-top: 23px;
+}
+
+.e24{
+  margin-left: 140px;
+  margin-right: 100px;
+}
+
+.child-birthday{
+  width: 300px;
+  margin-left: 45px;
+}
+
+.child-birthplace-input{
+  margin-left: 30px;
+  width: 500px;
+}
+
+.child-citizenship-input{
+  margin-left: 30px;
+  width: 400px;
+}
+
+.child-residence-input{
+  width: 700px;
+  margin-left: 45px;
+}
+
+.submit-button{
+  margin-top: 50px;
+  margin-left: 300px;
+  width: 900px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  color: white;
+  background-color: #00B54F;
+}
+
+.footer{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.FooterPNG{
+  margin-top: 700px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

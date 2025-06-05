@@ -8,7 +8,6 @@ from database.config import mysql_path
 bp_form = Blueprint('form', __name__)
 
 @bp_form.route("/petition", methods=["GET", "POST"])
-@login_required
 def petition():
     if request.method == "POST":
         try:

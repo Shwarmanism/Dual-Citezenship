@@ -13,9 +13,13 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(15), nullable=False)
     prefix = db.Column(db.String(5), nullable=True)
     suffix = db.Column(db.String(7), nullable=True)
+    user_gender = db.Column(db.String(2), nullable=False)
+    user_civil_status = db.Column(db.String(2), nullable=False)
+    user_citizenship = db.Column(db.String(50), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
+    country_birth = db.Column(db.String(50), nullable=False)
     contact_number = db.Column(db.String(18), nullable=False)
-
+    
     applicants = db.relationship('Applicant', backref='user', lazy=True)
 
 class UserFunction(db.Model):

@@ -30,8 +30,12 @@ def create_app():
 
     from app.routes.auth_routes import auth
     from app.routes.form_routes import bp_form
+    from app.routes.function_routes import bp_function
+    from app.routes.home_routes import bp_home
 
     app.register_blueprint(auth)
     app.register_blueprint(bp_form)
+    app.register_blueprint(bp_function)
+    app.register_blueprint(bp_home)
 
     return app

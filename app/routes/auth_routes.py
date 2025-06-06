@@ -53,8 +53,13 @@ def register():
             first_name=form_data.get("first_name"),
             middle_name=form_data.get("middle_name"),
             last_name=form_data.get("last_name"),
+            prefix=form_data.get("prefix"),
             suffix=form_data.get("suffix"),
+            user_gender=form_data.get("user_gender"),
+            user_civil_status=form_data.get("user_civil_status"),
+            user_citizenship=form_data.get("user_citizenship"),
             date_of_birth=dob,
+            country_birth=form_data.get("country_birth"),
             contact_number=form_data.get("contact_number"),
             email=email,
             password=hashed_password

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bureau of Immigration Header</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dataprivacynotice.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header>
+    <div class="top-bar">
+      <span>MON - FRI: 08:00 AM - 17:30 PM</span>
+      <span>Hotline: (+632) 8-465-2400</span>
+      <span>Support: xinfo@immigration.gov.ph</span>
+      <div class="top-bar-flag">
+        <img src="{{ url_for('static', filename='Images/v6_1409.png') }}" alt="Philippines Flag" />
+      </div>
+    </div>
+
+    <div class="main-header">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='Images/bureau.png') }}" alt="BI Logo" />
+        <div class="logo-text">
+          <span>Republic of the Philippines</span>
+          <h1>Bureau of Immigration</h1>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Visas</a></li>
+          <li><a href="#">eServices</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <button class="search-btn" aria-label="Search">🔍</button>
+        <button class="contact-btn">Contact us</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="blue-bar" style="
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #003366;
+  height: 60px;
+  z-index: 100;
+">
+    <nav style="text-align: center; padding: 1em 0;">
+      <a href="#directory" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Directory of Officials</a>
+      <a href="#vision-mission" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Vision and Mission</a>
+      <a href="#privacy" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Data Privacy Notice</a>
+    </nav>
+  </div>
+</div>
+  
+  <div class="info-image" style="display: flex; flex-direction: column; margin: 0; padding: 0;">
+    <img src="{{ url_for('static', filename='Images/3.png') }}" alt="Immigration Building" style="display: block; width: 100%; height: auto; margin: 0; padding: 0;" />
+
+   
+    <div style="text-align: center; color: black; font-size: x-large; margin-top: 3%;">
+    <p class="name">Data Privacy Notice</p>
+    </div>
+
+    <div class="content-wrapper">
+      <section id="privacy-commitment">
+        <p>
+          The Bureau of Immigration (BI) commits to protect and respect personal data privacy pursuant to the provisions of Republic Act No. 10173 or the Data Privacy Act of 2012 and its implementing rules and regulations.
+        </p>
+      </section>
+
+      <section id="personal-data-collected">
+        <h2>Personal Data Collected</h2>
+        <p>
+          The BI will collect and process collected personal data, whether submitted manually and electronically, such as name, date and place of birth, nationality, immigration status, civil status, contact information such as residential and business addresses, telephone numbers, electronic mail (e-mail) address(es) and other contact details, photographic and biometric data such as photos, Closed-Circuit Television Videos (CCTV) images and footages, fingerprints, handwriting, specimen signatures, etc.
+        </p>
+        <p>
+          The collection and processing of these data is pursuant to BI’s mandate to enforce and administer immigration and alien registration laws, as well as the supervision of immigration into and emigration from the Philippines.
+        </p>
+      </section>
+
+      <section id="use">
+        <h2>Use</h2>
+        <p>
+          The BI utilizes the collected personal data solely for documentation and processing purposes within the agency to properly address applications, requests, inquiries, and other related purposes, forward them to appropriate concerned offices for action and response, as well as provide clients with appropriate updates and advisories in a legitimate format and in an orderly and timely manner.
+        </p>
+        <p>
+          These data being collected and processed are not shared with any outside parties unless either (i) the concerned data subject consents, (ii) appropriate government authorities require the BI to comply with legal inquiries, and other legal processes, (iii) requested by the embassy of foreign national(s) or (iv) there is existing data sharing agreement(s), with their corresponding data privacy notice(s).
+        </p>
+      </section>
+
+      <section id="protection-measures">
+        <h2>Protection Measures</h2>
+        <p>
+          Only authorized BI personnel have access to these personal and sensitive data, the exchange of which will be facilitated through e-mail and hard copy. The BI ensures the quality of the data being retained and the security of the archived personal data for as long as necessary, for the fulfillment of the purpose by which they were collected, after which physical and digital records are archived or disposed of, according to applicable laws, rules, and regulations.
+        </p>
+        <p>
+          The BI will make readily available policies and practices relating to the management of personal data.
+        </p>
+      </section>
+
+      <section id="access-and-correction">
+        <h2>Access and Correction</h2>
+        <p>
+          Data subjects have the right to ask for a copy of any personal and sensitive data the BI holds about them and to request for the correction of erroneous entries, subject to presentation of appropriate documents. For questions about this Notice and their related concerns, please write to: The Data Protection Officer, Bureau of Immigration, Magallanes Drive, Intramuros, Manila 1002 Philippines and/or via electronic mail (e-mail) at data.privacy@immigration.gov.ph.
+        </p>
+        <p>
+          The Data Privacy Notice may be amended at any time without prior notice, and such amendments will be published via BI’s website.
+        </p>
+      </section>
+    </div>
+
+    <div class="footer">
+      <span>© 2025 Bureau of Immigration, Republic of the Philippines. All rights reserved.</span>
+    </div>
+    <img src="{{ url_for('static', filename='Images/footer.png') }}" alt="Footer Image" class="footer-img">
+  </div>
+</body>
+</html>

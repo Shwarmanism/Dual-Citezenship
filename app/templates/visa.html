@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bureau of Immigration Header</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='visa1.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header>
+    <div class="top-bar">
+      <span>MON - FRI: 08:00 AM - 17:30 PM</span>
+      <span>Hotline: (+632) 8-465-2400</span>
+      <span>Support: xinfo@immigration.gov.ph</span>
+      <div class="top-bar-flag">
+        <img src="{{ url_for('static', filename='Images/v6_1409.png') }}" alt="Philippines Flag" />
+      </div>
+    </div>
+
+    <div class="main-header">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='Images/bureau.png') }}" alt="BI Logo" />
+        <div class="logo-text">
+          <span>Republic of the Philippines</span>
+          <h1>Bureau of Immigration</h1>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Visas</a></li>
+          <li><a href="#">eServices</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <button class="search-btn" aria-label="Search">🔍</button>
+        <button class="contact-btn">Contact us</button>
+      </div>
+    </div>
+  </header>
+  <div class="info-image" style="display: flex; flex-direction: column; margin: 0; padding: 0;">
+  <img src="{{ url_for('static', filename='Images/visas.png') }}" alt="Immigration Building" style="display: block; width: 100%; height: 600px; margin: 0; padding: 0;" />
+
+    <div class="blue-bar"></div>
+
+  <div style="background-color: #003366; color: white; padding: 30px 20px; font-family: Arial, sans-serif; line-height: 1.6; text-align: center; max-width: 900px; margin: 20px auto; border-radius: 8px;">
+    <h2 style="font-weight: 600; margin-bottom: 15px; font-size: 1.8rem;">Immigrant Visa</h2>
+    <ul style="list-style: none; padding: 0; margin-bottom: 30px; font-size: 1.1rem;">
+      <li>Child Born Abroad of Immigrant Mother</li>
+      <li>Child Born Subsequent to the Issuance of Immigrant Visa of the Accompanying Parent</li>
+      <li>Immigrant Visa by Marriage (13A)</li>
+      <li>Permanent Resident Visa (PRV)</li>
+      <li>Returning Former Natural-Born Filipino Citizen (13G)</li>
+      <li>Returning Resident (13E)</li>
+      <li>Quota Visa (13)</li>
+    </ul>
+
+    <h2 style="font-weight: 600; margin-bottom: 15px; font-size: 1.8rem;">Non-Immigrant Visa</h2>
+    <ul style="list-style: none; padding: 0; margin-bottom: 30px; font-size: 1.1rem;">
+      <li>Temporary Resident Visa (TRV)</li>
+      <li>Temporary Visitor Visa (9A)</li>
+      <li>Treaty Trader or Treaty Investor (9D)</li>
+      <li>Accredited Official of Foreign Government (9E)</li>
+      <li>Student Visa (9F)</li>
+      <li>Pre-arranged Employment Visa (9G)</li>
+    </ul>
+
+    <h2 style="font-weight: 600; margin-bottom: 15px; font-size: 1.8rem;">Special Visa</h2>
+    <ul style="list-style: none; padding: 0; font-size: 1.1rem;">
+      <li>Visa Upon Arrival (SEVUA)</li>
+      <li>Special Visa for Employment Generation</li>
+      <li>Special Employment Visa for Offshore Banking Unit</li>
+      <li>Special Visa under E.O. 226, as amended by R.A. 8756</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer" style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 20px 30px; background-color: #409be6; color: rgba(92, 157, 231, 0.938); font-size: 14px; width: 100%; margin-top: 40px; flex-wrap: wrap; text-align: center;"></div>
+  <img src="{{ url_for('static', filename='Images/footer.jpg') }}" alt="Footer Image" style="width: 1225px; height: auto; object-fit: auto;">
+</body>
+</html>

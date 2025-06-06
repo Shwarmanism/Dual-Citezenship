@@ -18,6 +18,22 @@ class User(db.Model, UserMixin):
 
     applicants = db.relationship('Applicant', backref='user', lazy=True)
 
+class UserFunction(db.Model):
+    __tablename__ = 'user_function'
+
+    entry_no = db.Column(
+        db.Integer,
+        db.ForeignKey('applicant.entry_no'),
+        primary_key=True 
+    )
+    location = db.Column(db.String(50), nullable=False)
+    transaction = db.Column(db.String(30), nullable=False)
+    status = db.Column(db.String(10), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
+    date_updated = db.Column(db.DateTime, default=datetime.utcnow)
+
+    applicant = db.relationship('Applicant', backref=db.backref('user_function', uselist=False))
+
 class Applicant(db.Model):
     __tablename__ = 'applicant'
 

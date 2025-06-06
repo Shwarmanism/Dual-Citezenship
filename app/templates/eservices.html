@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bureau of Immigration Header</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='eservices1.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header>
+    <div class="top-bar">
+      <span>MON - FRI: 08:00 AM - 17:30 PM</span>
+      <span>Hotline: (+632) 8-465-2400</span>
+      <span>Support: xinfo@immigration.gov.ph</span>
+      <div class="top-bar-flag">
+        <img src="{{ url_for('static', filename='Images/v6_1409.png') }} "alt="Philippines Flag" />
+      </div>
+    </div>
+
+    <div class="main-header">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='Images/bureau.png') }} " alt="BI Logo" />
+        <div class="logo-text">
+          <span>Republic of the Philippines</span>
+          <h1>Bureau of Immigration</h1>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Visas</a></li>
+          <li><a href="#">eServices</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <button class="search-btn" aria-label="Search">🔍</button>
+        <button class="contact-btn">Contact us</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="info-image" style="display: flex; flex-direction: column; margin: 0; padding: 0;">
+  <img src="{{ url_for('static', filename='Images/eservices1.png') }}" alt="Immigration Building" style="display: block; width: 100%; height: 600px; margin: 0; padding: 0;" />
+
+    <div class="blue-bar"></div>
+
+    <p class="news">List of EServices</p>
+    <div class="info-image" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #e6f2ff; padding: 40px 0;">
+  <img src="{{ url_for('static', filename='Images/LASTNEW.png') }}" alt="Immigration Building" style="display: block; width: 50%; height: auto;" />
+</div>
+
+
+<div class="footer" style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 20px 30px; background-color: #409be6; color: rgba(92, 157, 231, 0.938); font-size: 14px; width: 100%; margin-top: 40px; flex-wrap: wrap; text-align: center;"></div>
+  <img src="{{ url_for('static', filename='Images/footer.jpg') }}" alt="Footer Image" style="width: 1225px; height: auto; object-fit: auto;">
+</body>
+</html>

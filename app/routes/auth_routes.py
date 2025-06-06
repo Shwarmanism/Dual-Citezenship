@@ -3,6 +3,7 @@ from app import db, bcrypt
 from app.models import User
 from flask_login import login_user, logout_user, login_required
 import datetime
+from database.config import mysql_path
 
 auth = Blueprint('auth', __name__)
 

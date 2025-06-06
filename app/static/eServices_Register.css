@@ -311,7 +311,7 @@ body{
   border: none;
 }
 
-.first-row, .second-row, .third-row, .fourth-row, .fifth-row, .sixth-row, .seventh-row{
+.first-row, .second-row, .third-row, .fourth-row, .fifth-row, .sixth-row, .seventh-row, .after-third-fix{
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -319,7 +319,7 @@ body{
   border: none;
 }
 
-.prefix, .first-name, .suffix, .last-name, .middle-name, .birth-date, .sex, .civil-status, .country-birth, .country-citizenship, .contact-number, .format-number, .email-address, .verify-email, .password, .verify-password{
+.prefix, .first-name, .suffix, .last-name, .middle-name, .birth-date, .sex, .civil-status, .country-birth, .country-citizenship, .contact-number, .format-number, .email-address, .verify-email, .password, .verify-password, .prefix{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -327,7 +327,7 @@ body{
   font-size: 18px;
 }
 
-.prefix-input, .first-name-input, .last-name-input, .middle-name-input, .suffix-input, .birth-date-input, .sex-input, .civil-status-input, .country-birth-input, .country-citizenship-input, .contact-number-input, .email-address-input, .verify-email-input, .password-input, .verify-password-input{
+.prefix-input, .first-name-input, .last-name-input, .middle-name-input, .suffix-input, .birth-date-input, .sex-input, .civil-status-input, .country-birth-input, .country-citizenship-input, .contact-number-input, .email-address-input, .verify-email-input, .password-input, .verify-password-input, .prefix-input{
   width: 260px;
   height: 70px;
   font-size: 18px;
@@ -372,7 +372,7 @@ body{
 }
 
 .FooterPNG{
-  margin-top: 700px;
+  margin-top: 800px;
   width: 100%;
   height: auto;
   object-fit: cover;

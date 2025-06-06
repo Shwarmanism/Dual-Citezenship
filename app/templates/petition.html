@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Petition</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='eServices_Petition.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital@0;1&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-left-most">
+      <img src="{{ url_for('static', filename='Images/CalendarBlank.png') }}" class="CalendarBlank">
+      <p>MON - FRI: 08:00 AM - 17:30 PM</p>
+    </div>
+    <div class="header-center">
+      <img src="{{ url_for('static', filename='Images/PhoneCall.png') }}" class="PhoneCall">
+      <p>Hotline: (+632) 8-465-2400</p>
+    </div>
+    <div class="header-right-most">
+      <p>Support: <span class="immigration-email">xinfo@immigration.gov.ph</span></p>
+      <img src="{{ url_for('static', filename='Images/PhilippineCircle.png') }}" class="PhilippineCircle">
+    </div>
+  </div>
+  <div class="below-header">
+    <div class="below-header-left">
+      <img src="{{ url_for('static', filename='Images/ImmigrationIcon.png') }}" class="ImmigrationIcon">
+      <div class="below-header-left-text">
+        <p class="republic-philippines">Republic of the Philippines</p>
+        <p class="bureau-immigration">Bureau of Immigration</p>
+      </div>
+    </div>
+    <div class="below-header-center">
+      <a href="#" class="Home">Home</a>
+      <a href="#" class="About">About</a>
+      <a href="#" class="Services">Services</a>
+      <a href="#" class="Visas">Visas</a>
+      <a href="#" class="eServices">eServices</a>
+    </div>
+    <div class="below-header-right">
+      <img src="{{ url_for('static', filename='Images/Phone.png') }}" class="Phone">
+      <p class="contact">Contact us</p>
+    </div>
+  </div>
+  <div class="petition-container">
+    <div class="first-box">
+      <button class="arrow-button" href="#">
+        <img src="{{ url_for('static', filename='Images/ArrowLeft.png') }}" class="ArrowLeft">
+      </button>
+      <img src="{{ url_for('static', filename='Images/ImmigrationLogo.png') }}" class="ImmigrationLogo">
+      <div class="first-box-content">
+        <p class="entry-number">ENTRY NO. 999</p>
+        <p class="title-text">Petition for dual citizenship and issuance of identification certificate</p>
+        <p class="number-1">1. NAME AS WRITTEN ON PHILIPPINE BIRTH CERTIFICATE OR REPORT OF BIRTH</p>
+        <div class="first-row">
+          <div class="first-name">
+            <p class="first-name-text">First Name - Middle Name - Last Name</p>
+            <input type="text" class="first-name-input">
+          </div>
+        </div>
+        <div class="second-row-text">
+          <p class="number-2">2. ARE YOU USING A DIFFERENT NAME?</p>
+          <input type="radio" name="second-name" id="name-yes" class="radio-button">
+          <p class="second-name-yes">YES - Please answer 2.a. to 2.d.</p>
+          <input type="radio" name="second-name" id="name-no" class="radio-button">
+          <p class="second-name-no" name="second-name" id="name-no">NO - Go to number 3</p>
+        </div>
+        <div class="second-row">
+          <div class="first-name">
+            <p class="first-name-text">First Name - Middle Name - Last Name</p>
+            <input type="text" class="first-name-input">
+          </div>
+        </div>
+        <p class="number-2-d">2d. SUPPORTING DOCUMENTS FOR CHANGE OF NAME</p>
+        <div class="number-2-docs">
+          <input type="checkbox" class="name-document" id="court-decree">
+          <p>COURT DECREE</p>
+          <input type="checkbox" class="name-document" id="others">
+          <p>OTHERS (please specify)</p>
+          <input type="text" class="name-document-input">
+        </div>
+        <div class="third-row-text">
+          <p class="number-3">3. Date of Birth (DD/MM/YY)</p>
+          <p class="number-4">4. PLACE OF BIRTH (town or city, province or state, country)</p>
+          <p class="number-5">5. GENDER</p>
+        </div>
+        <div class="third-row">
+          <div class="birth-date">
+            <input type="date" name="birthdate" id="birthdate" class="birthday">
+          </div>
+          <div class="birth-place">
+            <input type="text" class="birth-place-input">
+          </div>
+          <div class="gender">
+            <input type="radio" class="gender-input" name="gender-button" id="M">
+            <p class="male-text">MALE</p>
+            <input type="radio" class="gender-input" name="gender-button" id="F">
+            <p class="female-text">FEMALE</p>
+          </div>
+        </div>
+        <div class="fourth-row">
+          <p class="number-6">6. CIVIL STATUS:</p>
+          <input type="radio" class="civil-status" id="s" name="civil-status-button">
+          <p class="civil-status-choice">SINGLE</p>
+          <input type="radio" class="civil-status" id="m" name="civil-status-button">
+          <p class="civil-status-choice">MARRIED</p>
+          <input type="radio" class="civil-status" id="d" name="civil-status-button">
+          <p class="civil-status-choice">DIVORCED</p>
+          <input type="radio" class="civil-status" id="w" name="civil-status-button">
+          <p class="civil-status-choice">WIDOW/ER</p>
+          <input type="radio" class="civil-status" id="o" name="civil-status-button">
+          <p class="civil-status-choice">OTHERS</p>
+          <input type="text" class="civil-status-others">
+        </div>
+      </div>
+    </div>
+    <div class="second-box">
+      <div class="second-box-left">
+          <div class="second-box-left-first">
+            <p class="a7">7.a. NAME OF APPLICANT'S SPOUSE (as written in the birth certificate)</p>
+              <div class="first-name-family">
+                <p class="first-name-text">First Name - Middle Name - Last Name</p>
+                <input type="text" class="first-name-family-input">
+              </div>
+            </div>
+          <div class="second-box-left-second">
+            <p class="a7">8.a. NAME OF APPLICANT’S FATHER (as written in the birth certificate) </p>
+              <div class="first-name-family">
+                <p class="first-name-text">First Name - Middle Name - Last Name</p>
+                <input type="text" class="first-name-family-input">
+              </div>
+            </div>
+          <div class="second-box-left-third">
+            <p class="a7">9.a. NAME OF APPLICANT’S MOTHER (as written in the birth certificate)</p>
+              <div class="first-name-family">
+                <p class="first-name-text">First Name - Middle Name - Last Name</p>
+                <input type="text" class="first-name-family-input">
+              </div>
+            </div>
+      </div>
+      <div class="second-box-right">
+        <div class="second-box-right-first">
+          <p class="b7">7.b. CITIZENSHIP OF SPOUSE AT THE TIME OF APPLICATION </p>
+          <input type="text" class="citizenship-family-input">
+        </div>
+        <div class="second-box-right-first">
+          <p class="b7">8.b. FATHER’S CITIZENHIP AT THE TIME OF APPLICANT’S BIRTH </p>
+          <input type="text" class="citizenship-family-input">
+        </div>
+        <div class="second-box-right-first">
+          <p class="b7">9.b. MOTHER’S CITIZENHIP AT THE TIME OF APPLICANT’S BIRTH </p>
+          <input type="text" class="citizenship-family-input">
+        </div>
+      </div>
+    </div>
+    <div class="third-box">
+      <div class="third-box-first">
+          <p class="a10">10. HOW PHILIPPINE CITIZENSHIP WAS INITIALLY ACQUIRED</p>
+          <input type="radio" class="philippine-citizenship-input" name="philippine-citizenship-button">
+          <p class="philippine-citizenship-choice">BIRTH</p>
+          <input type="radio" class="philippine-citizenship-input" name="philippine-citizenship-button">
+          <p class="philippine-citizenship-choice">ELECTION</p>
+          <input type="radio" class="philippine-citizenship-input" name="philippine-citizenship-button">
+          <p class="philippine-citizenship-choice">MARRIAGE</p>
+          <input type="radio" class="philippine-citizenship-input" name="philippine-citizenship-button">
+          <p class="philippine-citizenship-choice">NATURALIZATION</p>
+          <input type="radio" class="philippine-citizenship-input" name="philippine-citizenship-button">
+          <p class="philippine-citizenship-choice">OTHERS</p>
+          <input type="text" class="philippine-citizenship-others">
+        </div>
+        <div class="third-box-second">
+          <p class="a10">11. SUPPORTING DOCUMENTS SUBMITTED TO PROVE THAT THE APPLICANT WAS A FORMER CITIZEN OF THE PHILIPPINES: </p>
+          <div class="third-box-second-choice">
+            <input type="checkbox" class="citizenship-document-input" name="citizenship-document-button">
+            <p class="citizenship-document-choice">Philippine Birth Certificate</p>
+          </div>
+          <div class="third-box-second-choice">
+            <input type="checkbox" class="citizenship-document-input" name="citizenship-document-button">
+            <p class="citizenship-document-choice">Marriage Contract indicating Philippine Citizenship of the applicant</p>
+          </div>
+          <div class="third-box-second-choice">
+            <input type="checkbox" class="citizenship-document-input" name="citizenship-document-button">
+            <p class="citizenship-document-choice">Old Philippine Passport</p>
+          </div>
+          <div class="third-box-second-choice">
+            <input type="checkbox" class="citizenship-document-input" name="citizenship-document-button">
+            <p class="citizenship-document-choice">Voter’s affidavit or voter’s identification card</p>
+          </div>
+          <div class="third-box-second-choice">
+            <input type="checkbox" class="citizenship-document-input" name="citizenship-document-button">
+            <p class="citizenship-document-choice">Naturalization Certificate</p>
+          </div>
+          <div class="third-box-second-choice">
+            <input type="checkbox" class="citizenship-document-input" name="citizenship-document-button">
+            <p class="citizenship-document-choice">Others (specify)</p>
+            <input type="text" class="citizenship-document-others">
+          </div>
+        </div>
+        <div class="third-box-third">
+          <p class="a10">12. PHILIPPINE PERMANENT ADDRESS</p>
+            <input type="text" class="address">
+        </div>
+        <div class="third-box-fourth">
+          <p class="a10">13. ADDRESS IN U.S. OR COUNTRY OF RESIDENCE</p>
+            <input type="text" class="address">
+        </div>
+        <div class="third-box-fifth">
+          <div class="person-info">
+            <p class="a10">14. MOBILE NO.</p>
+            <input type="text" class="person-info-input1">
+          </div>
+          <div class="person-info">
+            <p class="a10">15. E-MAIL ADDRESS</p>
+            <input type="text" class="person-info-input">
+          </div>
+          <div class="person-info">
+            <p class="a10">16. WORK TELEPHONE NO.</p>
+            <input type="text" class="person-info-input">
+          </div>
+          <div class="person-info">
+            <p class="a10">17. PRESENT OCCUPATION</p>
+            <input type="text" class="person-info-input">
+          </div>    
+        </div>
+        <div class="third-box-sixth">
+          <p class="a10">18. WORK ADDRESS</p>
+            <input type="text" class="address">
+        </div>
+    </div>
+    <div class="question">
+        <p class="citizenship-question">How many foreign citizenships do you have?</p>
+        <input type="text" class="citizenship-number-input" id="citizenshipCount">
+        <button class="submit" onclick="generateCitizenships()">Submit</button>
+      </div>
+    <div class="fourth-box">
+      <div class="citizenship-container" id="citizenshipContainer">
+      </div>
+    </div>
+    <div class="question">
+        <p class="citizenship-question">How many children do you have?</p>
+        <input type="text" class="citizenship-number-input" id="childCount">
+        <button class="submit" onclick="generateChildren()">Submit</button>
+    </div>
+    <div class="fifth-box">
+      <div class="child-container" id="childContainer">
+      </div>
+    </div>
+    <button class="submit-button">Submit</button>
+  </div>
+  </div>
+  </div>
+  <div class="footer">
+    <img src="{{ url_for('static', filename='Images/footer.png') }}" class="FooterPNG">
+  </div>
+  <script>
+  function generateCitizenships() {
+    const count = parseInt(document.getElementById("citizenshipCount").value);
+    const container = document.getElementById("citizenshipContainer");
+    container.innerHTML = '';
+
+    for (let i = 1; i <= count; i++) {
+      const block = document.createElement("div");
+      block.className = "citizenship-first";
+
+      block.innerHTML = `
+        <div class="citizenship-container">
+        <p class="citizenship-num">Citizenship #${i}</p>
+        <div class="citizenship-first">
+          <div class="citizenship-first-text">
+            <p class="citizenship-text">19.a. APPLICANT’S CURRENT FOREIGN CITIZENSHIPS</p>
+            <p class="citizenship-text">19.b. MODE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
+            <p class="citizenship-text">20.a. DATE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
+          </div>
+          <div class="citizenship-first-input">
+            <input type="text" class="citizenship-input1">
+            <input type="text" class="citizenship-input2">
+            <input type="date" class="citizenship-input3">
+          </div>
+        </div>
+        <div class="citizenship-first">
+          <div class="citizenship-first-text">
+            <p class="citizenship-text-1">20.b. NATURALIZATION CERTIFICATE NUMBERS</p>
+            <p class="citizenship-text-2">21.a. FOREIGN PASSPORT NO.</p>
+            <p class="citizenship-text-3">21.b. DATE OF ISSUANCE OF FOREIGN PASSPORT</p>
+          </div>
+          <div class="citizenship-first-input">
+            <input type="text" class="citizenship-input1">
+            <input type="text" class="citizenship-input2">
+            <input type="date" class="citizenship-input3">
+          </div>
+      </div>
+    </div>
+      `;
+      container.appendChild(block);
+    }
+  }
+  function generateChildren() {
+    const count = parseInt(document.getElementById("childCount").value);
+    const container = document.getElementById("childContainer");
+    container.innerHTML = '';
+
+    for (let i = 1; i <= count; i++) {
+      const block = document.createElement("div");
+      block.className = "child-first";
+
+      block.innerHTML = `
+      <div class="child-container">
+      <p class="child-num">Child #${i}</p>
+        <div class="child-first">
+          <p class="a24">24.a. Child's name</p>
+          <div class="child-first-text">
+            <p class="a24-name">First Name - Middle Name - Last Name</p>
+            <p class="b24">24.b. GENDER</p>
+            <input type="radio" class="gender-input" name="gender-button" id="M">
+            <p class="male-text">MALE</p>
+            <input type="radio" class="gender-input" name="gender-button" id="F">
+            <p class="female-text">FEMALE</p>
+          </div>
+          <input type="text" class="child-name-input">
+        </div>
+        <div class="child-second">
+          <p class="c24">24.c. CIVIL STATUS:</p>
+          <input type="radio" class="civil-status" id="s" name="child-civil-status-button">
+          <p class="civil-status-choice">SINGLE</p>
+          <input type="radio" class="civil-status" id="m" name="child-civil-status-button">
+          <p class="civil-status-choice">MARRIED</p>
+          <input type="radio" class="civil-status" id="d" name="child-civil-status-button">
+          <p class="civil-status-choice">DIVORCED</p>
+          <input type="radio" class="civil-status" id="w" name="child-civil-status-button">
+          <p class="civil-status-choice">WIDOW/ER</p>
+          <input type="radio" class="civil-status" id="o" name="child-civil-status-button">
+          <p class="civil-status-choice">OTHERS</p>
+          <input type="text" class="child-civil-status-others">
+        </div>
+        <div class="child-third">
+          <div class="child-third-text">
+            <p class="d24">24.d. Date of Birth (DD/MM/YY)</p>
+            <p class="e24">24.e. PLACE OF BIRTH (town or city, province or state, country)</p>
+            <p class="f24">24.f. COUNTRIES OF CITIZENSHIP</p>
+          </div>
+          <div class="child-third-input">
+            <input type="date" class="child-birthday">
+            <input type="text" class="child-birthplace-input">
+            <input type="text" class="child-citizenship-input">
+          </div>
+        </div>
+        <div class="child-fourth">
+          <p class="g24">24.g. COUNTRY OF PERMANENT RESIDENCE</p>
+          <input type="text" class="child-residence-input">
+        </div>
+        <div class="child-fifth">
+          <p class="h24">24.h. SUPPORTING DOCUMENTS:</p>
+          <input type="checkbox" class="name-document">
+          <p>Philippine Birth Certificate</p>
+          <input type="checkbox" class="name-document">
+          <p>Old Philippine Passport</p>
+          <input type="checkbox" class="name-document">
+          <p>Foreign Birth Certificate</p>
+          <input type="checkbox" class="name-document">
+          <p>Foreign Passport</p>
+        </div>
+        </div>
+      `;
+      container.appendChild(block);
+    }
+  }
+</script>
+
+</body>
+
+</html>

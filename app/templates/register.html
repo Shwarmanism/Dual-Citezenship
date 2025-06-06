@@ -8,9 +8,48 @@
   </head>
   <body>
     <!-- Header and Navigation (same as yours) -->
-    <div class="header"> ... </div>
-    <div class="below-header"> ... </div>
-    <div class="eServices-image"> ... </div>
+    <div class="header">
+      <div class="header-left-most">
+        <img src="{{ url_for('static', filename='Images/CalendarBlank.png') }}" class="CalendarBlank">
+        <p>MON - FRI: 08:00 AM - 17:30 PM</p>
+      </div>
+      <div class="header-center">
+        <img src="{{ url_for('static', filename='Images/PhoneCall.png') }}" class="PhoneCall">
+        <p>Hotline: (+632) 8-465-2400</p>
+      </div>
+      <div class="header-right-most">
+        <p>Support: <span class="immigration-email">xinfo@immigration.gov.ph</span></p>
+        <img src="{{ url_for('static', filename='Images/PhilippineCircle.png') }}" class="PhilippineCircle">
+      </div>
+    </div>
+    <div class="below-header">
+      <div class="below-header-left">
+        <img src="{{ url_for('static', filename='Images/ImmigrationIcon.png') }}" class="ImmigrationIcon">
+        <div class="below-header-left-text">
+          <p class="republic-philippines">Republic of the Philippines</p>
+          <p class="bureau-immigration">Bureau of Immigration</p>
+        </div>
+      </div>
+      <div class="below-header-center">
+        <a href="#" class="Home">Home</a>
+        <a href="#" class="About">About</a>
+        <a href="#" class="Services">Services</a>
+        <a href="#" class="Visas">Visas</a>
+        <a href="#" class="eServices">eServices</a>
+      </div>
+      <div class="below-header-right">
+        <img src="{{ url_for('static', filename='Images/Phone.png') }}" class="Phone">
+        <p class="contact">Contact us</p>
+      </div>
+    </div>
+    <div class="eServices-image">
+      <img src="{{ url_for('static', filename='Images/eServices.png') }}" class="eServices-png">
+      <div class="text-align">
+        <p class="overlay-text-1">eServices</p>
+        <a href="#" class="overlay-text-2">Home</a>
+        <p class="overlay-text-3">&#10132 <span class="eServices-orange">eServices</span></p>
+      </div>
+    </div>
     <div class="IconBackground">
       <img src="{{ url_for('static', filename='Images/IconBackground.png') }}" class="IconBackground-png">
     </div>
@@ -63,24 +102,23 @@
       </div>
 
       <div class="second-row">
-        <div class="middle-name">
-          <p class="middle-name-text">Middle Name</p>
-          <input type="text" class="middle-name-input" name="middle_name">
-        </div>
-        <div class="last-name">
-          <p class="last-name-text">Last Name</p>
-          <input type="text" class="last-name-input" name="last_name">
-        </div>
-        <div class="country-birth">
-          <p class="country-birth-text">Country of Birth</p>
-          <input type="text" class="country-birth-input" name="country_birth">
-        </div>
-        <div class="country-citizenship">
-          <p class="country-citizenship-text">Country of Citizenship</p>
-          <input type="text" class="country-citizenship-input" name="country_citizenship">
-        </div>
+        <div class="prefix">
+            <p class="prefix-text">Prefix</p>
+            <input type="text" class="prefix-input">
+          </div>
+          <div class="first-name">
+            <p class="first-name-text">First Name</p>
+            <input type="text" class="first-name-input">
+          </div>
+          <div class="middle-name">
+            <p class="middle-name-text">Middle Name</p>
+            <input type="text" class="middle-name-input">
+          </div>
+          <div class="last-name">
+            <p class="last-name-text">Last Name</p>
+            <input type="text" class="last-name-input">
+          </div>
       </div>
-
       <div class="third-row">
         <div class="suffix">
           <p class="suffix-text">Suffix</p>
@@ -98,7 +136,16 @@
           <p class="format">Format: [+][Country Code] [Number] (e.g, +19123456789)</p>
         </div>
       </div>
-
+      <div class="after-third-fix">
+        <div class="country-birth">
+          <p class="country-birth-text">Country of Birth</p>
+          <input type="text" class="country-birth-input">
+        </div>
+        <div class="country-citizenship">
+          <p class="country-citizenship-text">Country of Citizenship</p>
+          <input type="text" class="country-citizenship-input">
+        </div>
+      </div>
       <div class="fourth-row">
         <div class="email-address">
           <p class="email-address-text">Email Address</p>

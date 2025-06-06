@@ -1,6 +1,7 @@
 from app import db
 from flask_login import UserMixin
 from datetime import datetime
+from database.config import mysql_path
 
 class User(db.Model, UserMixin):
     id_no = db.Column(db.Integer, primary_key=True)
@@ -32,12 +33,13 @@ class Applicant(db.Model):
     ph_add = db.Column(db.String(100), nullable=False)
     ph_residence = db.Column(db.String(100), nullable=False)
     applicant_mobile_no = db.Column(db.String(20), nullable=False)
+    work_tl_no = db.Column(db.String(15), nullable=True)
     applicant_email = db.Column(db.String(100), nullable=False)
     applicant_occupation = db.Column(db.String(50), nullable=False)
     work_address = db.Column(db.String(100), nullable=False)
 
-    spouse_id = db.Column(db.String(10), db.ForeignKey('spouse_details.spouse_id'), nullable=False)
-    overseas_id = db.Column(db.String(10), db.ForeignKey('overseas_citezenship.overseas_id'), nullable=False)
+    
+    ph_citizenship_id = db.Column(db.String(10), db.ForeignKey('philippine_citizenship.ph_citizenship_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id_no'), nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -50,11 +52,11 @@ class Applicant(db.Model):
         foreign_keys='FamilyMember.entry_no'
     )
     overseas_entries = db.relationship(
-    'Overseas',
-    backref='applicant',
-    lazy=True,
-    cascade="all, delete-orphan",
-    foreign_keys='Overseas.entry_no'
+        'Overseas',
+        backref='applicant',
+        lazy=True,
+        cascade="all, delete-orphan",
+        foreign_keys='Overseas.entry_no'
     )
 
     children = db.relationship(
@@ -68,42 +70,41 @@ class FamilyMember(db.Model):
     
     __tablename__ = 'family_member'
 
-    family_id = db.Column(db.String(10), primary_key=True)  # made int for easier PK
-    entry_no = db.Column(db.Integer, db.ForeignKey('applicant.entry_no'), nullable=False)
+    entry_no = db.Column(db.Integer, db.ForeignKey('applicant.entry_no'))
+    family_id = db.Column(db.String(10), primary_key=True)  # made string for PK
+    spouse_id = db.Column(db.String(10), db.ForeignKey('spouse_details.spouse_id'), nullable=False)
 
     family_name = db.Column(db.String(50), nullable=False)
     relation = db.Column(db.String(50), nullable=False)
     citizenship = db.Column(db.String(50), nullable=False)
-
+    
     spouse_details = db.relationship('SpouseDetails', backref='family_member', uselist=False, cascade="all, delete-orphan")
 
 class SpouseDetails(db.Model):
     __tablename__ = 'spouse_details'
 
     spouse_id = db.Column(db.String(10), primary_key=True)
-    family_id = db.Column(db.String(10), db.ForeignKey('family_member.family_id'))
     spouse_address = db.Column(db.String(100), nullable=False)
-
 
 class Overseas(db.Model):
 
-    __tablename__ = 'overseas_citezenship'
+    __tablename__ = 'overseas_citizenship'
     overseas_id = db.Column(db.String(10), primary_key=True)
     entry_no = db.Column(db.Integer, db.ForeignKey('applicant.entry_no'), nullable=False)
 
-    foreign_add = db.Column(db.String(100), nullable=False)
     applicant_foreign_citizenship = db.Column(db.String(50), nullable=False)
     mode_of_acquisition = db.Column(db.String(100), nullable=False)
     date_of_acquisition = db.Column(db.Date, nullable=False)
     natural_cert_numbers = db.Column(db.String(100), nullable=False)
     foreign_passport_no = db.Column(db.String(50), nullable=False)
-    issuance_of_foreign_passport = db.Column(db.String(100), nullable=False)
+    date_of_issuance = db.Column(db.Date, nullable=False)
     place_of_issuance = db.Column(db.String(100), nullable=False)
     foreign_docs= db.Column(db.String(50), nullable=False)
 
 class Philippines(db.Model):
     __tablename__ = 'philippine_citizenship'
-    ph_id = db.Column(db.String(10), primary_key=True)
+
+    ph_citizenship_id = db.Column(db.String(10), primary_key=True)
     ph_mode_of_aquisition = db.Column(db.String(50), nullable=False)
     ph_docs = db.Column(db.String(50), nullable=False)
 

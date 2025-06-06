@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bureau of Immigration Header</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet" />
+  <style>
+    .name {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .org-structure-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 1.5rem 0 1rem 0;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="top-bar">
+      <span>MON - FRI: 08:00 AM - 17:30 PM</span>
+      <span>Hotline: (+632) 8-465-2400</span>
+      <span>Support: xinfo@immigration.gov.ph</span>
+      <div class="top-bar-flag">
+        <img src="{{ url_for('static', filename='Images/v6_1409.png') }}" alt="Philippines Flag" />
+      </div>
+    </div>
+
+    <div class="main-header">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='Images/bureau.png') }}" alt="BI Logo" />
+        <div class="logo-text">
+          <span>Republic of the Philippines</span>
+          <h1>Bureau of Immigration</h1>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Visas</a></li>
+          <li><a href="#">eServices</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <button class="search-btn" aria-label="Search">🔍</button>
+        <button class="contact-btn">Contact us</button>
+      </div>
+    </div>
+  </header>
+  
+  <div class="blue-bar" style="
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #003366;
+  height: 60px;
+  z-index: 100;
+">
+    <nav style="text-align: center; padding: 1em 0;">
+      <a href="#directory" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Directory of Officials</a>
+      <a href="#vision-mission" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Vision and Mission</a>
+      <a href="#privacy" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Data Privacy Notice</a>
+    </nav>
+  </div>
+</div>
+  
+<div class="info-image" style="display: flex; flex-direction: column; margin: 0; padding: 0;">
+
+  <img src="{{ url_for('static', filename='Images/1.png') }}" alt="Immigration Building" style="display: block; width: 100%; height: auto; margin: 0; padding: 0;" />
+
+
+ <img src="{{ url_for('static', filename='Images/commviado.png') }}" alt="commviado" class="mid-logo" style="width: 200px; height: auto; display: block; margin: 20px auto;" />
+  
+  <div style="text-align: center; color: black; font-size: x-large; margin-top: 0%;">
+    <p class="name">ATTY. JOEL ANTHONY M. VIADO</p>
+      <p class="pos" style="color: rgb(59, 59, 59); font-size: large; margin: 0;">
+        COMMISSIONER</p>
+  </div>
+</div>
+<div>
+  <img src="{{ url_for('static', filename='Images/directory1.png') }}" alt="First Directory" style="display: block; width: 100%; height: auto; margin: 0; padding: 0;">
+</div>
+<div>
+  <img src="{{ url_for('static', filename='Images/directory2.png') }}" alt="Second Directory" style="display: block; width: 100%; height: auto; margin: 0; padding: 0;">
+</div>
+<div>
+  <img src="{{ url_for('static', filename='Images/directory3.png') }}" alt="Last Directory" style="display: block; width: 100%; height: auto; margin: 0; padding: 0;">
+</div>
+<div style="text-align: center;">
+  <p class="org-structure-title">Organizational Structure</p>
+</div>
+<div>
+  <img src="{{ url_for('static', filename='Images/orgstruct.png') }}" alt="Organizational Structure Diagram" style="display: block; width: 100%; height: auto; margin: 0; padding: 0;">
+</div>
+<div class="footer" style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 20px 30px; background-color: #1c1d64f3; color: white; font-size: 14px; width: 100%; margin-top: 40px; flex-wrap: wrap; text-align: center;">
+  <img src="{{ url_for('static', filename='Images/footer.jpg') }}" alt="Footer Image" style="width: 1350px; height: auto; object-fit: auto;">
+</div>
+
+ </body>
+</html>

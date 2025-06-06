@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bureau of Immigration Header</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='intro.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header>
+    <div class="top-bar">
+      <span>MON - FRI: 08:00 AM - 17:30 PM</span>
+      <span>Hotline: (+632) 8-465-2400</span>
+      <span>Support: xinfo@immigration.gov.ph</span>
+      <div class="top-bar-flag">
+        <img src="{{ url_for('static', filename='Images/v6_1409.png') }}" alt="Philippines Flag" />
+      </div>
+    </div>
+
+    <div class="main-header">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='Images/bureau.png') }}" alt="BI Logo" />
+        <div class="logo-text">
+          <span>Republic of the Philippines</span>
+          <h1>Bureau of Immigration</h1>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Visas</a></li>
+          <li><a href="#">eServices</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <button class="search-btn" aria-label="Search">🔍</button>
+        <button class="contact-btn">Contact us</button>
+      </div>
+    </div>
+  </header>
+  
+  <div class="blue-bar" style="
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #003366;
+  height: 60px;
+  z-index: 100;
+">
+    <nav style="text-align: center; padding: 1em 0;">
+      <a href="#directory" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Directory of Officials</a>
+      <a href="#vision-mission" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Vision and Mission</a>
+      <a href="#privacy" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Data Privacy Notice</a>
+    </nav>
+  </div>
+</div>
+
+<div class="info-image" style="display: flex; flex-direction: column; margin: 0; padding: 0;">
+
+  <img src="{{ url_for('static', filename='Images/2.png') }}" alt="Immigration Building" style="display: block; width: 100%; height: auto; margin: 0; padding: 0;" />
+
+  <!-- Mandate, Vision, Mission Section (White Background) -->
+<section style="background-color: white; padding: 50px 20px; font-family: 'Times New Roman', Times, serif; color: #000; text-align: center;">
+  <div style="max-width: 900px; margin: auto;">
+    <h2 id="vision-mission" style="color: #003366; font-size: 32px; margin-bottom: 20px;">Mandate</h2>
+    <p style="font-size: 20px; margin-bottom: 40px;">
+      The Bureau of Immigration (BI) is principally responsible for the administration and enforcement of immigration, citizenship, and alien admission and registration laws in accordance with the provisions of the Philippine Immigration Act of 1940. It also plays a role in the enforcement of RA 9208, also known as the Anti-Trafficking In Persons Act of 2003.
+    </p>
+
+    <h2 style="color: #003366; font-size: 32px; margin-bottom: 20px;">Vision</h2>
+    <p style="font-size: 20px; margin-bottom: 40px;">
+      To be an inclusive, modernized, and resilient border control organization that exercises a culture of excellence and accountability.
+    </p>
+
+    <h2 style="color: #003366; font-size: 32px; margin-bottom: 20px;">Mission</h2>
+    <p style="font-size: 20px; margin-bottom: 40px;">
+      Secure the borders through automated and streamlined immigration control systems.
+    </p>
+  </div>
+</section>
+
+<!-- Everything Else (Blue Background) -->
+<section style="background-color: #e6f0ff; padding: 50px 20px; font-family: 'Times New Roman', Times, serif; color: #000; text-align: center;">
+  <div style="max-width: 900px; margin: auto;">
+
+    <h2 style="color: #003366; font-size: 32px; margin: 30px 0;">Quality Policy</h2>
+    <p style="font-size: 20px; margin-bottom: 40px;">
+      We are committed to provide quality immigration services in line with strategic directions leading to client satisfaction and compliance with applicable statutory, regulatory and other requirements.
+    </p>
+
+    <h2 style="color: #003366; font-size: 32px; margin: 30px 0;">Quality Objectives</h2>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 40px; display: inline-block;">
+      <li>Develop, implement, and continually improve systems and processes through sound policies and modernization.</li>
+      <li>Secure the borders through systematic immigration control.</li>
+      <li>Provide excellent immigration service in compliance with applicable laws, rules and regulations.</li>
+      <li>Provide adequate general administrative and support services.</li>
+      <li>Ensure personnel welfare and competency through strategic HR programs.</li>
+      <li>Adopt current technology trends and streamline processes.</li>
+      <li>Strengthen cooperation with other agencies and stakeholders.</li>
+    </ul>
+
+    <h2 style="color: #003366; font-size: 32px; margin: 30px 0;">Performance Indicators</h2>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 20px; display: inline-block;">
+      <li>Percentage of alien arrivals and departures cleared.</li>
+      <li>Percentage of entries/exits processed within 45 seconds*</li>
+      <li>Percentage of non-board action transactions completed within 6 days.</li>
+      <li>Percentage of intelligence cases resolved within 60 days.</li>
+    </ul>
+    <p style="font-size: 18px; margin-bottom: 40px;"><em>*Manual keying of traveler information from travel documents</em></p>
+
+    <h2 style="color: #003366; font-size: 32px; margin: 30px 0;">Our Core Values</h2>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 40px; display: inline-block;">
+      <li><strong>Patriotism:</strong> We do everything out of love of country.</li>
+      <li><strong>Integrity:</strong> We do what is right even if nobody is watching.</li>
+      <li><strong>Professionalism:</strong> We are best at what we do.</li>
+    </ul>
+
+    <h2 style="color: #003366; font-size: 32px; margin: 30px 0;">Key Focus Areas</h2>
+    <ol style="text-align: left; font-size: 20px; margin: 0 auto 40px; display: inline-block;">
+      <li>Anti-Corruption</li>
+      <li>Modernization</li>
+      <li>National Security</li>
+      <li>Rightsizing</li>
+      <li>Personnel Empowerment</li>
+    </ol>
+
+    <h2 style="color: #003366; font-size: 32px; margin: 30px 0;">Consolidated Strategies</h2>
+
+    <h3 style="color: #003366; font-size: 26px; margin: 20px 0;">Personnel Management and Enhancement</h3>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 30px; display: inline-block;">
+      <li>Continue HR initiatives with DOJ and BI support.</li>
+      <li>Enhance merit and disciplinary systems.</li>
+      <li>Improve health and wellness programs.</li>
+      <li>Conduct continuous professional training.</li>
+      <li>Promote capacity building and career development.</li>
+    </ul>
+
+    <h3 style="color: #003366; font-size: 26px; margin: 20px 0;">Agency Coordination</h3>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 30px; display: inline-block;">
+      <li>Formalize inter-agency coordination with defined roles and schedules.</li>
+    </ul>
+
+    <h3 style="color: #003366; font-size: 26px; margin: 20px 0;">Transparency and Good Governance</h3>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 30px; display: inline-block;">
+      <li>Update Citizen’s Charter regularly.</li>
+      <li>Implement ARTA, SPMS, Code of Ethics, RA 3019, RA 9184 strictly.</li>
+    </ul>
+
+    <h3 style="color: #003366; font-size: 26px; margin: 20px 0;">Rules, Regulations, and Policy Refinement</h3>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 30px; display: inline-block;">
+      <li>Refine systems (VIMS, IDR, SPMS, GAD).</li>
+      <li>Implement Integrated Communication Plan (ICP).</li>
+      <li>Sustain ISO 9001:2008 compliance.</li>
+      <li>Enhance security features of documents.</li>
+      <li>Strengthen international best practices and reduce red tape.</li>
+    </ul>
+
+    <h3 style="color: #003366; font-size: 26px; margin: 20px 0;">Infrastructure Improvement</h3>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 30px; display: inline-block;">
+      <li>Upgrade and expand BI office facilities nationwide.</li>
+    </ul>
+
+    <h3 style="color: #003366; font-size: 26px; margin: 20px 0;">Organizational and Structural Reforms</h3>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 30px; display: inline-block;">
+      <li>Pass the New Philippine Immigration Law.</li>
+      <li>Improve employee compensation structure.</li>
+      <li>Institutionalize ad hoc divisions and units.</li>
+      <li>Create the Strategic Management Office (SMO).</li>
+    </ul>
+
+    <h3 style="color: #003366; font-size: 26px; margin: 20px 0;">Technology Advancement</h3>
+    <ul style="text-align: left; font-size: 20px; margin: 0 auto 30px; display: inline-block;">
+      <li>Upgrade the Information Systems Strategic Plan (ISSP).</li>
+      <li>Request budget for IT upgrades and automation tools.</li>
+    </ul>
+
+  </div>
+</section>
+
+<div class="footer" style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 20px 30px; background-color: #409be6; color: rgba(92, 157, 231, 0.938); font-size: 14px; width: 100%; margin-top: 40px; flex-wrap: wrap; text-align: center;"></div>
+  <img src="{{ url_for('static', filename='Images/footer.jpg') }}" alt="Footer Image" style="width: 1225px; height: auto; object-fit: auto;">
+</body>
+</html>
+

@@ -45,7 +45,7 @@
       <p class="contact">Contact us</p>
     </div>
   </div>
-  <form class="petition" method="POST" action="/petition">
+  <form class="petition" method="POST" action="{{ url_for('function.resubmit_application', entry_no=entry_no) if editing else url_for('form.petition') }}">
     <div class="petition-container">
     <div class="first-box">
       <button class="arrow-button" href="#">
@@ -251,7 +251,7 @@
       <div class="child-container" id="childContainer">
       </div>
     </div>
-    <button class="submit-button" type="submit">Submit</button>
+    <button class="submit-button" type="submit">{{ 'Update' if editing else 'Submit' }}</button>
   </div>
   </form>
   <div class="footer">

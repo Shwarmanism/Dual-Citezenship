@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
   <title>Online Verification</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='Online_Verification.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
@@ -67,18 +68,8 @@
         <img src="{{ url_for('static', filename='Images/FAQPNG.png') }}" class="FAQPNG">
       </div>
       <div class="second-box-right">
-        <div class="right-box-first">
-          <p class="show-text">Show</p>
-          <select name="" id="" class="entry-number">
-
-          </select>
-          <p class="entries-text">entries</p>
-          <p class="search-text2">Search</p>
-          <input type="text" class="search-input">
-          <button class="search-button2">Submit</button>
-        </div>
         <div class="right-box-second">
-           <table id="verificationTable" class="display" style="width:100%">
+          <table id="verificationTable" class="display" style="width:100%">
             <thead>
               <tr>
                 <th>Reference Number</th>
@@ -104,17 +95,65 @@
                   <button onclick="deleteRow()">Delete</button>
                 </td>
               </tr>
+              <!--  
+              {% for item in data %} Dynamically Add
+              <tr>
+                <td>{{ item.ref_number }}</td>
+                <td>{{ item.location }}</td>
+                <td>{{ item.transaction }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.date_created }}</td>
+                <td>{{ item.date_updated }}</td>
+                <td>
+                  <button onclick="viewRow('{{ item.ref_number }}')">View</button>
+                  <button onclick="updateRow('{{ item.ref_number }}')">Update</button>
+                  <button onclick="deleteRow('{{ item.ref_number }}')">Delete</button>
+                </td>
+              </tr>
+              {% endfor %}-->
             </tbody>
           </table>
         </div>
-        <p class="form-text">View the complete application form and its current processing status. Click <span class="view-text">View</span></p>
-        <p class="form-text">Make changes to your application if your information has changed or needs correction. Click <span class="update-text">Update</span></p>
-        <p class="form-text">Permanently delete this application form. This action is irreversible. Click <span class="delete-text">Delete</span></p>
+        <p class="form-text">View the complete application form and its current processing status. Click <span
+            class="view-text">View</span></p>
+        <p class="form-text">Make changes to your application if your information has changed or needs correction. Click
+          <span class="update-text">Update</span>
+        </p>
+        <p class="form-text">Permanently delete this application form. This action is irreversible. Click <span
+            class="delete-text">Delete</span></p>
       </div>
     </div>
   </div>
   <div class="footer">
-    <img src="{{ url_for('static', filename='Images/FooterPNG.png') }}" class="FooterPNG">
+    <img src="../Images/Footer.png" class="FooterPNG">
   </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#verificationTable').DataTable({
+        pageLength: 10,
+        lengthMenu: [10, 20, 30],
+        scrollY: "370px",
+        scrollCollapse: true,
+        paging: true,
+        responsive: true
+      });
+    });
+
+    function viewRow(ref) {
+
+    }
+
+    function updateRow(ref) {
+
+    }
+
+    function deleteRow(ref) {
+
+    }
+  </script>
+  </script>
 </body>
+
 </html>

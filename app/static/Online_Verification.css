@@ -253,11 +253,11 @@ body{
 }
 
 .second-box-right{
-  width: 79.2%;
+  width: 80%;
 }
 
 .second-box-left{
-  width: 300px;
+  width: 20%;
 }
 
 .ServicesPNG, .FAQPNG, .OnlineVerificationPNG{
@@ -320,6 +320,7 @@ body{
 
 .right-box-second{
   height: 500px;
+  margin-bottom: 20px;
 }
 
 #verificationTable thead th {
@@ -335,7 +336,15 @@ body{
   padding: 0px;
 }
 
+#verificationTable {
+  width: 100% !important;
+  height: 100% !important;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
 .form-text{
+  margin-top: 20px;
   margin-bottom: 0px;
   align-self: center;
   font-size: 18px;

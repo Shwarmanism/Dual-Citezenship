@@ -7,6 +7,7 @@ import datetime
 bp_form = Blueprint('form', __name__)
 
 @bp_form.route("/petition", methods=["GET", "POST"])
+@login_required
 def petition():
     if request.method == "POST":
         success, msg = submit_petition(request.form, current_user.id_no)

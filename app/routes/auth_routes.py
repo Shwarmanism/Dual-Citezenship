@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from app import db, bcrypt
 from app.models import User
 from flask_login import login_user, logout_user, login_required
-import datetime
+from datetime import datetime
 from database.config import mysql_path
 
 auth = Blueprint('auth', __name__)
@@ -19,7 +19,7 @@ def login():
             login_user(user)
             flash("Logged in successfully", "success")
             
-            return redirect(url_for("bp_form.petition"))
+            return redirect(url_for("form.petition"))
         else:
             flash("Login failed. Check your email/password.", "anger")
 
@@ -30,12 +30,22 @@ def register():
     if request.method == "POST":
         form_data = request.form.to_dict()
 
-        date_of_birth = form_data.get('date_of_birth')
+        date_of_birth = form_data.get("date_of_birth", "").strip()
+
+        print(f"[DEBUG] Raw date_of_birth = '{date_of_birth}'")
+
+        if not date_of_birth:
+            flash("Date of Birth is required.", "danger")
+            return render_template("register.html", form=form_data)
+
         try:
             dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
-        except Exception:
+            print(f"[DEBUG] Parsed DOB = {dob}")
+        except Exception as e:
+            print(f"[ERROR] Date parsing failed: {e}")
             flash("Invalid date format.", "danger")
             return render_template("register.html", form=form_data)
+
 
         email, password = verification()
         if not email or not password:
@@ -66,6 +76,10 @@ def register():
         )
 
         db.session.add(new_user)
+        db.session.commit()
+
+        new_user.id_no = f"USR{new_user.id:05d}"
+
         db.session.commit()
 
         flash("Registered successfully.", "success")

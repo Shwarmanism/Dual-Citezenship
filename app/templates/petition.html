@@ -124,7 +124,11 @@
           <p class="a7">7.a. NAME OF APPLICANT'S SPOUSE (as written in the birth certificate)</p>
           <div class="first-name-family">
             <p class="first-name-text">First Name - Middle Name - Last Name</p>
-            <input type="text" class="first-name-family-input" name="family_name">
+            <input type="text" class="first-name-family-input" name="family_name_2">
+          </div>
+          <div class="first-name-family">
+              <p class="first-name-text">Additional Detail: Spouse Address</p>
+              <input type="text" class="first-name-family-input" name="spouse_address">
           </div>
         </div>
         <div class="second-box-left-second">
@@ -251,7 +255,7 @@
       <div class="child-container" id="childContainer">
       </div>
     </div>
-    <button class="submit-button" type="submit">Submit</button>
+    <button class="submit-button" type="submit">{{ 'Update' if editing else 'Submit' }}</button>
   </div>
   </form>
   <div class="footer">
@@ -329,7 +333,7 @@
             <p class="male-text">MALE</p>
             <input type="radio" class="gender-input" name="gender" value="F">
             <p class="female-text">FEMALE</p>
-          </div>f
+          </div>
           <input type="text" class="child-name-input" name="child_name">
         </div>
         <div class="child-second">

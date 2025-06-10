@@ -1,0 +1,381 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 45px;
+  background-color: #21005d;
+  justify-content: end;
+  align-items: center;
+  font-family: Roboto;
+  color: white;
+  gap: 25px;
+  font-size: 10px;
+}
+
+.header-left-most{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.CalendarBlank{
+  width: 15px;
+  margin-right: 10px;
+}
+
+.header-center{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.PhoneCall{
+  width: 15px;
+  margin-right: 10px;
+}
+
+.header-right-most{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 200px;
+}
+
+.PhilippineCircle{
+  width: 20px;
+  margin-left: 10px;
+}
+
+.immigration-email{
+  text-decoration: underline;
+}
+
+.below-header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+  background-color: white;
+  align-items: center;
+  justify-content: left;
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: gray;
+}
+
+.below-header-left{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  margin-left: 100px;
+}
+
+.ImmigrationIcon{
+  width: 65px;
+  height: auto;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.below-header-left-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: .3;
+  font-family: Roboto;
+  padding-bottom: 10px;
+  font-weight: bold;
+  margin-right: 135px;
+}
+
+.republic-philippines{
+  font-size: 12px;
+}
+
+.bureau-immigration {
+  font-size: 20px;
+  margin: 0;
+}
+
+.below-header-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 14px;
+  width: auto;
+  gap: 30px;
+  margin-left: 240px;
+}
+
+.Home, .About, .Visas, .Services, .eServices{
+  color: gray;
+  text-decoration: none;
+}
+
+.below-header-right{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contact{
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 14px;
+  color: #21005d;
+  margin-left: 10px;
+}
+
+.Phone{
+  width: 30px;
+  margin-left: 45px;
+}
+
+.verification-container{
+  display: flex;
+  flex-direction: column;
+  font-family: Lato;
+  border: solid;
+  border-color: black;
+  width: 100%;
+  height: 1000px;
+  border-width: 2px;
+}
+
+.first-box, .second-box{
+  display: flex;
+  flex-direction: row;
+  font-family: Lato;
+  border: solid;
+  border-color: red;
+  width: 100%;
+  height: 300px;
+  border-width: 2px;
+}
+
+.first-box-left, .second-box-left{
+  display: flex;
+  flex-direction: column;
+  font-family: Lato;
+  border: solid;
+  border-color: yellow;
+  width: 25%;
+  height: 300px;
+  border-width: 2px;
+}
+
+.ImmigrationLogo{
+  margin-top: 20px;
+  object-fit: cover;
+  height: 250px; 
+}
+
+.first-box-right, .second-box-right{
+  display: flex;
+  flex-direction: column;
+  font-family: Lato;
+  border: solid;
+  border-color: green;
+  width: 100%;
+  height: 300px;
+  border-width: 2px;
+}
+
+.online-verification-text{
+  font-weight:800;
+  color: rgb(49, 49, 108);
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin-left: 20px;
+  margin-top: 45px;
+}
+
+.reference-text{
+  font-size: 20px;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.reference-number-input, .search-input, .entry-number{
+  width: 95%;
+  height: 70px;
+  font-size: 18px;
+  color: gray;
+  border-radius: 5px;
+  background-color: rgb(234, 232, 232) ;
+  border: none;
+  margin-left: 20px;
+}
+
+.search-button, .search-button2{
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  width: 180px;
+  height: 60px;
+  margin-top: 15px;
+  margin-right: 35px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(40, 130, 199);
+}
+
+.SearchPNG{
+  width: 30px;
+  height: 30px;
+  align-self: center;
+  margin-left: 10px;
+}
+
+.search-text{
+  font-size: 28px;
+  align-self: center;
+  font-weight: 400;
+  color: white;
+  margin-left: 15px;
+}
+
+.second-box, .second-box-left, .second-box-right{
+  height: 700px;
+}
+
+.second-box-right{
+  width: 80%;
+}
+
+.second-box-left{
+  width: 20%;
+}
+
+.ServicesPNG, .FAQPNG, .OnlineVerificationPNG{
+  width: 300px;
+}
+
+.right-box-first, .right-box-second{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50px;
+  border: solid;
+  border-width: 2px;
+}
+
+.show-text, .entries-text, .search-text2{
+  align-self: center;
+  font-size: 18px;
+}
+
+.show-text{
+  margin-left: 25px;
+  margin-right: 5px;
+}
+
+.entry-number{
+  width: 60px;
+  height: 30px;
+  align-self: center;
+  margin-right: 5px;
+  margin-left: 0px;
+  background-color: white;
+  border: solid;
+  border-width: 1px;
+}
+
+.entries-text{
+  margin-right: 700px;
+}
+
+.search-input{
+  margin-left: 5px;
+  align-self: center;
+  width: 150px;
+  height: 30px;
+  background-color: white;
+  border: solid;
+  border-width: 1px;
+}
+
+.search-button2{
+  width: 50px;
+  height: 30px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  color: white;
+  font-size: 12px;
+  align-items: center;
+}
+
+.right-box-second{
+  height: 500px;
+  margin-bottom: 20px;
+}
+
+#verificationTable thead th {
+  border: solid;
+  border-width: 1px; 
+  border-color: gray;
+  padding: 10px;
+}
+
+#verificationTable tbody tr{
+  vertical-align: top;
+  line-height: 1.2;
+  padding: 0px;
+}
+
+#verificationTable {
+  width: 100% !important;
+  height: 100% !important;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.form-text{
+  margin-top: 20px;
+  margin-bottom: 0px;
+  align-self: center;
+  font-size: 18px;
+}
+
+.view-text{
+  color: rgb(41, 41, 217);
+  font-weight: bold;
+}
+
+.update-text{
+  color: green;
+  font-weight: bold;
+}
+
+.delete-text{
+  color: red;
+  font-weight: bold;
+}
+
+
+.footer{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.FooterPNG{
+  margin-top: 300px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

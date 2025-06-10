@@ -45,7 +45,7 @@
       <p class="contact">Contact us</p>
     </div>
   </div>
-  <form class="petition" method="POST" action="/petition">
+  <form class="petition" method="POST" action="{{ url_for('function.resubmit_application', entry_no=entry_no) if editing else url_for('form.petition') }}">
     <div class="petition-container">
     <div class="first-box">
       <button class="arrow-button" href="#">
@@ -124,11 +124,7 @@
           <p class="a7">7.a. NAME OF APPLICANT'S SPOUSE (as written in the birth certificate)</p>
           <div class="first-name-family">
             <p class="first-name-text">First Name - Middle Name - Last Name</p>
-            <input type="text" class="first-name-family-input" name="family_name_2">
-              <div class="first-name-family">
-                  <p class="first-name-text">Additional Detail: Spouse Address</p>
-                  <input type="text" class="first-name-family-input" name="spouse_address">
-                </div>
+            <input type="text" class="first-name-family-input" name="family_name">
           </div>
         </div>
         <div class="second-box-left-second">
@@ -240,7 +236,7 @@
     <div class="question">
       <p class="citizenship-question">How many foreign citizenships do you have?</p>
       <input type="text" class="citizenship-number-input" id="citizenshipCount">
-      <button class="submit" onclick="generateCitizenships()">Submit</button>
+      <button class="submit" type="button" onclick="generateCitizenships()">Submit</button>
     </div>
     <div class="fourth-box">
       <div class="citizenship-container" id="citizenshipContainer">
@@ -249,13 +245,13 @@
     <div class="question">
       <p class="citizenship-question">How many children do you have?</p>
       <input type="text" class="citizenship-number-input" id="childCount">
-      <button class="submit" onclick="generateChildren()">Submit</button>
+      <button class="submit" type="button" onclick="generateChildren()">Submit</button>
     </div>
     <div class="fifth-box">
       <div class="child-container" id="childContainer">
       </div>
     </div>
-    <button class="submit-button" type="button">Submit</button>
+    <button class="submit-button" type="submit">Submit</button>
   </div>
   </form>
   <div class="footer">

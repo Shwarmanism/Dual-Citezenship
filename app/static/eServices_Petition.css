@@ -177,7 +177,7 @@ body{
   
   border: none;
   width: auto;
-  height: 450px;
+  height: 550px;
 }
 
 .second-box-left{
@@ -220,7 +220,7 @@ body{
   flex-direction: column;
   align-items:flex-start;
   justify-content: flex-start;
-  overflow-y: scroll;
+  overflow-y: auto;
   
   border: none;
   width: 100%;
@@ -410,7 +410,7 @@ body{
   display: flex;
   flex-direction: row;
   align-items:center;
-  margin-top: 70px;
+  margin-top: 102px;
 }
 
 .citizenship-family-input{
@@ -515,7 +515,6 @@ body{
 .citizenship-first-input{
   width: 1400px;
   margin-left: 45px;
-  margin-bottom: 10px;
 }
 
 .citizenship-input2, .citizenship-input3{
@@ -535,10 +534,6 @@ body{
 .citizenship-text-2{
   margin-left: 90px;
   margin-right: 255px;  
-}
-
-.citizenship-text-4{
-  margin-right: 550px;
 }
 
 .child-first{
@@ -598,17 +593,6 @@ body{
   margin-left: 45px;
 }
 
-.child-sixth{
-  display: flex;
-  flex-direction: column;
-}
-
-.immigration-input{
-  width: 1000px;
-  margin-left: 45px;
-  margin-bottom: 10px;
-}
-
 .submit-button{
   margin-top: 50px;
   margin-left: 300px;
@@ -619,6 +603,11 @@ body{
   font-size: 25px;
   color: white;
   background-color: #00B54F;
+}
+
+.immigration-input{
+  margin-left: 45px;
+  margin-bottom: 10px;
 }
 
 .footer{
@@ -634,3 +623,4 @@ body{
   height: auto;
   object-fit: cover;
 }
+

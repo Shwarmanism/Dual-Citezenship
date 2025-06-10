@@ -4,10 +4,9 @@ from datetime import datetime
 from database.config import mysql_path
 
 class User(db.Model, UserMixin):
-
     __tablename__ = 'user'
 
-    id = db.Column('ID_NO', db.Integer, primary_key=True, unique=True, autoincrement=True)
+    id_no = db.Column('ID_NO', db.Integer, primary_key=True, unique=True, autoincrement=True)
     email = db.Column('EMAIL_ADDRESS', db.String(50), unique=True, nullable=False)
     password = db.Column('PASS_WORD', db.String(60), nullable=False)
     account_type = db.Column('ACCOUNT_TYPE', db.String(25), nullable=False)
@@ -25,12 +24,15 @@ class User(db.Model, UserMixin):
 
     applicants = db.relationship('Applicant', backref='user', lazy=True)
 
+    def get_id(self):
+        return str(self.id_no)
+    
 class UserFunction(db.Model):
     __tablename__ = 'user_function'
 
     entry_no = db.Column(
         db.Integer,
-        db.ForeignKey('applicant.entry_no'),
+        db.ForeignKey('applicant.ENTRY_NO'),
         primary_key=True 
     )
     location = db.Column(db.String(50), nullable=False)
@@ -61,10 +63,9 @@ class Applicant(db.Model):
     applicant_occupation = db.Column('PRESENT_OCCUPATION', db.String(50), nullable=False)
     work_address = db.Column('WORK_ADDRESS', db.String(100), nullable=False)
 
+    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(10), db.ForeignKey('philippine_citizenship.PH_CITIZENSHIP_ID'))
+    id_no = db.Column('ID_NO', db.String(10), db.ForeignKey('user.ID_NO'), nullable=False)
     
-    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(10), db.ForeignKey('philippine_citizenship.ph_citizenship_id'))
-    id_no = db.Column('ID_NO', db.String(10), db.ForeignKey('user.id'), nullable=False)
-
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     family_members = db.relationship(
@@ -81,33 +82,32 @@ class Applicant(db.Model):
         cascade="all, delete-orphan",
         foreign_keys='Overseas.entry_no'
     )
-
     children = db.relationship(
         'Child', 
         backref='applicant', 
         lazy=True, 
         cascade="all, delete-orphan",
-        foreign_keys='Child.entry_no')
+        foreign_keys='Child.entry_no'
+    )
 
 class FamilyMember(db.Model):
-    
     __tablename__ = 'family_member'
 
-    entry_no = db.Column('ENTRY_NO',db.Integer, db.ForeignKey('applicant.entry_no'))
-    family_id = db.Column('FAMILY_ID', db.String(10), primary_key=True)  # made string for PK
-    spouse_id = db.Column('SPOUSE_ID', db.String(10), db.ForeignKey('spouse_details.spouse_id'), nullable=False)
+    entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'))
+    family_id = db.Column('FAMILY_ID', db.String(10), primary_key=True)
+    spouse_id = db.Column('SPOUSE_ID', db.String(10), db.ForeignKey('spouse_details.SPOUSE_ID'), nullable=False)
 
     family_name = db.Column('FAMILY_NAME', db.String(50), nullable=False)
     relation = db.Column('RELATION', db.String(50), nullable=False)
     citizenship = db.Column('FAMILY_CITIZENSHIP', db.String(50), nullable=False)
     
     spouse_details = db.relationship(
-    'SpouseDetails',
-    backref=db.backref('family_member', uselist=False),
-    uselist=False,
-    cascade="all, delete-orphan",
-    single_parent=True
-)
+        'SpouseDetails',
+        backref=db.backref('family_member', uselist=False),
+        uselist=False,
+        cascade="all, delete-orphan",
+        single_parent=True
+    )
 
 class SpouseDetails(db.Model):
     __tablename__ = 'spouse_details'
@@ -116,37 +116,38 @@ class SpouseDetails(db.Model):
     spouse_address = db.Column('SPOUSE_ADDRESS', db.String(100), nullable=False)
 
 class Overseas(db.Model):
-
     __tablename__ = 'overseas_citizenship'
+
     overseas_id = db.Column(db.String(10), primary_key=True)
-    entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.entry_no'), nullable=False)
+    entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
     applicant_foreign_citizenship = db.Column('FOREIGN_CITIZENSHIP_ID', db.String(50), nullable=False)
     mode_of_acquisition = db.Column('ACQUISITION_FOREIGN_CITIZENSHIP', db.String(100), nullable=False)
     date_of_acquisition = db.Column('DATE_ACQUISITION', db.Date, nullable=False)
     natural_cert_numbers = db.Column('NATURALIZATION_NO', db.String(100), nullable=False)
-    foreign_passport_no = db.Column('FOREIGN_PASSPORT_NO',db.String(50), nullable=False)
+    foreign_passport_no = db.Column('FOREIGN_PASSPORT_NO', db.String(50), nullable=False)
     date_of_issuance = db.Column('DATE_ISSUANCE', db.Date, nullable=False)
     place_of_issuance = db.Column('PLACE_ISSUANCE', db.String(100), nullable=False)
-    foreign_docs= db.Column('FOREIGN_SUPPORTING_DOCS', db.String(50), nullable=False)
+    foreign_docs = db.Column('FOREIGN_SUPPORTING_DOCS', db.String(50), nullable=False)
 
 class Philippines(db.Model):
     __tablename__ = 'philippine_citizenship'
 
-    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID',db.String(10), primary_key=True)
+    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(10), primary_key=True)
     ph_mode_of_aquisition = db.Column('MODE_PH_ACQUISITION', db.String(50), nullable=False)
     ph_docs = db.Column('PH_DOCS', db.String(50), nullable=False)
 
 class Child(db.Model):
     __tablename__ = 'child'
+
     child_id = db.Column('CHILD_ID', db.String(10), primary_key=True)
-    entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.entry_no'), nullable=False)
+    entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
     child_name = db.Column('CHILD_NAME', db.String(50), nullable=False)
     gender = db.Column('CHILD_GENDER', db.String(10), nullable=False)
-    civil_status = db.Column('CHILD_CIVIL_STATUS',db.String(20), nullable=False)
+    civil_status = db.Column('CHILD_CIVIL_STATUS', db.String(20), nullable=False)
     child_DB = db.Column('CHILD_DB', db.Date, nullable=False)
-    child_PB = db.Column('CHILD_BP',db.String(75), nullable=False)
+    child_PB = db.Column('CHILD_BP', db.String(75), nullable=False)
     country_pa = db.Column('COUNTRY_PA', db.String(75), nullable=False)
     child_citizenship = db.Column('CHILD_CITIZENSHIP', db.String(50), nullable=False)
     child_supporting_docs = db.Column('SUPPORTING_DOCS', db.String(100), nullable=False)

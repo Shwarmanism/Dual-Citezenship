@@ -6,6 +6,7 @@ import datetime
 
 bp_form = Blueprint('form', __name__)
 
+
 @bp_form.route("/petition", methods=["GET", "POST"])
 @login_required
 def petition():

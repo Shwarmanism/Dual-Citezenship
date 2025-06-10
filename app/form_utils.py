@@ -43,9 +43,10 @@ def submit_petition(form, user_id):
         db.session.flush()
         entry_no = applicant.entry_no
 
+        i = 0
+        relation = ["Father", "Mother", "Spouse"]
         # --- Family Members ---
-        no_of_family_members = int(form.get('no_of_family_members', 0))
-        for i in range(no_of_family_members):
+        for i in range(3):
             relation = form.get(f'relation_{i}')
             family_name = form.get(f'family_name_{i}')
             citizenship = form.get(f'citizenship_{i}')
@@ -70,6 +71,8 @@ def submit_petition(form, user_id):
                 )
                 db.session.add(spouse_detail)
 
+        action = form.get("action")
+
         # --- Overseas Citizenship ---
         no_of_citizenship = int(form.get('no_of_citizenship', 0))
 
@@ -88,17 +91,17 @@ def submit_petition(form, user_id):
             foreign_docs = form.get(f'foreign_docs_{i}')
 
             overseas = Overseas(
-                entry_no=entry_no,
-                overseas_id=overseas_id,
-                applicant_foreign_citizenship=applicant_foreign_citizenship,
-                mode_of_acquisition=mode_of_acquisition,
-                date_of_acquisition=date_of_acquisition,
-                natural_cert_numbers=natural_cert_numbers,
-                foreign_passport_no=foreign_passport_no,
-                date_of_issuance=issuance_of_foreign_passport,
-                place_of_issuance=place_of_issuance,
-                foreign_docs=foreign_docs
-            )
+                    entry_no=entry_no,
+                    overseas_id=overseas_id,
+                    applicant_foreign_citizenship=applicant_foreign_citizenship,
+                    mode_of_acquisition=mode_of_acquisition,
+                    date_of_acquisition=date_of_acquisition,
+                    natural_cert_numbers=natural_cert_numbers,
+                    foreign_passport_no=foreign_passport_no,
+                    date_of_issuance=issuance_of_foreign_passport,
+                    place_of_issuance=place_of_issuance,
+                    foreign_docs=foreign_docs
+                )
             db.session.add(overseas)
 
         # --- Philippine Citizenship ---
@@ -121,22 +124,22 @@ def submit_petition(form, user_id):
         if child_petition == 'on':
             no_of_child_included = int(form.get('no_of_child_included', 0))
             for i in range(no_of_child_included):
-                dob_child_raw = form.get(f'dob_child_{i}')
-                child_DB = datetime.datetime.strptime(dob_child_raw, "%Y-%m-%d").date() if dob_child_raw else None
-                child = Child(
-                    entry_no=entry_no,
-                    child_id=f"C-{i+1}",
-                    child_name=form.get(f'child_name_{i}'),
-                    gender=form.get(f'child_gender_{i}'),
-                    civil_status=form.get(f'child_cs_{i}'),
-                    child_DB=child_DB,
-                    child_PB=form.get(f'child_PB_{i}'),
-                    country_pa=form.get(f'child_country_pa_{i}'),
-                    child_citizenship=form.get(f'child_citizenship_{i}'),
-                    child_supporting_docs=form.get(f'child_supporting_docs_{i}'),
-                    immigration_docs=form.get(f'child_immigration_docs_{i}')
-                )
-                db.session.add(child)
+                    dob_child_raw = form.get(f'dob_child_{i}')
+                    child_DB = datetime.datetime.strptime(dob_child_raw, "%Y-%m-%d").date() if dob_child_raw else None
+                    child = Child(
+                        entry_no=entry_no,
+                        child_id=f"C-{i+1}",
+                        child_name=form.get(f'child_name_{i}'),
+                        gender=form.get(f'child_gender_{i}'),
+                        civil_status=form.get(f'child_cs_{i}'),
+                        child_DB=child_DB,
+                        child_PB=form.get(f'child_PB_{i}'),
+                        country_pa=form.get(f'child_country_pa_{i}'),
+                        child_citizenship=form.get(f'child_citizenship_{i}'),
+                        child_supporting_docs=form.get(f'child_supporting_docs_{i}'),
+                        immigration_docs=form.get(f'child_immigration_docs_{i}')
+                    )
+                    db.session.add(child)
 
         db.session.commit()
         return True, "Petition submitted successfully."

@@ -1,148 +1,181 @@
 from app import db
 from app.models import Applicant, FamilyMember, Overseas, Philippines, Child, SpouseDetails
 import datetime
+import traceback
+import uuid
 
 def submit_petition(form, user_id):
     try:
+        action = form.get("action")
+        print("Action received:", action)
+
+        # --- Philippine Citizenship ---
+        ph_citizenship_id = f"PH-{uuid.uuid4().hex[:8]}"
+        mode = form.get("mode_ph_acquisition")
+        if mode == "Others:":
+            mode = form.get("mode_ph_acquisition_others") or "Others"
+
+        philippines = Philippines(
+            ph_citizenship_id=ph_citizenship_id,
+            mode_ph_acquisition=mode,
+            ph_docs=form.get('ph_docs')
+        )
+        db.session.add(philippines)
+        db.session.flush()
+
         # --- Applicant ---
         applicant_name = form.get('applicant_name')
-        has_alternative_name = form.get('has_alternative_name') == 'on'
+        print("Applicant Name:", applicant_name)
+
+        has_alternative_name = form.get('has_alternative_name') == 'yes'
         alternative_name = form.get('alternative_name') if has_alternative_name else None
-        db_raw = form.get('date_of_birth')
+        alt_name_docs = form.getlist('applicant_supporting_docs[]')
+        applicant_supporting_docs = ", ".join(alt_name_docs)
+
+        db_raw = form.get('db_raw')
         applicant_DB = datetime.datetime.strptime(db_raw, "%Y-%m-%d").date() if db_raw else None
-        applicant_PB = form.get('applicant_PB')
-        applicant_gender = form.get('applicant_gender')
+
         applicant_cs = form.get('applicant_cs')
-        ph_add = form.get('ph_add')
-        ph_residence = form.get('ph_residence')
-        applicant_mobile_no = form.get('mobile_no')
-        applicant_email = form.get('applicant_email')
-        applicant_occupation = form.get('applicant_occupation')
-        work_address = form.get('work_address')
-        applicant_supporting_docs = form.get('applicant_supporting_docs')
+        if applicant_cs == "OTHERS":
+            applicant_cs = form.get('civil_status_others') or "OTHERS"
 
         applicant = Applicant(
-            user_id=user_id,
+            id_no=user_id,
             applicant_name=applicant_name,
             alternative_name=alternative_name,
             applicant_supporting_docs=applicant_supporting_docs,
             applicant_DB=applicant_DB,
-            applicant_PB=applicant_PB,
-            applicant_gender=applicant_gender,
+            applicant_PB=form.get('applicant_PB'),
+            applicant_gender=form.get('applicant_gender'),
             applicant_cs=applicant_cs,
-            ph_add=ph_add,
-            ph_residence=ph_residence,
-            applicant_mobile_no=applicant_mobile_no,
-            applicant_email=applicant_email,
-            applicant_occupation=applicant_occupation,
-            work_address=work_address,
-            ph_citizenship_id=None
+            ph_add=form.get('ph_add'),
+            ph_residence=form.get('ph_residence'),
+            home_telephone_no=form.get('home_telephone_no'),
+            applicant_email=form.get('applicant_email'),
+            applicant_occupation=form.get('applicant_occupation'),
+            work_tl_no=form.get('work_tl_No'),
+            work_address=form.get('work_address'),
+            ph_citizenship_id=ph_citizenship_id
         )
 
         db.session.add(applicant)
         db.session.flush()
         entry_no = applicant.entry_no
+        print("Generated Entry No:", entry_no)
 
-        i = 0
-        relation = ["Father", "Mother", "Spouse"]
         # --- Family Members ---
+        relation_default = ["Father", "Mother", "Spouse"]
         for i in range(3):
-            relation = form.get(f'relation_{i}')
-            family_name = form.get(f'family_name_{i}')
-            citizenship = form.get(f'citizenship_{i}')
-            family_id = f"F-{i+1}"
-            spouse_id = f"S-{i+1}" if relation and relation.lower() == 'spouse' else None
+            relation = form.get(f'relation_{i}', relation_default[i])
+
+            spouse_id = f"S-{uuid.uuid4().hex[:8]}" if relation.lower() == 'spouse' else None
 
             family_member = FamilyMember(
                 entry_no=entry_no,
-                family_id=family_id,
+                family_id=f"F-{i+1}",
                 spouse_id=spouse_id,
                 relation=relation,
-                family_name=family_name,
-                citizenship=citizenship
+                family_name=form.get(f'family_name_{i}'),
+                citizenship=form.get(f'citizenship_{i}')
             )
             db.session.add(family_member)
 
-            if spouse_id:
-                spouse_address = form.get(f'spouse_address_{i}')
+            if relation.lower() == 'spouse':
                 spouse_detail = SpouseDetails(
                     spouse_id=spouse_id,
-                    spouse_address=spouse_address or ''
+                    spouse_address=form.get(f'spouse_address_{i}') or ''
                 )
                 db.session.add(spouse_detail)
 
-        action = form.get("action")
 
         # --- Overseas Citizenship ---
         no_of_citizenship = int(form.get('no_of_citizenship', 0))
 
+        foreign_citizenships = form.getlist("applicant_foreign_citizenship[]")
+        modes_of_acquisition = form.getlist("mode_of_acquisition[]")
+        date_of_acquisition_raw = form.getlist("date_of_acquisition[]")
+        natural_cert_numbers = form.getlist("natural_cert_numbers[]")
+        foreign_passport_nos = form.getlist("foreign_passport_no[]")
+        date_of_issuance_raw = form.getlist("raw_issuance[]")
+        places_of_issuance = form.getlist("place_of_issuance[]")
+        foreign_docs = form.getlist("foreign_docs[]")
+
         for i in range(no_of_citizenship):
-
-            overseas_id = f"FC-{i+1}"
-            applicant_foreign_citizenship = form.get(f'applicant_foreign_citizenship_{i}')
-            mode_of_acquisition = form.get(f'mode_of_acquisition_{i}')
-            date_raw = form.get(f'date_of_acquisition_{i}')
-            date_of_acquisition = datetime.datetime.strptime(date_raw, "%Y-%m-%d").date() if date_raw else None
-            natural_cert_numbers = form.get(f'natural_cert_numbers_{i}')
-            foreign_passport_no = form.get(f'foreign_passport_no_{i}')
-            raw_issuance = form.get(f'raw_issuance_{i}')
-            issuance_of_foreign_passport = datetime.datetime.strptime(raw_issuance, "%Y-%m-%d").date() if raw_issuance else None
-            place_of_issuance = form.get(f'place_of_issuance_{i}')
-            foreign_docs = form.get(f'foreign_docs_{i}')
-
+            date_of_acquisition = (
+                datetime.datetime.strptime(date_of_acquisition_raw[i], "%Y-%m-%d").date()
+                if date_of_acquisition_raw[i] else None
+            )
+            date_of_issuance = (
+                datetime.datetime.strptime(date_of_issuance_raw[i], "%Y-%m-%d").date()
+                if date_of_issuance_raw[i] else None
+            )
             overseas = Overseas(
-                    entry_no=entry_no,
-                    overseas_id=overseas_id,
-                    applicant_foreign_citizenship=applicant_foreign_citizenship,
-                    mode_of_acquisition=mode_of_acquisition,
-                    date_of_acquisition=date_of_acquisition,
-                    natural_cert_numbers=natural_cert_numbers,
-                    foreign_passport_no=foreign_passport_no,
-                    date_of_issuance=issuance_of_foreign_passport,
-                    place_of_issuance=place_of_issuance,
-                    foreign_docs=foreign_docs
-                )
+                entry_no=entry_no,
+                overseas_id=f"FC-{i+1}",
+                applicant_foreign_citizenship=foreign_citizenships[i],
+                mode_of_acquisition=modes_of_acquisition[i],
+                date_of_acquisition=date_of_acquisition,
+                natural_cert_numbers=natural_cert_numbers[i],
+                foreign_passport_no=foreign_passport_nos[i],
+                date_of_issuance=date_of_issuance,
+                place_of_issuance=places_of_issuance[i],
+                foreign_docs=foreign_docs[i]
+            )
             db.session.add(overseas)
 
-        # --- Philippine Citizenship ---
-        ph_citizenship_id = "PH-1"
-        ph_mode_of_acquisition = form.get('ph_mode_of_acquisition')
-        ph_docs = form.get('ph_docs')
-
-        philippines = Philippines(
-            ph_citizenship_id=ph_citizenship_id,
-            ph_mode_of_aquisition=ph_mode_of_acquisition,
-            ph_docs=ph_docs
-        )
-        db.session.add(philippines)
-        db.session.flush()
-
-        applicant.ph_citizenship_id = ph_citizenship_id
-
         # --- Children ---
-        child_petition = form.get('child_petition')
-        if child_petition == 'on':
+        if form.get('child_petition') == 'on':
             no_of_child_included = int(form.get('no_of_child_included', 0))
-            for i in range(no_of_child_included):
-                    dob_child_raw = form.get(f'dob_child_{i}')
-                    child_DB = datetime.datetime.strptime(dob_child_raw, "%Y-%m-%d").date() if dob_child_raw else None
-                    child = Child(
-                        entry_no=entry_no,
-                        child_id=f"C-{i+1}",
-                        child_name=form.get(f'child_name_{i}'),
-                        gender=form.get(f'child_gender_{i}'),
-                        civil_status=form.get(f'child_cs_{i}'),
-                        child_DB=child_DB,
-                        child_PB=form.get(f'child_PB_{i}'),
-                        country_pa=form.get(f'child_country_pa_{i}'),
-                        child_citizenship=form.get(f'child_citizenship_{i}'),
-                        child_supporting_docs=form.get(f'child_supporting_docs_{i}'),
-                        immigration_docs=form.get(f'child_immigration_docs_{i}')
-                    )
-                    db.session.add(child)
 
-        db.session.commit()
-        return True, "Petition submitted successfully."
+            for i in range(no_of_child_included):
+                idx = i + 1  # Child numbering starts at 1
+
+                child_name = form.getlist("child_name[]")[i] if form.getlist("child_name[]") else None
+                dob_str = form.getlist("child_dob[]")[i] if form.getlist("child_dob[]") else None
+                child_DB = datetime.datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
+
+                child_gender = form.get(f"child_gender_{idx}")
+                child_cs = form.get(f"child_status_{idx}")
+                child_cs_other = form.getlist("child_status_other[]")[i] if form.getlist("child_status_other[]") else None
+                child_PB = form.getlist("child_birthplace[]")[i] if form.getlist("child_birthplace[]") else None
+                child_citizenship = form.getlist("child_citizenship[]")[i] if form.getlist("child_citizenship[]") else None
+                child_country = form.getlist("child_residence[]")[i] if form.getlist("child_residence[]") else None
+                child_docs = form.getlist(f"child_docs_{idx}[]")
+                child_immigration = form.getlist("child_immigration_docs[]")[i] if form.getlist("child_immigration_docs[]") else None
+
+                final_civil_status = child_cs
+                if child_cs == 'O' and child_cs_other:
+                    final_civil_status = f"Others: {child_cs_other}"
+
+                child = Child(
+                    entry_no=entry_no,
+                    child_id=f"C-{idx}",
+                    child_name=child_name,
+                    gender=child_gender,
+                    civil_status=final_civil_status,
+                    child_DB=child_DB,
+                    child_PB=child_PB,
+                    country_pa=child_country,
+                    child_citizenship=child_citizenship,
+                    child_supporting_docs=', '.join(child_docs),
+                    immigration_docs=child_immigration
+                )
+                db.session.add(child)
+
+
+
+        # --- Final Commit ---
+        if action == "submit":
+            db.session.commit()
+            print("Form committed successfully.")
+            return True, "Petition submitted successfully."
+        else:
+            db.session.rollback()
+            print("Form not committed. Action was not 'submit'.")
+            return False, f"Invalid action: '{action}'. Petition not submitted."
+
     except Exception as e:
         db.session.rollback()
+        print("Exception occurred:", str(e))
+        traceback.print_exc()
         return False, f"Error submitting petition: {str(e)}"

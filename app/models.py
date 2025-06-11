@@ -46,25 +46,25 @@ class UserFunction(db.Model):
 class Applicant(db.Model):
     __tablename__ = 'applicant'
 
-    entry_no = db.Column('ENTRY_NO', db.Integer, primary_key=True)
+    entry_no = db.Column('ENTRY_NO', db.Integer, primary_key=True, autoincrement=True)
 
     applicant_name = db.Column('FULL_NAME', db.String(50), nullable=False)
-    alternative_name = db.Column('ALT_NAME', db.String(50), nullable=True)
-    applicant_supporting_docs = db.Column('SUPPORTING_DOCS_NAME', db.String(100), nullable=False)
+    alternative_name = db.Column('ALT_NAME', db.String(50))
+    applicant_supporting_docs = db.Column('SUPPORTING_DOCS_NAME', db.String(100))
     applicant_DB = db.Column('BIRTH_DATE', db.Date, nullable=False)
     applicant_PB = db.Column('BIRTH_PLACE', db.String(50), nullable=False)
     applicant_gender = db.Column('GENDER', db.String(5), nullable=False)
-    applicant_cs = db.Column('CIVIL_STATUS', db.String(10), nullable=False)
+    applicant_cs = db.Column('CIVIL_STATUS', db.String(50), nullable=False)
     ph_add = db.Column('PHILIPPINE_ADDRESS', db.String(100), nullable=False)
     ph_residence = db.Column('RESIDENCE_ADDRESS', db.String(100), nullable=False)
-    applicant_mobile_no = db.Column('HOME_TELEPHONE_NO', db.String(20), nullable=False)
+    home_telephone_no = db.Column('HOME_TELEPHONE_NO', db.String(20), nullable=True)
     work_tl_no = db.Column('WORK_TELEPHONE_NO', db.String(15), nullable=True)
     applicant_email = db.Column('EMAIL_ADDRESS', db.String(100), nullable=False)
     applicant_occupation = db.Column('PRESENT_OCCUPATION', db.String(50), nullable=False)
     work_address = db.Column('WORK_ADDRESS', db.String(100), nullable=False)
 
-    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(10), db.ForeignKey('philippine_citizenship.PH_CITIZENSHIP_ID'))
-    id_no = db.Column('ID_NO', db.String(10), db.ForeignKey('user.ID_NO'), nullable=False)
+    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(50), db.ForeignKey('philippine_citizenship.PH_CITIZENSHIP_ID'))
+    id_no = db.Column('ID_NO', db.Integer, db.ForeignKey('user.ID_NO'), nullable=False)
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -95,7 +95,7 @@ class FamilyMember(db.Model):
 
     entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'))
     family_id = db.Column('FAMILY_ID', db.String(10), primary_key=True)
-    spouse_id = db.Column('SPOUSE_ID', db.String(10), db.ForeignKey('spouse_details.SPOUSE_ID'), nullable=False)
+    spouse_id = db.Column('SPOUSE_ID', db.String(10), db.ForeignKey('spouse_details.SPOUSE_ID'), nullable=True)
 
     family_name = db.Column('FAMILY_NAME', db.String(50), nullable=False)
     relation = db.Column('RELATION', db.String(50), nullable=False)
@@ -134,7 +134,7 @@ class Philippines(db.Model):
     __tablename__ = 'philippine_citizenship'
 
     ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(10), primary_key=True)
-    ph_mode_of_aquisition = db.Column('MODE_PH_ACQUISITION', db.String(50), nullable=False)
+    mode_ph_acquisition = db.Column('MODE_PH_ACQUISITION', db.String(50), nullable=False)
     ph_docs = db.Column('PH_DOCS', db.String(50), nullable=False)
 
 class Child(db.Model):

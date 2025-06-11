@@ -62,13 +62,16 @@
               <input type="text" class="first-name-input" name="applicant_name">
             </div>
           </div>
-          <div class="second-row-text">
-            <p class="number-2">2. ARE YOU USING A DIFFERENT NAME?</p>
-            <input type="radio" name="second-name" id="name-yes" class="radio-button">
-            <p class="second-name-yes">YES - Please answer 2.a. to 2.d.</p>
-            <input type="radio" name="second-name" id="name-no" class="radio-button">
-            <p class="second-name-no" name="second-name" id="name-no">NO - Go to number 3</p>
-          </div>
+            <div class="second-row-text">
+              <p class="number-2">2. ARE YOU USING A DIFFERENT NAME?</p>
+
+              <input type="radio" name="has_alternative_name" id="name-yes" class="radio-button" value="yes">
+              <label for="name-yes" class="second-name-yes">YES - Please answer 2.a. to 2.d.</label>
+
+              <input type="radio" name="has_alternative_name" id="name-no" class="radio-button" value="no">
+              <label for="name-no" class="second-name-no">NO - Go to number 3</label>
+            </div>
+
           <div class="second-row">
             <div class="first-name">
               <p class="first-name-text">First Name - Middle Name - Last Name</p>
@@ -90,7 +93,7 @@
           </div>
           <div class="third-row">
             <div class="birth-date">
-              <input type="date" class="birthday" name="applicant_DB">
+              <input type="date" class="birthday" name="db_raw">
             </div>
             <div class="birth-place">
               <input type="text" class="birth-place-input" name="applicant_PB">
@@ -104,17 +107,22 @@
           </div>
           <div class="fourth-row">
             <p class="number-6">6. CIVIL STATUS:</p>
-            <input type="radio" class="civil-status" id="s" name="applicant_cs">
+            <input type="radio" class="civil-status" id="s" name="applicant_cs" value="SINGLE">
             <p class="civil-status-choice">SINGLE</p>
-            <input type="radio" class="civil-status" id="m" name="applicant_cs">
+
+            <input type="radio" class="civil-status" id="m" name="applicant_cs" value="MARRIED">
             <p class="civil-status-choice">MARRIED</p>
-            <input type="radio" class="civil-status" id="d" name="applicant_cs">
+
+            <input type="radio" class="civil-status" id="d" name="applicant_cs" value="DIVORCED">
             <p class="civil-status-choice">DIVORCED</p>
-            <input type="radio" class="civil-status" id="w" name="applicant_cs">
+
+            <input type="radio" class="civil-status" id="w" name="applicant_cs" value="WIDOW/ER">
             <p class="civil-status-choice">WIDOW/ER</p>
-            <input type="radio" class="civil-status" id="o" name="applicant_cs">
+
+            <input type="radio" class="civil-status" id="o" name="applicant_cs" value="OTHERS">
             <p class="civil-status-choice">OTHERS</p>
-            <input type="text" class="civil-status-others">
+
+            <input type="text" class="civil-status-others" name="civil_status_others">
           </div>
         </div>
     </div>
@@ -164,17 +172,17 @@
     <div class="third-box">
       <div class="third-box-first">
         <p class="a10">10. HOW PHILIPPINE CITIZENSHIP WAS INITIALLY ACQUIRED</p>
-        <input type="radio" class="philippine-citizenship-input" name="ph_mode_of_aquisition" value="Birth">
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Birth">
         <p class="philippine-citizenship-choice">BIRTH</p>
-        <input type="radio" class="philippine-citizenship-input" name="ph_mode_of_aquisition" value="Election">
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Election">
         <p class="philippine-citizenship-choice">ELECTION</p>
-        <input type="radio" class="philippine-citizenship-input" name="ph_mode_of_aquisition" value="Marriage">
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Marriage">
         <p class="philippine-citizenship-choice">MARRIAGE</p>
-        <input type="radio" class="philippine-citizenship-input" name="ph_mode_of_aquisition" value="Naturalization">
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Naturalization">
         <p class="philippine-citizenship-choice">NATURALIZATION</p>
-        <input type="radio" class="philippine-citizenship-input" name="ph_mode_of_aquisition" value="Others:">
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Others:">
         <p class="philippine-citizenship-choice">OTHERS</p>
-        <input type="text" class="philippine-citizenship-others" name="ph_mode_of_aquisition">
+        <input type="text" class="philippine-citizenship-others" name="mode_ph_acquisition_others">
       </div>
       <div class="third-box-second">
         <p class="a10">11. SUPPORTING DOCUMENTS SUBMITTED TO PROVE THAT THE APPLICANT WAS A FORMER CITIZEN OF THE
@@ -217,7 +225,7 @@
       <div class="third-box-fifth">
         <div class="person-info">
           <p class="a10">14. MOBILE NO.</p>
-          <input type="text" class="person-info-input1" name="applicant_mobile_no">
+          <input type="text" class="person-info-input1" name="home_telephone_no">
         </div>
         <div class="person-info">
           <p class="a10">15. E-MAIL ADDRESS</p>
@@ -251,142 +259,139 @@
       <input type="text" class="citizenship-number-input" id="childCount">
       <button class="submit" type="button" onclick="generateChildren()">Submit</button>
     </div>
-    <div class="fifth-box">
-      <div class="child-container" id="childContainer">
+      <div class="fifth-box">
+        <div class="child-container" id="childContainer">
+        </div>
       </div>
+      <button class="submit-button" type="submit" name="action" value="{{ 'update' if editing else 'submit' }}">
+        {{ 'Update' if editing else 'Submit' }}
+       </button>
     </div>
-    <button class="submit-button" type="submit">{{ 'Update' if editing else 'Submit' }}</button>
-  </div>
   </form>
   <div class="footer">
     <img src="{{ url_for('static', filename='Images/footer.png') }}" class="FooterPNG">
   </div>
-  <script>
-    function generateCitizenships() {
-      const count = parseInt(document.getElementById("citizenshipCount").value);
-      const container = document.getElementById("citizenshipContainer");
-      container.innerHTML = '';
+<script>
+  function generateCitizenships() {
+    const count = parseInt(document.getElementById("citizenshipCount").value);
+    const container = document.getElementById("citizenshipContainer");
+    container.innerHTML = '';
 
-      for (let i = 1; i <= count; i++) {
-        const block = document.createElement("div");
-        block.className = "citizenship-first";
+    for (let i = 1; i <= count; i++) {
+      const block = document.createElement("div");
+      block.className = "citizenship-first";
 
-        block.innerHTML = `
+      block.innerHTML = `
         <div class="citizenship-container">
-        <p class="citizenship-num">Citizenship #${i}</p>
-        <div class="citizenship-first">
-          <div class="citizenship-first-text">
-            <p class="citizenship-text">19.a. APPLICANT’S CURRENT FOREIGN CITIZENSHIPS</p>
-            <p class="citizenship-text">19.b. MODE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
-            <p class="citizenship-text">20.a. DATE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
-          </div>
-          <div class="citizenship-first-input">
-            <input type="text" class="citizenship-input1" name="applicant_foreign_citizenship">
-            <input type="text" class="citizenship-input2" name="mode_of_acquisition">
-            <input type="date" class="citizenship-input3" name="date_of_acquisition">
-          </div>
-        </div>
-        <div class="citizenship-first">
-          <div class="citizenship-first-text">
-            <p class="citizenship-text-1">20.b. NATURALIZATION CERTIFICATE NUMBERS</p>
-            <p class="citizenship-text-2">21.a. FOREIGN PASSPORT NO.</p>
-            <p class="citizenship-text-3">21.b. DATE OF ISSUANCE OF FOREIGN PASSPORT</p>
-          </div>
-          <div class="citizenship-first-input">
-            <input type="text" class="citizenship-input1" name="natural_cert_numbers">
-            <input type="text" class="citizenship-input2" name="foreign_passport_no">
-            <input type="date" class="citizenship-input3" name="issuance_of_foreign_passport">
+          <p class="citizenship-num">Citizenship #${i}</p>
+          <div class="citizenship-first">
+            <div class="citizenship-first-text">
+              <p>19.a. APPLICANT’S CURRENT FOREIGN CITIZENSHIPS</p>
+              <p>19.b. MODE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
+              <p>20.a. DATE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
+            </div>
+            <div class="citizenship-first-input">
+              <input type="text" name="applicant_foreign_citizenship[]" class="citizenship-input1">
+              <input type="text" name="mode_foreign_acquisition[]" class="citizenship-input2">
+              <input type="date" name="date_of_acquisition[]" class="citizenship-input3">
+            </div>
           </div>
           <div class="citizenship-first">
-          <div class="citizenship-first-text">
-            <p class="citizenship-text-4">22. Place of Issuance</p>
-            <p class="citizenship-text-5">23. FOREIGN PASSPORT NO.</p>
+            <div class="citizenship-first-text">
+              <p>20.b. NATURALIZATION CERTIFICATE NUMBERS</p>
+              <p>21.a. FOREIGN PASSPORT NO.</p>
+              <p>21.b. DATE OF ISSUANCE OF FOREIGN PASSPORT</p>
+            </div>
+            <div class="citizenship-first-input">
+              <input type="text" name="natural_cert_numbers[]" class="citizenship-input1">
+              <input type="text" name="foreign_passport_no[]" class="citizenship-input2">
+              <input type="date" name="issuance_of_foreign_passport[]" class="citizenship-input3">
+            </div>
           </div>
-          <div class="citizenship-first-input">
-            <input type="text" class="citizenship-input1" name="place_of_issuance">
-            <input type="text" class="citizenship-input2" name="foreign_docs">
+          <div class="citizenship-first">
+            <div class="citizenship-first-text">
+              <p>22. Place of Issuance</p>
+              <p>23. FOREIGN DOCUMENT</p>
+            </div>
+            <div class="citizenship-first-input">
+              <input type="text" name="place_of_issuance[]" class="citizenship-input1">
+              <input type="text" name="foreign_docs[]" class="citizenship-input2">
+            </div>
           </div>
-      </div>
-    </div>
+        </div>
       `;
-        container.appendChild(block);
-      }
+      container.appendChild(block);
     }
-    function generateChildren() {
-      const count = parseInt(document.getElementById("childCount").value);
-      const container = document.getElementById("childContainer");
-      container.innerHTML = '';
+  }
 
-      for (let i = 1; i <= count; i++) {
-        const block = document.createElement("div");
-        block.className = "child-first";
+  function generateChildren() {
+  const count = parseInt(document.getElementById("childCount").value);
+  const container = document.getElementById("childContainer");
+  container.innerHTML = '';
 
-        block.innerHTML = `
+  for (let i = 1; i <= count; i++) {
+    const block = document.createElement("div");
+    block.className = "child-entry";
+
+    block.innerHTML = `
       <div class="child-container">
-      <p class="child-num">Child #${i}</p>
+        <p class="child-num">Child #${i}</p>
+        
         <div class="child-first">
           <p class="a24">24.a. Child's name</p>
-          <div class="child-first-text">
-            <p class="a24-name">First Name - Middle Name - Last Name</p>
-            <p class="b24">24.b. GENDER</p>
-            <input type="radio" class="gender-input" name="gender" value="M">
-            <p class="male-text">MALE</p>
-            <input type="radio" class="gender-input" name="gender" value="F">
-            <p class="female-text">FEMALE</p>
-          </div>
-          <input type="text" class="child-name-input" name="child_name">
+          <input type="text" class="child-name-input" name="child_name[]">
+
+          <p class="b24">24.b. GENDER</p>
+          <input type="radio" name="child_gender_${i}" value="M"> <label>MALE</label>
+          <input type="radio" name="child_gender_${i}" value="F"> <label>FEMALE</label>
         </div>
+
         <div class="child-second">
           <p class="c24">24.c. CIVIL STATUS:</p>
-          <input type="radio" class="civil-status" value="S" name="civil_status">
-          <p class="civil-status-choice">SINGLE</p>
-          <input type="radio" class="civil-status" value="M" name="civil_status">
-          <p class="civil-status-choice">MARRIED</p>
-          <input type="radio" class="civil-status" value="D" name="civil_status">
-          <p class="civil-status-choice">DIVORCED</p>
-          <input type="radio" class="civil-status" value="W" name="civil_status">
-          <p class="civil-status-choice">WIDOW/ER</p>
-          <input type="radio" class="civil-status" value="O" name="civil_status">
-          <p class="civil-status-choice">OTHERS</p>
-          <input type="text" class="child-civil-status-others" name="civil_status">
+          <input type="radio" name="child_status_${i}" value="S"><label>SINGLE</label>
+          <input type="radio" name="child_status_${i}" value="M"><label>MARRIED</label>
+          <input type="radio" name="child_status_${i}" value="D"><label>DIVORCED</label>
+          <input type="radio" name="child_status_${i}" value="W"><label>WIDOW/ER</label>
+          <input type="radio" name="child_status_${i}" value="O"><label>OTHERS</label>
+          <input type="text" name="child_status_other[]">
         </div>
+
         <div class="child-third">
-          <div class="child-third-text">
-            <p class="d24">24.d. Date of Birth (DD/MM/YY)</p>
-            <p class="e24">24.e. PLACE OF BIRTH (town or city, province or state, country)</p>
-            <p class="f24">24.f. COUNTRIES OF CITIZENSHIP</p>
-          </div>
-          <div class="child-third-input">
-            <input type="date" class="child-birthday" name="child_DB">
-            <input type="text" class="child-birthplace-input" name="child_PB">
-            <input type="text" class="child-citizenship-input" name="child_citizenship">
-          </div>
+          <p>24.d. Date of Birth</p>
+          <input type="date" name="child_dob[]" class="child-birthday">
+
+          <p>24.e. Place of Birth</p>
+          <input type="text" name="child_birthplace[]" class="child-birthplace-input">
+
+          <p>24.f. Countries of Citizenship</p>
+          <input type="text" name="child_citizenship[]" class="child-citizenship-input">
         </div>
+
         <div class="child-fourth">
-          <p class="g24">24.g. COUNTRY OF PERMANENT RESIDENCE</p>
-          <input type="text" class="child-residence-input" name="country_pa">
+          <p>24.g. Country of Permanent Residence</p>
+          <input type="text" name="child_residence[]" class="child-residence-input">
         </div>
+
         <div class="child-fifth">
-          <p class="h24">24.h. SUPPORTING DOCUMENTS:</p>
-          <input type="checkbox" class="name-document" name="child_supporting_docs">
-          <p>Philippine Birth Certificate</p>
-          <input type="checkbox" class="name-document" name="child_supporting_docs">
-          <p>Old Philippine Passport</p>
-          <input type="checkbox" class="name-document" name="child_supporting_docs">
-          <p>Foreign Birth Certificate</p>
-          <input type="checkbox" class="name-document" name="child_supporting_docs">
-          <p>Foreign Passport</p>
+          <p>24.h. SUPPORTING DOCUMENTS:</p>
+          <label><input type="checkbox" name="child_docs_${i}[]" value="ph_birth_cert"> Philippine Birth Certificate</label><br>
+          <label><input type="checkbox" name="child_docs_${i}[]" value="old_passport"> Old Philippine Passport</label><br>
+          <label><input type="checkbox" name="child_docs_${i}[]" value="foreign_birth_cert"> Foreign Birth Certificate</label><br>
+          <label><input type="checkbox" name="child_docs_${i}[]" value="foreign_passport"> Foreign Passport</label>
         </div>
+
         <div class="child-sixth">
-          <p class="h24">24.h. IMMIGRATION DOCUMENTS:</p>
-          <input type="text" class="immigration-input" name="child_PB">
+          <p>24.i. IMMIGRATION DOCUMENTS:</p>
+          <input type="text" name="child_immigration_docs[]" class="immigration-input">
         </div>
-        </div>
-      `;
-        container.appendChild(block);
-      }
-    }
-  </script>
+      </div>
+    `;
+
+    container.appendChild(block);
+  }
+}
+</script>
+
 </body>
 
 </html>

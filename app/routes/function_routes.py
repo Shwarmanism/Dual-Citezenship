@@ -6,16 +6,16 @@ from app import db
 
 bp_function = Blueprint('function', __name__)
 
-@bp_function.route('/user')
+@bp_function.route('/Online_Verification')
 @login_required
 def display_data():
     applications = (
         db.session.query(UserFunction)
         .join(Applicant)
-        .filter(Applicant.user_id == current_user.id_no)
+        .filter(Applicant.id_no == current_user.id_no)
         .all()
     )
-    return render_template("user.html", user_functions=applications)
+    return render_template("Online_Verification.html", user_functions=applications)
 
 @bp_function.route('/delete_entry/<int:entry_no>', methods=['POST'])
 @login_required

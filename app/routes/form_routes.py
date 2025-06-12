@@ -1,17 +1,38 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from app.form_utils import submit_petition
+from app.models import UserFunction, Applicant
 from app import db
 from flask_login import login_required, current_user
-import datetime
+from datetime import datetime
 
 bp_form = Blueprint('form', __name__)
-
 
 @bp_form.route("/petition", methods=["GET", "POST"])
 @login_required
 def petition():
     if request.method == "POST":
         success, msg = submit_petition(request.form, current_user.id_no)
-        flash(msg, "success" if success else "danger")
-        return redirect(url_for("form.petition"))
-    return render_template("petition.html")
+        
+        if success:
+            applicant = Applicant.query.filter_by(id_no=current_user.id_no).first()
+            if applicant:
+                user_func = UserFunction(
+                    entry_no=applicant.entry_no,
+                    location=applicant.philippine_address,
+                    transaction="Petition Submission",
+                    status="Active",
+                    created_at=applicant.created_at,
+                    date_updated=None
+                )
+                db.session.add(user_func)
+                db.session.commit()
+                flash("Petition submitted and tracked successfully!", "success")
+            else:
+                flash("Applicant record not found.", "danger")
+        else:
+            flash(msg, "danger")
+
+        return redirect(url_for("function.display_data"))
+
+    # GET method: just render the form
+    return render_template("petition_form.html")

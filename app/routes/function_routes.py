@@ -9,34 +9,33 @@ bp_function = Blueprint('function', __name__)
 @bp_function.route('/Online_Verification')
 @login_required
 def display_data():
-    applications = (
+
+    limit = request.args.get('limit', default=None, type=int)
+    
+    query = (
         db.session.query(UserFunction)
         .join(Applicant)
         .filter(Applicant.id_no == current_user.id_no)
         .all()
     )
+    
+    if limit:
+        query = query.limit(limit)
+
+    applications = query.all()
+
     return render_template("Online_Verification.html", user_functions=applications)
 
-@bp_function.route('/delete_entry/<int:entry_no>', methods=['POST'])
-@login_required
+@bp_function.route('/delete/<int:entry_no>', methods=['POST'])
 def delete_entry(entry_no):
-
-    applicant = Applicant.query.get(entry_no)
-    if not applicant or applicant.user_id != current_user.id_no:
-        return "Unauthorized or Not Found", 403
-
-    try:
-        user_func = UserFunction.query.get(entry_no)
-        if user_func:
-            db.session.delete(user_func)
-
-        db.session.delete(applicant)
+    user_function = UserFunction.query.get(entry_no)
+    if user_function:
+        db.session.delete(user_function)
         db.session.commit()
-        return redirect('/user')
-
-    except Exception as e:
-        db.session.rollback()
-        return f"Error: {str(e)}", 500
+        flash('Entry deleted successfully.', 'success')
+    else:
+        flash('Entry not found.', 'danger')
+    return redirect(url_for('function.display_verification'))
 
 @bp_function.route("/resubmit/<int:entry_no>", methods=["POST"])
 @login_required

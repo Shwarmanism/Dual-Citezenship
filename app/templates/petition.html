@@ -59,32 +59,37 @@
           <div class="first-row">
             <div class="first-name">
               <p class="first-name-text">First Name - Middle Name - Last Name</p>
-              <input type="text" class="first-name-input" name="applicant_name">
+                <input type="text" class="first-name-input" name="applicant_name" value="{{ petition_data.applicant_name if editing else '' }}">
             </div>
           </div>
             <div class="second-row-text">
               <p class="number-2">2. ARE YOU USING A DIFFERENT NAME?</p>
 
-              <input type="radio" name="has_alternative_name" id="name-yes" class="radio-button" value="yes">
-              <label for="name-yes" class="second-name-yes">YES - Please answer 2.a. to 2.d.</label>
+              <input type="radio" name="has_alternative_name" id="name-yes" class="radio-button" value="yes"
+                {% if editing and petition_data.has_alternative_name == 'yes' %}checked{% endif %}>
+              <label for="name-yes">YES</label>
 
-              <input type="radio" name="has_alternative_name" id="name-no" class="radio-button" value="no">
-              <label for="name-no" class="second-name-no">NO - Go to number 3</label>
+              <input type="radio" name="has_alternative_name" id="name-no" class="radio-button" value="no"
+                {% if editing and petition_data.has_alternative_name == 'no' %}checked{% endif %}>
+              <label for="name-no">NO</label>
             </div>
 
           <div class="second-row">
             <div class="first-name">
               <p class="first-name-text">First Name - Middle Name - Last Name</p>
-              <input type="text" class="first-name-input" name="alternative_name">
+              <input type="text" class="first-name-input" name="alternative_name" value="{{ petition_data.field_name if editing else '' }}">
             </div>
           </div>
           <p class="number-2-d">2d. SUPPORTING DOCUMENTS FOR CHANGE OF NAME</p>
           <div class="number-2-docs">
-            <input type="checkbox" class="name-document" value="Court Decree" name="applicant_supporting_docs[]">
+            <input type="checkbox" class="name-document" value="Court Decree" name="applicant_supporting_docs[]"
+              {% if editing and 'Court Decree' in supporting_docs %}checked{% endif %}>
             <p>COURT DECREE</p>
-            <input type="checkbox" class="name-document" id="others" name="applicant_supporting_docs[]">
+            <input type="checkbox" class="name-document" id="others" value="Others" name="applicant_supporting_docs[]"
+              {% if editing and others_text %}checked{% endif %}>
             <p>OTHERS (please specify)</p>
-            <input type="text" class="name-document-input" name="applicant_supporting_docs[]">
+            <input type="text" class="name-document-input" name="applicant_supporting_docs_others"
+              value="{{ others_text if editing else '' }}">
           </div>
           <div class="third-row-text">
             <p class="number-3">3. Date of Birth (DD/MM/YY)</p>
@@ -93,39 +98,54 @@
           </div>
           <div class="third-row">
             <div class="birth-date">
-              <input type="date" class="birthday" name="db_raw">
+              <input type="date" class="birthday" name="db_raw"
+                {% if editing and petition_data.applicant_DB %}value="{{ petition_data.applicant_DB.strftime('%Y-%m-%d') }}"{% endif %}>
             </div>
+
             <div class="birth-place">
-              <input type="text" class="birth-place-input" name="applicant_PB">
+              <input type="text" class="birth-place-input" name="applicant_PB"
+                {% if editing and petition_data.applicant_PB %}value="{{ petition_data.applicant_PB }}"{% endif %}>
             </div>
+
             <div class="gender">
-              <input type="radio" class="gender-input" name="applicant_gender" value="M">
+              <input type="radio" class="gender-input" name="applicant_gender" value="M"
+                {% if editing and petition_data.applicant_gender == 'M' %}checked{% endif %}>
               <p class="male-text">MALE</p>
-              <input type="radio" class="gender-input" name="applicant_gender" value="F">
+
+              <input type="radio" class="gender-input" name="applicant_gender" value="F"
+                {% if editing and petition_data.applicant_gender == 'F' %}checked{% endif %}>
               <p class="female-text">FEMALE</p>
             </div>
           </div>
           <div class="fourth-row">
             <p class="number-6">6. CIVIL STATUS:</p>
-            <input type="radio" class="civil-status" id="s" name="applicant_cs" value="SINGLE">
+
+            <input type="radio" class="civil-status" id="s" name="applicant_cs" value="SINGLE"
+              {% if editing and petition_data.applicant_cs == 'SINGLE' %}checked{% endif %}>
             <p class="civil-status-choice">SINGLE</p>
 
-            <input type="radio" class="civil-status" id="m" name="applicant_cs" value="MARRIED">
+            <input type="radio" class="civil-status" id="m" name="applicant_cs" value="MARRIED"
+              {% if editing and petition_data.applicant_cs == 'MARRIED' %}checked{% endif %}>
             <p class="civil-status-choice">MARRIED</p>
 
-            <input type="radio" class="civil-status" id="d" name="applicant_cs" value="DIVORCED">
+            <input type="radio" class="civil-status" id="d" name="applicant_cs" value="DIVORCED"
+              {% if editing and petition_data.applicant_cs == 'DIVORCED' %}checked{% endif %}>
             <p class="civil-status-choice">DIVORCED</p>
 
-            <input type="radio" class="civil-status" id="w" name="applicant_cs" value="WIDOW/ER">
+            <input type="radio" class="civil-status" id="w" name="applicant_cs" value="WIDOW/ER"
+              {% if editing and petition_data.applicant_cs == 'WIDOW/ER' %}checked{% endif %}>
             <p class="civil-status-choice">WIDOW/ER</p>
 
-            <input type="radio" class="civil-status" id="o" name="applicant_cs" value="OTHERS">
+            <input type="radio" class="civil-status" id="o" name="applicant_cs" value="OTHERS"
+              {% if editing and petition_data.applicant_cs.startswith('OTHERS') %}checked{% endif %}>
             <p class="civil-status-choice">OTHERS</p>
 
-            <input type="text" class="civil-status-others" name="civil_status_others">
+            {% if editing and petition_data.applicant_cs.startswith('OTHERS') %}
+            <input type="text" name="civil_status_others" value="{{ petition_data.applicant_cs.replace('OTHERS: ', '') }}">
+            {% else %}
+            <input type="text" name="civil_status_others">
+            {% endif %}
           </div>
-        </div>
-    </div>
     <div class="second-box">
       <div class="second-box-left">
         <div class="second-box-left-first">
@@ -249,6 +269,8 @@
       <p class="citizenship-question">How many foreign citizenships do you have?</p>
       <input type="text" class="citizenship-number-input" id="citizenshipCount">
       <button class="submit" type="button" onclick="generateCitizenships()">Submit</button>
+      <input type="hidden" id="no_of_citizenship" name="no_of_citizenship">
+      <input type="hidden" name="citizenship_button" value="on">
     </div>
     <div class="fourth-box">
       <div class="citizenship-container" id="citizenshipContainer">
@@ -258,6 +280,8 @@
       <p class="citizenship-question">How many children do you have?</p>
       <input type="text" class="citizenship-number-input" id="childCount">
       <button class="submit" type="button" onclick="generateChildren()">Submit</button>
+      <input type="hidden" id="no_of_child_included" name="no_of_child_included">
+      <input type="hidden" name="child_button" value="on">
     </div>
       <div class="fifth-box">
         <div class="child-container" id="childContainer">
@@ -274,6 +298,7 @@
 <script>
   function generateCitizenships() {
     const count = parseInt(document.getElementById("citizenshipCount").value);
+    document.getElementById("no_of_citizenship").value = count;
     const container = document.getElementById("citizenshipContainer");
     container.innerHTML = '';
 
@@ -292,8 +317,8 @@
             </div>
             <div class="citizenship-first-input">
               <input type="text" name="applicant_foreign_citizenship[]" class="citizenship-input1">
-              <input type="text" name="mode_foreign_acquisition[]" class="citizenship-input2">
-              <input type="date" name="date_of_acquisition[]" class="citizenship-input3">
+              <input type="text" name="acquisition_foreign_citizenship[]" class="citizenship-input2">
+              <input type="date" name="date_acquisition[]" class="citizenship-input3">
             </div>
           </div>
           <div class="citizenship-first">
@@ -303,9 +328,9 @@
               <p>21.b. DATE OF ISSUANCE OF FOREIGN PASSPORT</p>
             </div>
             <div class="citizenship-first-input">
-              <input type="text" name="natural_cert_numbers[]" class="citizenship-input1">
+              <input type="text" name="naturalization_no[]" class="citizenship-input1">
               <input type="text" name="foreign_passport_no[]" class="citizenship-input2">
-              <input type="date" name="issuance_of_foreign_passport[]" class="citizenship-input3">
+              <input type="date" name="date_issuance[]" class="citizenship-input3">
             </div>
           </div>
           <div class="citizenship-first">
@@ -314,8 +339,8 @@
               <p>23. FOREIGN DOCUMENT</p>
             </div>
             <div class="citizenship-first-input">
-              <input type="text" name="place_of_issuance[]" class="citizenship-input1">
-              <input type="text" name="foreign_docs[]" class="citizenship-input2">
+              <input type="text" name="place_issuance[]" class="citizenship-input1">
+              <input type="text" name="foreign_supporting_docs[]" class="citizenship-input2">
             </div>
           </div>
         </div>
@@ -326,6 +351,7 @@
 
   function generateChildren() {
   const count = parseInt(document.getElementById("childCount").value);
+  document.getElementById("no_of_child_included").value = count;
   const container = document.getElementById("childContainer");
   container.innerHTML = '';
 
@@ -386,7 +412,7 @@
         </div>
       </div>
     `;
-
+      
     container.appendChild(block);
   }
 }

@@ -31,15 +31,16 @@ class UserFunction(db.Model):
     __tablename__ = 'user_function'
 
     entry_no = db.Column(
+        'FK_USERF_ENTRY_NO',
         db.Integer,
         db.ForeignKey('applicant.ENTRY_NO'),
         primary_key=True 
     )
-    location = db.Column(db.String(50), nullable=False)
-    transaction = db.Column(db.String(30), nullable=False)
-    status = db.Column(db.String(10), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    date_updated = db.Column(db.DateTime, default=datetime.utcnow)
+    location = db.Column('LOCATION',db.String(50), nullable=False)
+    transaction = db.Column('TRANSACTION', db.String(30), nullable=False)
+    status = db.Column('STATUS',db.String(10), nullable=False)
+    created_at = db.Column('CREATED_AT', db.DateTime, nullable=False)
+    date_updated = db.Column('DATE_UPDATED', db.DateTime, default=datetime.utcnow)
 
     applicant = db.relationship('Applicant', backref=db.backref('user_function', uselist=False))
 
@@ -118,17 +119,17 @@ class SpouseDetails(db.Model):
 class Overseas(db.Model):
     __tablename__ = 'overseas_citizenship'
 
-    overseas_id = db.Column(db.String(10), primary_key=True)
-    entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
+    foreign_id = db.Column('FOREIGN_CITIZENSHIP_ID', db.String(7), primary_key=True)  # match varchar(7)
+    entry_no = db.Column('FK_OVERSEAS_ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
-    applicant_foreign_citizenship = db.Column('FOREIGN_CITIZENSHIP_ID', db.String(50), nullable=False)
-    mode_of_acquisition = db.Column('ACQUISITION_FOREIGN_CITIZENSHIP', db.String(100), nullable=False)
-    date_of_acquisition = db.Column('DATE_ACQUISITION', db.Date, nullable=False)
-    natural_cert_numbers = db.Column('NATURALIZATION_NO', db.String(100), nullable=False)
-    foreign_passport_no = db.Column('FOREIGN_PASSPORT_NO', db.String(50), nullable=False)
-    date_of_issuance = db.Column('DATE_ISSUANCE', db.Date, nullable=False)
-    place_of_issuance = db.Column('PLACE_ISSUANCE', db.String(100), nullable=False)
-    foreign_docs = db.Column('FOREIGN_SUPPORTING_DOCS', db.String(50), nullable=False)
+    applicant_foreign_citizenship = db.Column('FOREIGN_CITIZENSHIP', db.String(50), nullable=False)
+    acquisition_foreign_citizenship = db.Column('ACQUISITION_FOREIGN_CITIZENSHIP', db.String(45), nullable=False)
+    date_acquisition = db.Column('DATE_ACQUISITION', db.Date, nullable=False)
+    naturalization_no = db.Column('NATURALIZATION_NO', db.String(15), nullable=False)
+    foreign_passport_no = db.Column('FOREIGN_PASSPORT_NO', db.String(15), nullable=False)
+    date_issuance = db.Column('DATE_ISSUANCE', db.Date, nullable=False)
+    place_issuance = db.Column('PLACE_ISSUANCE', db.String(70), nullable=False)
+    foreign_supporting_docs = db.Column('FOREIGN_ACQUISITION_DOCS', db.String(40), nullable=False)
 
 class Philippines(db.Model):
     __tablename__ = 'philippine_citizenship'
@@ -141,12 +142,12 @@ class Child(db.Model):
     __tablename__ = 'child'
 
     child_id = db.Column('CHILD_ID', db.String(10), primary_key=True)
-    entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
+    entry_no = db.Column('FK_CHILD_ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
     child_name = db.Column('CHILD_NAME', db.String(50), nullable=False)
     gender = db.Column('CHILD_GENDER', db.String(10), nullable=False)
     civil_status = db.Column('CHILD_CIVIL_STATUS', db.String(20), nullable=False)
-    child_DB = db.Column('CHILD_DB', db.Date, nullable=False)
+    child_BD = db.Column('CHILD_BD', db.Date, nullable=False)
     child_PB = db.Column('CHILD_BP', db.String(75), nullable=False)
     country_pa = db.Column('COUNTRY_PA', db.String(75), nullable=False)
     child_citizenship = db.Column('CHILD_CITIZENSHIP', db.String(50), nullable=False)

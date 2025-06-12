@@ -610,6 +610,21 @@ body{
   margin-bottom: 10px;
 }
 
+.in-between{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.child-question{
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.child-check{
+  transform: scale(1.5);
+}
+
 .footer{
   position: absolute;
   display: flex;

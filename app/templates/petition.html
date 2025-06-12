@@ -59,25 +59,25 @@
           <div class="first-row">
             <div class="first-name">
               <p class="first-name-text">First Name - Middle Name - Last Name</p>
-                <input type="text" class="first-name-input" name="applicant_name" value="{{ petition_data.applicant_name if editing else '' }}">
+                <input type="text" class="first-name-input" name="applicant_name" value="{{applicant.applicant_name if editing else '' }}">
             </div>
           </div>
             <div class="second-row-text">
               <p class="number-2">2. ARE YOU USING A DIFFERENT NAME?</p>
 
               <input type="radio" name="has_alternative_name" id="name-yes" class="radio-button" value="yes"
-                {% if editing and petition_data.has_alternative_name == 'yes' %}checked{% endif %}>
+                {% if editing and applicant.has_alternative_name == 'yes' %}checked{% endif %}>
               <label for="name-yes">YES</label>
 
               <input type="radio" name="has_alternative_name" id="name-no" class="radio-button" value="no"
-                {% if editing and petition_data.has_alternative_name == 'no' %}checked{% endif %}>
+                {% if editing and applicant.has_alternative_name == 'no' %}checked{% endif %}>
               <label for="name-no">NO</label>
             </div>
 
           <div class="second-row">
             <div class="first-name">
               <p class="first-name-text">First Name - Middle Name - Last Name</p>
-              <input type="text" class="first-name-input" name="alternative_name" value="{{ petition_data.field_name if editing else '' }}">
+              <input type="text" class="first-name-input" name="alternative_name" value="{{ applicant.field_name if editing else '' }}">
             </div>
           </div>
           <p class="number-2-d">2d. SUPPORTING DOCUMENTS FOR CHANGE OF NAME</p>
@@ -99,21 +99,21 @@
           <div class="third-row">
             <div class="birth-date">
               <input type="date" class="birthday" name="db_raw"
-                {% if editing and petition_data.applicant_DB %}value="{{ petition_data.applicant_DB.strftime('%Y-%m-%d') }}"{% endif %}>
+                {% if editing and petition_data.applicant_DB %}value="{{ applicant.applicant_DB.strftime('%Y-%m-%d') }}"{% endif %}>
             </div>
 
             <div class="birth-place">
               <input type="text" class="birth-place-input" name="applicant_PB"
-                {% if editing and petition_data.applicant_PB %}value="{{ petition_data.applicant_PB }}"{% endif %}>
+                {% if editing and petition_data.applicant_PB %}value="{{ applicant.applicant_PB }}"{% endif %}>
             </div>
 
             <div class="gender">
               <input type="radio" class="gender-input" name="applicant_gender" value="M"
-                {% if editing and petition_data.applicant_gender == 'M' %}checked{% endif %}>
+                {% if editing and applicant.applicant_gender == 'M' %}checked{% endif %}>
               <p class="male-text">MALE</p>
 
               <input type="radio" class="gender-input" name="applicant_gender" value="F"
-                {% if editing and petition_data.applicant_gender == 'F' %}checked{% endif %}>
+                {% if editing and applicant.applicant_gender == 'F' %}checked{% endif %}>
               <p class="female-text">FEMALE</p>
             </div>
           </div>
@@ -121,148 +121,180 @@
             <p class="number-6">6. CIVIL STATUS:</p>
 
             <input type="radio" class="civil-status" id="s" name="applicant_cs" value="SINGLE"
-              {% if editing and petition_data.applicant_cs == 'SINGLE' %}checked{% endif %}>
+              {% if editing and applicant.applicant_cs == 'SINGLE' %}checked{% endif %}>
             <p class="civil-status-choice">SINGLE</p>
 
             <input type="radio" class="civil-status" id="m" name="applicant_cs" value="MARRIED"
-              {% if editing and petition_data.applicant_cs == 'MARRIED' %}checked{% endif %}>
+              {% if editing and applicant.applicant_cs == 'MARRIED' %}checked{% endif %}>
             <p class="civil-status-choice">MARRIED</p>
 
             <input type="radio" class="civil-status" id="d" name="applicant_cs" value="DIVORCED"
-              {% if editing and petition_data.applicant_cs == 'DIVORCED' %}checked{% endif %}>
+              {% if editing and applicant.applicant_cs == 'DIVORCED' %}checked{% endif %}>
             <p class="civil-status-choice">DIVORCED</p>
 
             <input type="radio" class="civil-status" id="w" name="applicant_cs" value="WIDOW/ER"
-              {% if editing and petition_data.applicant_cs == 'WIDOW/ER' %}checked{% endif %}>
+              {% if editing and applicant.applicant_cs == 'WIDOW/ER' %}checked{% endif %}>
             <p class="civil-status-choice">WIDOW/ER</p>
 
             <input type="radio" class="civil-status" id="o" name="applicant_cs" value="OTHERS"
-              {% if editing and petition_data.applicant_cs.startswith('OTHERS') %}checked{% endif %}>
+              {% if editing and applicant.applicant_cs.startswith('OTHERS') %}checked{% endif %}>
             <p class="civil-status-choice">OTHERS</p>
 
             {% if editing and petition_data.applicant_cs.startswith('OTHERS') %}
-            <input type="text" name="civil_status_others" value="{{ petition_data.applicant_cs.replace('OTHERS: ', '') }}">
+            <input type="text" name="civil_status_others" value="{{ applicant.applicant_cs.replace('OTHERS: ', '') }}">
             {% else %}
             <input type="text" name="civil_status_others">
             {% endif %}
           </div>
+        </div>
+      </div>
     <div class="second-box">
       <div class="second-box-left">
         <div class="second-box-left-first">
           <p class="a7">7.a. NAME OF APPLICANT'S SPOUSE (as written in the birth certificate)</p>
           <div class="first-name-family">
             <p class="first-name-text">First Name - Middle Name - Last Name</p>
-            <input type="text" class="first-name-family-input" name="family_name_2">
+            <input type="text" class="first-name-family-input" name="family_name_2"  value="{{ applicant._family_name_2 if editing else '' }}">
+            
           </div>
           <div class="first-name-family">
               <p class="first-name-text">Additional Detail: Spouse Address</p>
-              <input type="text" class="first-name-family-input" name="spouse_address">
+              <input type="text" class="first-name-family-input" name="spouse_address" value="{{ applicant.spouse_address if editing else '' }}">
           </div>
         </div>
         <div class="second-box-left-second">
           <p class="a7">8.a. NAME OF APPLICANT’S FATHER (as written in the birth certificate) </p>
           <div class="first-name-family">
             <p class="first-name-text">First Name - Middle Name - Last Name</p>
-            <input type="text" class="first-name-family-input" name="family_name_0">
+            <input type="text" class="first-name-family-input" name="family_name_0" value="{{ applicant.family_name_0 if editing else '' }}">
           </div>
         </div>
         <div class="second-box-left-third">
           <p class="a7">9.a. NAME OF APPLICANT’S MOTHER (as written in the birth certificate)</p>
           <div class="first-name-family">
             <p class="first-name-text">First Name - Middle Name - Last Name</p>
-            <input type="text" class="first-name-family-input" name="family_name_1">
+            <input type="text" class="first-name-family-input" name="family_name_1" value="{{ applicant.family_name_1 if editing else '' }}">
           </div>
         </div>
       </div>
       <div class="second-box-right">
         <div class="second-box-right-first">
           <p class="b7">7.b. CITIZENSHIP OF SPOUSE AT THE TIME OF APPLICATION </p>
-          <input type="text" class="citizenship-family-input" name="citizenship_2">
+          <input type="text" class="citizenship-family-input" name="citizenship_2" value="{{ applicant.citizenship_2 if editing else '' }}">
         </div>
         <div class="second-box-right-first">
           <p class="b7">8.b. FATHER’S CITIZENHIP AT THE TIME OF APPLICANT’S BIRTH </p>
-          <input type="text" class="citizenship-family-input" name="citizenship_0">
+          <input type="text" class="citizenship-family-input" name="citizenship_0" value="{{ applicant.citizenship_0 if editing else '' }}">
         </div>
         <div class="second-box-right-first">
           <p class="b7">9.b. MOTHER’S CITIZENHIP AT THE TIME OF APPLICANT’S BIRTH </p>
-          <input type="text" class="citizenship-family-input" name="citizenship_1">
+          <input type="text" class="citizenship-family-input" name="citizenship_1" value="{{ applicant.citizenship_1 if editing else '' }}">
         </div>
       </div>
     </div>
     <div class="third-box">
       <div class="third-box-first">
         <p class="a10">10. HOW PHILIPPINE CITIZENSHIP WAS INITIALLY ACQUIRED</p>
-        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Birth">
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Birth"
+          {% if editing and applicant.applicant_mode_ph_acquisition == 'Birth' %}checked{% endif %}>
         <p class="philippine-citizenship-choice">BIRTH</p>
-        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Election">
+
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Election"
+          {% if editing and applicant.applicant_mode_ph_acquisition == 'Election' %}checked{% endif %}>
         <p class="philippine-citizenship-choice">ELECTION</p>
-        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Marriage">
+
+          
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Marriage"
+          {% if editing and applicant.applicant_mode_ph_acquisition == 'Marriage' %}checked{% endif %}>
         <p class="philippine-citizenship-choice">MARRIAGE</p>
-        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Naturalization">
+
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Naturalization"
+          {% if editing and applicant.applicant_mode_ph_acquisition == 'Naturalization' %}checked{% endif %}>
         <p class="philippine-citizenship-choice">NATURALIZATION</p>
-        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Others:">
+
+        <input type="radio" class="philippine-citizenship-input" name="mode_ph_acquisition" value="Others:"
+          {% if editing and applicant.applicant_mode_ph_acquisition == 'Others:' %}checked{% endif %}>
+
         <p class="philippine-citizenship-choice">OTHERS</p>
-        <input type="text" class="philippine-citizenship-others" name="mode_ph_acquisition_others">
+          {% if editing and applicant.applicant_mode_ph_acquisition.startswith('Others:') %}
+        <input type="text" class="philippine-citizenship-others" name="mode_ph_acquisition_others" value="{{ applicant.mode_ph_acquisition.replace('OTHERS: ', '') }}">
+          {% else %}
+        <input type="text" name="mode_ph_acquisition_others" class="philippine-citizenship-others">
+          {% endif %}
+
       </div>
       <div class="third-box-second">
-        <p class="a10">11. SUPPORTING DOCUMENTS SUBMITTED TO PROVE THAT THE APPLICANT WAS A FORMER CITIZEN OF THE
-          PHILIPPINES: </p>
+        <p class="a10">11. SUPPORTING DOCUMENTS SUBMITTED TO PROVE THAT THE APPLICANT WAS A FORMER CITIZEN OF THE PHILIPPINES: </p>
         <div class="third-box-second-choice">
-          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="PH Birth Certificate">
+          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="PH Birth Certificate"
+            {% if editing and applicant.applicant_ph_docs == 'PH Birth Certificate' %}checked{% endif %}>
           <p class="citizenship-document-choice">Philippine Birth Certificate</p>
         </div>
+
         <div class="third-box-second-choice">
-          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="Marriage Contract">
-          <p class="citizenship-document-choice">Marriage Contract indicating Philippine Citizenship of the applicant
-          </p>
+          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="Marriage Contract"
+            {% if editing and applicant.applicant_ph_docs == 'Marriage Contract' %}checked{% endif %}>
+          <p class="citizenship-document-choice">Marriage Contract indicating Philippine Citizenship of the applicant</p>
         </div>
+
         <div class="third-box-second-choice">
-          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="PH Passport">
+          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="PH Passport"
+            {% if editing and applicant.applicant_ph_docs == 'PH Passport' %}checked{% endif %}>
           <p class="citizenship-document-choice">Old Philippine Passport</p>
         </div>
+
         <div class="third-box-second-choice">
-          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="Voter’s Affiavit/ID">
+          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="Voter’s Affiavit/ID"
+            {% if editing and applicant.applicant_ph_docs == 'Voter’s Affiavit/ID' %}checked{% endif %}>
           <p class="citizenship-document-choice">Voter’s affidavit or voter’s identification card</p>
         </div>
+
         <div class="third-box-second-choice">
-          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="Naturalization Certificate">
+          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="Naturalization Certificate"
+            {% if editing and applicant.applicant_ph_docs == 'Naturalization Certificate' %}checked{% endif %}>
           <p class="citizenship-document-choice">Naturalization Certificate</p>
         </div>
+
         <div class="third-box-second-choice">
-          <input type="checkbox" class="citizenship-document-input" name="ph_docs">
+
+          <input type="checkbox" class="citizenship-document-input" name="ph_docs" value="Citizenship Others">
           <p class="citizenship-document-choice">Others (specify)</p>
-          <input type="text" class="citizenship-document-others" name="ph_docs">
+          {% if editing and applicant.applicant_mode_ph_acquisition.startswith('Others:') %}
+          <input type="text" class="citizenship-document-others" name="ph_docs" value="{{ applicant.mode_ph_acquisition.replace('OTHERS: ', '') }}">
+          {% else %}
+            <input type="text" class="citizenship-document-others" name="ph_docs">
+          {% endif %}
         </div>
       </div>
       <div class="third-box-third">
         <p class="a10">12. PHILIPPINE PERMANENT ADDRESS</p>
-        <input type="text" class="address" name="ph_add">
+        <input type="text" class="address" name="ph_add" value="{{ applicant.citizenship_ph_add if editing else '' }}">
       </div>
       <div class="third-box-fourth">
         <p class="a10">13. ADDRESS IN U.S. OR COUNTRY OF RESIDENCE</p>
-        <input type="text" class="address" name="ph_residence">
+        <input type="text" class="address" name="ph_residence" value="{{ applicant.citizenship_ph_residence if editing else '' }}">
       </div>
       <div class="third-box-fifth">
         <div class="person-info">
           <p class="a10">14. MOBILE NO.</p>
-          <input type="text" class="person-info-input1" name="home_telephone_no">
+          <input type="text" class="person-info-input1" name="home_telephone_no" value="{{ applicant.citizenship_home_telephone_no if editing else '' }}">
         </div>
         <div class="person-info">
           <p class="a10">15. E-MAIL ADDRESS</p>
-          <input type="text" class="person-info-input" name="applicant_email">
+          <input type="text" class="person-info-input" name="applicant_email" value="{{ applicant.applicant_email if editing else '' }}">
         </div>
         <div class="person-info">
           <p class="a10">16. WORK TELEPHONE NO.</p>
-          <input type="text" class="person-info-input" name="work_tl_no">
+          <input type="text" class="person-info-input" name="work_tl_no" value="{{ applicant.work_tl_no if editing else '' }}">
         </div>
         <div class="person-info">
           <p class="a10">17. PRESENT OCCUPATION</p>
-          <input type="text" class="person-info-input" name="applicant_occupation">
+          <input type="text" class="person-info-input" name="applicant_occupation" value="{{ applicant.applicant_occupation if editing else '' }}">
         </div>
       </div>
       <div class="third-box-sixth">
         <p class="a10">18. WORK ADDRESS</p>
-        <input type="text" class="address" name="work_address">
+        <input type="text" class="address" name="work_address" value="{{ applicant.work_address if editing else '' }}">
       </div>
     </div>
     <div class="question">
@@ -296,6 +328,7 @@
     <img src="{{ url_for('static', filename='Images/footer.png') }}" class="FooterPNG">
   </div>
 <script>
+  
   function generateCitizenships() {
     const count = parseInt(document.getElementById("citizenshipCount").value);
     document.getElementById("no_of_citizenship").value = count;

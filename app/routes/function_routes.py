@@ -26,19 +26,16 @@ def display_data():
     return render_template("Online_Verification.html", user_functions=applications)
 
 @bp_function.route('/delete/<int:entry_no>', methods=['POST'])
+@login_required
 def delete_entry(entry_no):
-    user_function = UserFunction.query.get(entry_no)
-    if user_function:
-        db.session.delete(user_function)
+    applicant = Applicant.query.get(entry_no)
+
+    if applicant:
+        db.session.delete(applicant)
         db.session.commit()
-        flash('Entry deleted successfully.', 'success')
+        flash('Application and all related records deleted successfully.', 'success')
     else:
         flash('Entry not found.', 'danger')
-    return redirect(url_for('function.display_verification'))
 
-@bp_function.route("/resubmit/<int:entry_no>", methods=["POST"])
-@login_required
-def resubmit_application(entry_no):
-    success, msg = submit_petition(request.form, current_user.id_no)
-    flash(msg, "success" if success else "danger")
-    return redirect(url_for("function.display_data"))
+    return redirect(url_for('function.display_data'))
+

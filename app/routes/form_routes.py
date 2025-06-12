@@ -35,4 +35,4 @@ def petition():
         return redirect(url_for("function.display_data"))
 
     # GET method: just render the form
-    return render_template("petition_form.html")
+    return render_template("petition.html")

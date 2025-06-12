@@ -1,10 +1,10 @@
 from app import db
-from app.models import Applicant, FamilyMember, Overseas, Philippines, Child, SpouseDetails
-import datetime
+from app.models import Applicant, FamilyMember, Overseas, Philippines, Child, SpouseDetails, UserFunction
+from datetime import datetime
 import traceback
 import uuid
 
-def submit_petition(form, user_id, entry_no=None):
+def submit_petition(form, user_id, entry_no=None, editing=False):
     if entry_no:
          # --- Update Philippine Citizenship ---
         applicant = Applicant.query.filter_by(entry_no=entry_no, id_no=user_id).first()
@@ -44,7 +44,7 @@ def submit_petition(form, user_id, entry_no=None):
 
         applicant.applicant_PB = form.get('applicant_PB')
         applicant.applicant_gender = form.get('applicant_gender')
-        applicant.ph_add = form.get('ph_add')
+        applicant.philippine_address = form.get('philippine_address')
         applicant.ph_residence = form.get('ph_residence')
         applicant.home_telephone_no = form.get('home_telephone_no')
         applicant.applicant_email = form.get('applicant_email')
@@ -75,8 +75,7 @@ def submit_petition(form, user_id, entry_no=None):
             if relation.lower() == 'spouse':
                 spouse_detail = SpouseDetails(
                     spouse_id=spouse_id,
-                    spouse_address=form.get(f'spouse_address_{i}') or ''
-                )
+                    spouse_address=form.get(f'spouse_address_{i}') or '')
                 db.session.add(spouse_detail)
 
         # --- Update Overseas ---
@@ -117,7 +116,7 @@ def submit_petition(form, user_id, entry_no=None):
 
                 child = Child(
                     entry_no=entry_no,
-                    child_id=f"C-{idx}",
+                    child_id=f"C-{uuid.uuid4().hex[:8]}",
                     child_name=form.getlist("child_name[]")[i],
                     gender=form.get(f"child_gender_{idx}"),
                     civil_status=final_civil_status,
@@ -129,6 +128,16 @@ def submit_petition(form, user_id, entry_no=None):
                     immigration_docs=form.getlist("child_immigration_docs[]")[i]
                 )
                 db.session.add(child)
+
+        user_func = UserFunction(
+                entry_no=entry_no,
+                location=applicant.philippine_address,
+                transaction="Petition Update",
+                status="Active",
+                created_at=applicant.created_at,
+                date_updated=datetime.utcnow()
+            )
+        db.session.add(user_func)
 
         db.session.commit()
         return True, "Petition updated successfully."
@@ -185,7 +194,7 @@ def submit_petition(form, user_id, entry_no=None):
                 applicant_PB=form.get('applicant_PB'),
                 applicant_gender=form.get('applicant_gender'),
                 applicant_cs=applicant_cs,
-                ph_add=form.get('ph_add'),
+                philippine_address=form.get('philippine_address'),
                 ph_residence=form.get('ph_residence'),
                 home_telephone_no=form.get('home_telephone_no'),
                 applicant_email=form.get('applicant_email'),
@@ -250,7 +259,7 @@ def submit_petition(form, user_id, entry_no=None):
                     )
                     overseas = Overseas(
                         entry_no=entry_no,
-                        foreign_id=f"FC-{i+1}",
+                        foreign_id=f"FC-{uuid.uuid4().hex[:8]}",
                         applicant_foreign_citizenship=applicant_foreign_citizenship[i],
                         acquisition_foreign_citizenship=acquisition_foreign_citizenship[i],
                         date_acquisition=date_acquisition,
@@ -289,7 +298,7 @@ def submit_petition(form, user_id, entry_no=None):
 
                     child = Child(
                         entry_no=entry_no,
-                        child_id=f"C-{idx}",
+                        child_id=f"C-{uuid.uuid4().hex[:8]}",
                         child_name=child_name,
                         gender=child_gender,
                         civil_status=final_civil_status,
@@ -302,7 +311,20 @@ def submit_petition(form, user_id, entry_no=None):
                     )
                     db.session.add(child)
 
-
+            #----User Function----
+            user_func_existing = UserFunction.query.get(entry_no)
+            if not user_func_existing:
+                user_func = UserFunction(
+                    entry_no=entry_no,
+                    location=applicant.philippine_address,
+                    transaction="Petition Submission",
+                    status="Active",
+                    created_at=datetime.utcnow(),
+                    date_updated=None
+                )
+                db.session.add(user_func)
+            else:
+                print(f"[INFO] Skipping: UserFunction for entry_no={entry_no} already exists.")
 
             # --- Final Commit ---
             if action == "submit":
@@ -311,6 +333,7 @@ def submit_petition(form, user_id, entry_no=None):
                 print("Child count:", no_of_child_included)
                 print("Child names:", form.getlist("child_name[]"))
                 print("Foreign citizenships:", form.getlist("applicant_foreign_citizenship[]"))
+                print("Attempting to insert entry_no:", entry_no)
                 return True, "Petition submitted successfully."
             else:
                 db.session.rollback()

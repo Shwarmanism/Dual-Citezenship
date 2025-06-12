@@ -91,7 +91,7 @@
                 <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
                 <td>{{ item.date_updated.strftime('%Y-%m-%d') if item.date_updated else '' }}</td>
                 <td>
-                  <a href="{{ url_for('function.resubmit_application', entry_no=item.entry_no) }}">
+                  <a href="{{ url_for('form.edit_petition', entry_no=item.entry_no) }}">
                     <button type="button" class="btn btn-update">Update</button>
                   </a>
                   <form method="POST" action="{{ url_for('function.delete_entry', entry_no=item.entry_no) }}" style="display:inline;">
@@ -131,8 +131,17 @@
       });
     });
 
+    function viewRow(ref) {
 
+    }
 
+    function updateRow(ref) {
+
+    }
+
+    function deleteRow(ref) {
+
+    }
   </script>
 </body>
 

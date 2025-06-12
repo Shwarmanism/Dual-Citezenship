@@ -49,7 +49,6 @@ class UserFunction(db.Model):
     cascade="all, delete-orphan")
     )
 
-
 class Applicant(db.Model):
     __tablename__ = 'applicant'
 
@@ -62,7 +61,7 @@ class Applicant(db.Model):
     applicant_PB = db.Column('BIRTH_PLACE', db.String(50), nullable=False)
     applicant_gender = db.Column('GENDER', db.String(5), nullable=False)
     applicant_cs = db.Column('CIVIL_STATUS', db.String(50), nullable=False)
-    ph_add = db.Column('PHILIPPINE_ADDRESS', db.String(100), nullable=False)
+    philippine_address = db.Column('PHILIPPINE_ADDRESS', db.String(100), nullable=False)
     ph_residence = db.Column('RESIDENCE_ADDRESS', db.String(100), nullable=False)
     home_telephone_no = db.Column('HOME_TELEPHONE_NO', db.String(20), nullable=True)
     work_tl_no = db.Column('WORK_TELEPHONE_NO', db.String(15), nullable=True)
@@ -97,6 +96,13 @@ class Applicant(db.Model):
         foreign_keys='Child.entry_no'
     )
 
+    philippine = db.relationship(
+    'Philippines',
+    backref='applicant',
+    uselist=False,
+    foreign_keys='Applicant.ph_citizenship_id'
+    )
+
 class FamilyMember(db.Model):
     __tablename__ = 'family_member'
 
@@ -125,7 +131,7 @@ class SpouseDetails(db.Model):
 class Overseas(db.Model):
     __tablename__ = 'overseas_citizenship'
 
-    foreign_id = db.Column('FOREIGN_CITIZENSHIP_ID', db.String(7), primary_key=True)  # match varchar(7)
+    foreign_id = db.Column('FOREIGN_CITIZENSHIP_ID', db.String(50), primary_key=True)  # match varchar(7)
     entry_no = db.Column('FK_OVERSEAS_ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
     applicant_foreign_citizenship = db.Column('FOREIGN_CITIZENSHIP', db.String(50), nullable=False)
@@ -140,14 +146,14 @@ class Overseas(db.Model):
 class Philippines(db.Model):
     __tablename__ = 'philippine_citizenship'
 
-    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(10), primary_key=True)
+    ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(50), primary_key=True)
     mode_ph_acquisition = db.Column('MODE_PH_ACQUISITION', db.String(50), nullable=False)
     ph_docs = db.Column('PH_DOCS', db.String(50), nullable=False)
 
 class Child(db.Model):
     __tablename__ = 'child'
 
-    child_id = db.Column('CHILD_ID', db.String(10), primary_key=True)
+    child_id = db.Column('CHILD_ID', db.String(50), primary_key=True)
     entry_no = db.Column('FK_CHILD_ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
     child_name = db.Column('CHILD_NAME', db.String(50), nullable=False)

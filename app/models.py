@@ -42,7 +42,13 @@ class UserFunction(db.Model):
     created_at = db.Column('CREATED_AT', db.DateTime, nullable=False)
     date_updated = db.Column('DATE_UPDATED', db.DateTime, default=datetime.utcnow)
 
-    applicant = db.relationship('Applicant', backref=db.backref('user_function', uselist=False))
+    applicant = db.relationship(
+    'Applicant',
+    backref=db.backref('user_function', 
+    uselist=False, 
+    cascade="all, delete-orphan")
+    )
+
 
 class Applicant(db.Model):
     __tablename__ = 'applicant'

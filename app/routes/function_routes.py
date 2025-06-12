@@ -13,12 +13,11 @@ def display_data():
     limit = request.args.get('limit', default=None, type=int)
     
     query = (
-        db.session.query(UserFunction)
-        .join(Applicant)
-        .filter(Applicant.id_no == current_user.id_no)
-        .all()
+    db.session.query(UserFunction)
+    .join(Applicant)
+    .filter(Applicant.id_no == current_user.id_no)
     )
-    
+
     if limit:
         query = query.limit(limit)
 

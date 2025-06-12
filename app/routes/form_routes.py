@@ -35,4 +35,39 @@ def petition():
         return redirect(url_for("function.display_data"))
 
     # GET method: just render the form
-    return render_template("petition_form.html")
+    return render_template("petition.html")
+
+
+@bp_form.route("/edit/<int:entry_no>", methods=["GET", "POST"])
+@login_required
+def edit_petition(entry_no):
+    # --- Fetch existing applicant record ---
+    applicant = Applicant.query.filter_by(entry_no=entry_no, id_no=current_user.id_no).first()
+
+    if not applicant:
+        flash("Petition not found.", "danger")
+        return redirect(url_for("function.display_data"))
+
+    if request.method == "POST":
+        success, msg = submit_petition(request.form, current_user.id_no, entry_no=entry_no, editing=True)
+
+        if success:
+            user_func = UserFunction(
+                entry_no=entry_no,
+                location=applicant.philippine_address,
+                transaction="Petition Update",
+                status="Active",
+                created_at=applicant.created_at,
+                date_updated=datetime.utcnow()
+            )
+            db.session.add(user_func)
+            db.session.commit()
+            flash("Petition updated and tracked successfully.", "success")
+        else:
+            flash(f"Failed to update petition: {msg}", "danger")
+
+        return redirect(url_for("function.display_data"))
+
+    # --- GET method: pre-fill the form for editing ---
+    return render_template("petition.html", applicant=applicant, editing=True)
+

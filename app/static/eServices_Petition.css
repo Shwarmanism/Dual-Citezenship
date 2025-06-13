@@ -241,6 +241,7 @@ body{
   gap: 20px;
   border-width: 2px; 
   border-color: black
+  
 }
 
 .citizenship-container{
@@ -385,7 +386,7 @@ body{
 }
 
 .civil-status-choice{
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .civil-status{
@@ -569,8 +570,8 @@ body{
 }
 
 .e24{
-  margin-left: 140px;
-  margin-right: 100px;
+  margin-left: 225px;
+  margin-right: 400px;
 }
 
 .child-birthday{
@@ -610,19 +611,12 @@ body{
   margin-bottom: 10px;
 }
 
-.in-between{
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+.gender-text{
+  margin-top: 15px;
 }
 
-.child-question{
-  font-size: 18px;
-  margin-left: 10px;
-}
-
-.child-check{
-  transform: scale(1.5);
+.child-fifth label{
+  margin-top: 15px;
 }
 
 .footer{
@@ -633,9 +627,10 @@ body{
 }
 
 .FooterPNG{
-  margin-top: 2200px;
+  margin-top: 1100px;
   width: 100%;
   height: auto;
   object-fit: cover;
 }
+
 

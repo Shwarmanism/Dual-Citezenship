@@ -283,7 +283,8 @@
       {% else %}
         <input type="text" class="citizenship-document-others" name="ph_docs_others">
       {% endif %}
-      
+       </div>
+      </div>
       <div class="third-box-third">
         <p class="a10">12. PHILIPPINE PERMANENT ADDRESS</p>
         <input type="text" class="address" name="philippine_address" value="{{ applicant.philippine_address if editing else '' }}">
@@ -323,8 +324,7 @@
       <input type="hidden" name="citizenship_button" value="on">
     </div>
     <div class="fourth-box">
-      <div class="citizenship-container" id="citizenshipContainer">
-      </div>
+      <div class="citizenship-container" id="citizenshipContainer"></div>
     </div>
     <div class="question">
       <p class="citizenship-question">How many children do you have?</p>
@@ -334,9 +334,8 @@
       <input type="hidden" name="child_button" value="on">
     </div>
       <div class="fifth-box">
-        <div class="child-container" id="childContainer">
-        </div>
-      </div>
+        <div class="child-container" id="childContainer"></div>
+    </div>
       <button class="submit-button" type="submit" name="action" value="{{ 'update' if editing else 'submit' }}">
         {{ 'Update' if editing else 'Submit' }}
        </button>
@@ -355,10 +354,9 @@
 
     for (let i = 1; i <= count; i++) {
       const block = document.createElement("div");
-      block.className = "citizenship-first";
+      block.className = "citizenship-entry";
 
       block.innerHTML = `
-        <div class="citizenship-container">
           <p class="citizenship-num">Citizenship #${i}</p>
           <div class="citizenship-first">
             <div class="citizenship-first-text">
@@ -394,7 +392,6 @@
               <input type="text" name="foreign_supporting_docs[]" class="citizenship-input2">
             </div>
           </div>
-        </div>
       `;
       container.appendChild(block);
     }
@@ -408,40 +405,45 @@
 
   for (let i = 1; i <= count; i++) {
     const block = document.createElement("div");
-    block.className = "child-entry";
+    block.className = "child-container";
 
     block.innerHTML = `
-      <div class="child-container">
         <p class="child-num">Child #${i}</p>
         
         <div class="child-first">
           <p class="a24">24.a. Child's name</p>
+          <div class="child-first-text">
+            <p class="a24-name">First Name - Middle Name - Last Name</p>
+              <p class="b24">24.b. GENDER</p>
+            <input type="radio" name="child_gender_${i}" value="M">
+            <label class="gender-text">MALE</label>
+            <input type="radio" name="child_gender_${i}" value="F">
+            <label class="gender-text">FEMALE</label>
+          </div>
           <input type="text" class="child-name-input" name="child_name[]">
-
-          <p class="b24">24.b. GENDER</p>
-          <input type="radio" name="child_gender_${i}" value="M"> <label>MALE</label>
-          <input type="radio" name="child_gender_${i}" value="F"> <label>FEMALE</label>
         </div>
 
         <div class="child-second">
           <p class="c24">24.c. CIVIL STATUS:</p>
-          <input type="radio" name="child_status_${i}" value="S"><label>SINGLE</label>
-          <input type="radio" name="child_status_${i}" value="M"><label>MARRIED</label>
-          <input type="radio" name="child_status_${i}" value="D"><label>DIVORCED</label>
-          <input type="radio" name="child_status_${i}" value="W"><label>WIDOW/ER</label>
-          <input type="radio" name="child_status_${i}" value="O"><label>OTHERS</label>
-          <input type="text" name="child_status_other[]">
+          <input type="radio" name="child_status_${i}" value="S"><label class="civil-status-choice">SINGLE</label>
+          <input type="radio" name="child_status_${i}" value="M"><label class="civil-status-choice">MARRIED</label>
+          <input type="radio" name="child_status_${i}" value="D"><label class="civil-status-choice">DIVORCED</label>
+          <input type="radio" name="child_status_${i}" value="W"><label class="civil-status-choice">WIDOW/ER</label>
+          <input type="radio" name="child_status_${i}" value="O"><label class="civil-status-choice">OTHERS</label>
+          <input type="text" name="child_status_other[]" class="child-civil-status-others"">
         </div>
 
         <div class="child-third">
-          <p>24.d. Date of Birth</p>
-          <input type="date" name="child_dob[]" class="child-birthday">
-
-          <p>24.e. Place of Birth</p>
-          <input type="text" name="child_birthplace[]" class="child-birthplace-input">
-
-          <p>24.f. Countries of Citizenship</p>
-          <input type="text" name="child_citizenship[]" class="child-citizenship-input">
+          <div class="child-third-text">
+              <p class="d24">24.d. Date of Birth</p>
+              <p class="e24">24.e. Place of Birth</p>
+              <p class="f24">24.f. Countries of Citizenship</p>
+            </div>
+          <div class="child-third-input">
+            <input type="date" name="child_dob[]" class="child-birthday">
+            <input type="text" name="child_birthplace[]" class="child-birthplace-input">
+            <input type="text" name="child_citizenship[]" class="child-citizenship-input">
+          </div>
         </div>
 
         <div class="child-fourth">
@@ -461,9 +463,7 @@
           <p>24.i. IMMIGRATION DOCUMENTS:</p>
           <input type="text" name="child_immigration_docs[]" class="immigration-input">
         </div>
-      </div>
     `;
-      
     container.appendChild(block);
   }
 }

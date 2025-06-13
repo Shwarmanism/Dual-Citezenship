@@ -30,11 +30,12 @@
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Visas</a></li>
-          <li><a href="#">eServices</a></li>
+          <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
+          <li><a href="{{ url_for('home.home_index') }}">Home</a></li>
+          <li><a href="{{ url_for('home.about') }}">About</a></li>
+          <li><a href="{{ url_for('function.display_data') }}">Services</a></li>
+          <li><a href="{{ url_for('home.visa') }}">Visas</a></li>
+          <li><a href="{{ url_for('home.eservices') }}">eServices</a></li>
         </ul>
       </nav>
 

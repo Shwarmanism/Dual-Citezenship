@@ -31,11 +31,12 @@
         </div>
       </div>
       <div class="below-header-center">
-        <a href="#" class="Home">Home</a>
-        <a href="#" class="About">About</a>
-        <a href="#" class="Services">Services</a>
-        <a href="#" class="Visas">Visas</a>
-        <a href="#" class="eServices">eServices</a>
+        <a href="{{ url_for('auth.login') }}" class="Home">Log in</a>
+        <a href="{{ url_for('home.home_index') }}" class="Home">Home</a>
+        <a href="{{ url_for('home.about') }}"  class="About">About</a>
+        <a href="{{ url_for('function.display_data') }}"  class="Services">Services</a>
+        <a href="{{ url_for('home.visa') }}"  class="Visas">Visas</a>
+        <a href="{{ url_for('home.eservices') }}"  class="eServices">eServices</a>
       </div>
       <div class="below-header-right">
         <img src="{{ url_for('static', filename='Images/Phone.png') }}" class="Phone">
@@ -46,7 +47,7 @@
       <img src="{{ url_for('static', filename='Images/eServices.png') }}" class="eServices-png">
       <div class="text-align">
         <p class="overlay-text-1">eServices</p>
-        <a href="#" class="overlay-text-2">Home</a>
+        <a href="{{ url_for('home.home_index') }}" class="overlay-text-2">Home</a>
         <p class="overlay-text-3">&#10132 <span class="eServices-orange">eServices</span></p>
       </div>
     </div>
@@ -68,8 +69,8 @@
     <!-- FORM START -->
     <form class="register" method="POST" action="/register">
       <div class="icons">
-        <button type="button" class="login-button"><p>Login</p></button>
-        <button type="button" class="register-button"><p>Register</p></button>
+        <button type="button" class="login-button" onclick="window.location.href='{{ url_for('auth.login') }}'"><p>Login</p></button>
+        <button type="button" class="register-button" onclick="window.location.href='{{ url_for('auth.register') }}'"><p>Register</p></button>
       </div>
 
       <div class="first-row">

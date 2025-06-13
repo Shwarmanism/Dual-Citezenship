@@ -296,7 +296,6 @@ p {
 
 .blue-bar {
   background-color: #003366;
-  display: flex;
   justify-content: center;   /* center buttons horizontally */
   align-items: center;       /* center vertically */
   gap: 20px;                 /* space between buttons */

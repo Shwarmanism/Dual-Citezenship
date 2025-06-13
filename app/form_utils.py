@@ -22,7 +22,6 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
         philippines.mode_ph_acquisition = mode
         ph_docs = form.getlist('ph_docs[]')
 
-        # Handle "OTHERS:"
         others_input = form.get('ph_docs_others', '').strip()
         if "OTHERS:" in ph_docs or "OTHERS" in ph_docs:
             ph_docs = [doc for doc in ph_docs if not doc.startswith("OTHERS")]
@@ -86,7 +85,6 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                 family_member.citizenship = citizenship
                 db.session.add(family_member)
 
-                # Handle spouse's address update
                 if relation_key == 'spouse':
                     spouse_id = family_member.spouse_id
                     spouse_address = form.get(f'spouse_address_{i}', '')
@@ -100,10 +98,10 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
         for i in range(no_of_citizenship):
             if i < len(existing_overseas):
-                overseas = existing_overseas[i]  # Update existing
+                overseas = existing_overseas[i]
             else:
                 overseas = Overseas(entry_no=entry_no, foreign_id=f"FC-{uuid.uuid4().hex[:8]}")
-                db.session.add(overseas)  # Add new record if form has more entries
+                db.session.add(overseas) 
 
             overseas.applicant_foreign_citizenship = form.getlist("applicant_foreign_citizenship[]")[i]
             overseas.acquisition_foreign_citizenship = form.getlist("acquisition_foreign_citizenship[]")[i]
@@ -136,38 +134,53 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
             for i in range(no_of_child_included):
                 idx = i + 1
-            dob_str = child_dobs[i] if child_dobs else None
-            child_BD = datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
+                dob_str = child_dobs[i] if child_dobs else None
+                child_BD = datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
 
-            child_id = child_ids[i] if i < len(child_ids) else None
-            child_gender = form.get(f"child_gender_{idx}")
-            child_cs = form.get(f"child_status_{idx}")
-            child_cs_other = child_status_others[i] if child_status_others else None
+                child_id = child_ids[i] if i < len(child_ids) else None
+                child_gender = form.get(f"child_gender_{idx}")
+                child_cs = form.get(f"child_status_{idx}")
+                child_cs_other = child_status_others[i] if child_status_others else None
 
-            final_civil_status = f"Others: {child_cs_other}" if child_cs == 'O' and child_cs_other else child_cs
+                final_civil_status = f"Others: {child_cs_other}" if child_cs == 'O' and child_cs_other else child_cs
 
-            if not child_gender:
-                return False, f"Missing gender for child #{idx}."
+                if not child_gender:
+                    return False, f"Missing gender for child #{idx}."
 
-            if not final_civil_status:
-                return False, f"Missing civil status for child #{idx}."
+                if not final_civil_status:
+                    return False, f"Missing civil status for child #{idx}."
 
-            if child_id:
-                    child = Child.query.filter_by(entry_no=entry_no, child_id=child_id).first()
-                    if child:
-                        child.child_name = child_names[i]
-                        child.child_gender = child_gender
-                        child.child_civil_status = final_civil_status
-                        child.child_BD = child_BD
-                        child.child_PB = child_birthplaces[i]
-                        child.country_pa = child_residences[i]
-                        child.child_citizenship = child_citizenships[i]
-                        child.child_supporting_docs = ', '.join(form.getlist(f"child_docs_{idx}[]"))
-                        child.immigration_docs = child_immigration_docs[i]
-                    else:
+                if child_id:
+                        child = Child.query.filter_by(entry_no=entry_no, child_id=child_id).first()
+                        if child:
+                            child.child_name = child_names[i]
+                            child.child_gender = child_gender
+                            child.child_civil_status = final_civil_status
+                            child.child_BD = child_BD
+                            child.child_PB = child_birthplaces[i]
+                            child.country_pa = child_residences[i]
+                            child.child_citizenship = child_citizenships[i]
+                            child.child_supporting_docs = ', '.join(form.getlist(f"child_docs_{idx}[]"))
+                            child.immigration_docs = child_immigration_docs[i]
+                        else:
+                            new_child = Child(
+                                entry_no=entry_no,
+                                child_id=child_id,
+                                child_name=child_names[i],
+                                child_gender=child_gender,
+                                child_civil_status=final_civil_status,
+                                child_BD=child_BD,
+                                child_PB=child_birthplaces[i],
+                                country_pa=child_residences[i],
+                                child_citizenship=child_citizenships[i],
+                                child_supporting_docs=', '.join(form.getlist(f"child_docs_{idx}[]")),
+                                immigration_docs=child_immigration_docs[i]
+                            )
+                            db.session.add(new_child)
+                else:
                         new_child = Child(
                             entry_no=entry_no,
-                            child_id=child_id,
+                            child_id=f"C-{uuid.uuid4().hex[:8]}",
                             child_name=child_names[i],
                             child_gender=child_gender,
                             child_civil_status=final_civil_status,
@@ -179,41 +192,24 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                             immigration_docs=child_immigration_docs[i]
                         )
                         db.session.add(new_child)
+
+            user_func = UserFunction.query.get(entry_no)
+
+            if user_func:
+                user_func.location = applicant.philippine_address
+                user_func.transaction = "Petition Update"
+                user_func.status = "Active"
+                user_func.date_updated = datetime.utcnow()
             else:
-                    new_child = Child(
+                user_func = UserFunction(
                         entry_no=entry_no,
-                        child_id=f"C-{uuid.uuid4().hex[:8]}",
-                        child_name=child_names[i],
-                        child_gender=child_gender,
-                        child_civil_status=final_civil_status,
-                        child_BD=child_BD,
-                        child_PB=child_birthplaces[i],
-                        country_pa=child_residences[i],
-                        child_citizenship=child_citizenships[i],
-                        child_supporting_docs=', '.join(form.getlist(f"child_docs_{idx}[]")),
-                        immigration_docs=child_immigration_docs[i]
+                        location=applicant.philippine_address,
+                        transaction="Petition Update",
+                        status="Active",
+                        created_at=applicant.created_at,
+                        date_updated=datetime.utcnow()
                     )
-                    db.session.add(new_child)
-
-        user_func = UserFunction.query.get(entry_no)
-
-        if user_func:
-            # Safe update of existing record
-            user_func.location = applicant.philippine_address
-            user_func.transaction = "Petition Update"
-            user_func.status = "Active"
-            user_func.date_updated = datetime.utcnow()
-        else:
-            # Fallback: record was somehow not created yet
-            user_func = UserFunction(
-                    entry_no=entry_no,
-                    location=applicant.philippine_address,
-                    transaction="Petition Update",
-                    status="Active",
-                    created_at=applicant.created_at,
-                    date_updated=datetime.utcnow()
-                )
-            db.session.add(user_func)
+                db.session.add(user_func)
         db.session.commit()
         return True, "Petition updated successfully."
     else:
@@ -296,26 +292,34 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
             relation_default = ["Father", "Mother", "Spouse"]
             for i in range(3):
                 relation = form.get(f'relation_{i}', relation_default[i])
+                family_name = form.get(f'family_name_{i}')
 
-                spouse_id = f"S-{uuid.uuid4().hex[:8]}" if relation.lower() == 'spouse' else None
+                if not family_name:
+                    continue
+
+                spouse_id = None
+                if relation.lower() == 'spouse':
+                    if family_name.strip():
+                        spouse_id = f"S-{uuid.uuid4().hex[:8]}"
+                    else:
+                        relation = 'Spouse'
 
                 family_member = FamilyMember(
                     entry_no=entry_no,
                     family_id=f"F-{i+1}",
                     spouse_id=spouse_id,
                     relation=relation,
-                    family_name=form.get(f'family_name_{i}'),
+                    family_name=family_name,
                     citizenship=form.get(f'citizenship_{i}')
                 )
                 db.session.add(family_member)
 
-                if relation.lower() == 'spouse':
+                if spouse_id:
                     spouse_detail = SpouseDetails(
                         spouse_id=spouse_id,
                         spouse_address=form.get(f'spouse_address_{i}') or ''
                     )
                     db.session.add(spouse_detail)
-
 
             # --- Overseas Citizenship ---
             if form.get("citizenship_button") == "on":
@@ -358,9 +362,9 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
             # --- Children ---
             if form.get('child_button') == 'on':
-                no_of_child_included = int(form.get('no_of_child_included', 0))
-
-                i = 0
+                
+                no_of_child_included_str = form.get('no_of_child_included', '').strip()
+                no_of_child_included = int(no_of_child_included_str) if no_of_child_included_str else 0
 
                 for i in range(no_of_child_included):
                     idx = i + 1 
@@ -378,6 +382,9 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                     child_docs = form.getlist(f"child_docs_{idx}[]")
                     child_immigration = form.getlist("child_immigration_docs[]")[i] if form.getlist("child_immigration_docs[]") else None
 
+                    if not all([child_name, child_gender, child_cs, child_BD, child_PB, child_citizenship, child_country]):
+                        continue
+                    
                     final_civil_status = child_cs
                     if child_cs == 'O' and child_cs_other:
                         final_civil_status = f"Others: {child_cs_other}"

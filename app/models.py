@@ -39,8 +39,8 @@ class UserFunction(db.Model):
     location = db.Column('LOCATION',db.String(50), nullable=False)
     transaction = db.Column('TRANSACTION', db.String(30), nullable=False)
     status = db.Column('STATUS',db.String(10), nullable=False)
-    created_at = db.Column('CREATED_AT', db.DateTime, nullable=False)
-    date_updated = db.Column('DATE_UPDATED', db.DateTime, default=datetime.utcnow)
+    created_at = db.Column('CREATED_AT', db.DateTime, default=datetime.utcnow, nullable=False)
+    date_updated = db.Column('DATE_UPDATED', db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)    
 
     applicant = db.relationship(
     'Applicant',
@@ -107,7 +107,7 @@ class FamilyMember(db.Model):
     __tablename__ = 'family_member'
 
     entry_no = db.Column('ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'))
-    family_id = db.Column('FAMILY_ID', db.String(10), primary_key=True)
+    family_id = db.Column('FAMILY_ID', db.String(10), primary_key=True, nullable=True)
     spouse_id = db.Column('SPOUSE_ID', db.String(10), db.ForeignKey('spouse_details.SPOUSE_ID'), nullable=True)
 
     family_name = db.Column('FAMILY_NAME', db.String(50), nullable=False)
@@ -148,7 +148,7 @@ class Philippines(db.Model):
 
     ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(50), primary_key=True)
     mode_ph_acquisition = db.Column('MODE_PH_ACQUISITION', db.String(50), nullable=False)
-    ph_docs = db.Column('PH_DOCS', db.String(50), nullable=False)
+    ph_docs = db.Column('PH_DOCS', db.String(255), nullable=False)
 
 class Child(db.Model):
     __tablename__ = 'child'

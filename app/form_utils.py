@@ -20,22 +20,33 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
             mode = form.get("mode_ph_acquisition_others") or "Others"
 
         philippines.mode_ph_acquisition = mode
-        philippines.ph_docs = form.get('ph_docs')
+        ph_docs = form.getlist('ph_docs[]')
+
+        # Handle "OTHERS:"
+        others_input = form.get('ph_docs_others', '').strip()
+        if "OTHERS:" in ph_docs or "OTHERS" in ph_docs:
+            ph_docs = [doc for doc in ph_docs if not doc.startswith("OTHERS")]
+            if others_input:
+                ph_docs.append(f"OTHERS: {others_input}")
+        philippines.ph_docs = ", ".join(ph_docs)
+
 
         # --- Update Applicant ---
         applicant.applicant_name = form.get('applicant_name')
+        
         has_alternative_name = form.get('has_alternative_name') == 'yes'
         applicant.alternative_name = form.get('alternative_name') if has_alternative_name else None
         alt_name_docs = form.getlist('applicant_supporting_docs[]')
-        if "Others" in alt_name_docs or "OTHERS" in alt_name_docs:
-            others_input = form.get('applicant_supporting_docs_others', '').strip()
-            if others_input:
-                alt_name_docs = [doc for doc in alt_name_docs if doc.lower() != "others"]
-                alt_name_docs.append(f"Others: {others_input}")
-        applicant.applicant_supporting_docs = ", ".join(alt_name_docs)
+        if alt_name_docs:
+            if "Others" in alt_name_docs or "OTHERS" in alt_name_docs:
+                others_input = form.get('applicant_supporting_docs_others', '').strip()
+                if others_input:
+                    alt_name_docs = [doc for doc in alt_name_docs if doc.lower() != "others"]
+                    alt_name_docs.append(f"Others: {others_input}")
+            applicant.applicant_supporting_docs = ", ".join(alt_name_docs)
 
         db_raw = form.get('db_raw')
-        applicant.applicant_DB = datetime.datetime.strptime(db_raw, "%Y-%m-%d").date() if db_raw else None
+        applicant.applicant_DB = datetime.strptime(db_raw, "%Y-%m-%d").date() if db_raw else None
 
         applicant_cs = form.get('applicant_cs')
         if applicant_cs == "OTHERS":
@@ -49,40 +60,45 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
         applicant.home_telephone_no = form.get('home_telephone_no')
         applicant.applicant_email = form.get('applicant_email')
         applicant.applicant_occupation = form.get('applicant_occupation')
-        applicant.work_tl_no = form.get('work_tl_No')
+        applicant.work_tl_no = form.get('work_tl_no')
         applicant.work_address = form.get('work_address')
 
         # --- Update Family Members ---
-        FamilyMember.query.filter_by(entry_no=entry_no).delete()
-        SpouseDetails.query.filter(SpouseDetails.spouse_id.in_([
-            f.spouse_id for f in FamilyMember.query.filter_by(entry_no=entry_no).all() if f.relation.lower() == 'spouse'])).delete()
+        existing_family = {
+            f.relation.lower(): f for f in FamilyMember.query.filter_by(entry_no=entry_no).all()
+        }
+        existing_spouse_details = {
+            f.spouse_id: f.spouse_details for f in existing_family.values()
+            if f.relation.lower() == 'spouse' and f.spouse_id
+        }
 
         relation_default = ["Father", "Mother", "Spouse"]
+
         for i in range(3):
             relation = form.get(f'relation_{i}', relation_default[i])
-            spouse_id = f"S-{uuid.uuid4().hex[:8]}" if relation.lower() == 'spouse' else None
+            family_name = form.get(f'family_name_{i}', '')
+            citizenship = form.get(f'citizenship_{i}', '')
+            relation_key = relation.lower()
 
-            family_member = FamilyMember(
-                entry_no=entry_no,
-                family_id=f"F-{i+1}",
-                spouse_id=spouse_id,
-                relation=relation,
-                family_name=form.get(f'family_name_{i}'),
-                citizenship=form.get(f'citizenship_{i}')
-            )
-            db.session.add(family_member)
+            if relation_key in existing_family:
+                family_member = existing_family[relation_key]
+                family_member.family_name = family_name
+                family_member.citizenship = citizenship
+                db.session.add(family_member)
 
-            if relation.lower() == 'spouse':
-                spouse_detail = SpouseDetails(
-                    spouse_id=spouse_id,
-                    spouse_address=form.get(f'spouse_address_{i}') or '')
-                db.session.add(spouse_detail)
+                # Handle spouse's address update
+                if relation_key == 'spouse':
+                    spouse_id = family_member.spouse_id
+                    spouse_address = form.get(f'spouse_address_{i}', '')
+                    if spouse_id and spouse_id in existing_spouse_details:
+                        existing_spouse_details[spouse_id].spouse_address = spouse_address
+                        db.session.add(existing_spouse_details[spouse_id])
 
         # --- Update Overseas ---
         Overseas.query.filter_by(entry_no=entry_no).delete()
 
         if form.get("citizenship_button") == "on":
-            no_of_citizenship = int(form.get('no_of_citizenship', 0))
+            no_of_citizenship = int(form.get('no_of_citizenship') or 0)
             for i in range(no_of_citizenship):
                 date_acquisition = datetime.datetime.strptime(form.getlist("date_acquisition[]")[i], "%Y-%m-%d").date() if form.getlist("date_acquisition[]")[i] else None
                 date_issuance = datetime.datetime.strptime(form.getlist("date_issuance[]")[i], "%Y-%m-%d").date() if form.getlist("date_issuance[]")[i] else None
@@ -105,7 +121,7 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
         Child.query.filter_by(entry_no=entry_no).delete()
 
         if form.get('child_button') == 'on':
-            no_of_child_included = int(form.get('no_of_child_included', 0))
+            no_of_child_included = int(form.get('no_of_child_included') or 0)
             for i in range(no_of_child_included):
                 idx = i + 1
                 dob_str = form.getlist("child_dob[]")[i] if form.getlist("child_dob[]") else None
@@ -129,7 +145,17 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                 )
                 db.session.add(child)
 
-        user_func = UserFunction(
+        user_func = UserFunction.query.get(entry_no)
+
+        if user_func:
+            # Safe update of existing record
+            user_func.location = applicant.philippine_address
+            user_func.transaction = "Petition Update"
+            user_func.status = "Active"
+            user_func.date_updated = datetime.utcnow()
+        else:
+            # Fallback: record was somehow not created yet
+            user_func = UserFunction(
                 entry_no=entry_no,
                 location=applicant.philippine_address,
                 transaction="Petition Update",
@@ -137,7 +163,7 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                 created_at=applicant.created_at,
                 date_updated=datetime.utcnow()
             )
-        db.session.add(user_func)
+            db.session.add(user_func)
 
         db.session.commit()
         return True, "Petition updated successfully."
@@ -149,6 +175,14 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
             # --- Philippine Citizenship ---
             ph_citizenship_id = f"PH-{uuid.uuid4().hex[:8]}"
+
+            ph_docs_list = form.getlist('ph_docs[]')
+
+            ph_docs_others = form.get("ph_docs_others")
+            if ph_docs_others:
+                ph_docs_list.append(f"OTHERS: {ph_docs_others}")
+
+            ph_docs_combined = "; ".join(ph_docs_list)
             mode = form.get("mode_ph_acquisition")
             if mode == "Others:":
                 mode = form.get("mode_ph_acquisition_others") or "Others"
@@ -156,7 +190,7 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
             philippines = Philippines(
                 ph_citizenship_id=ph_citizenship_id,
                 mode_ph_acquisition=mode,
-                ph_docs=form.get('ph_docs')
+                ph_docs=ph_docs_combined
             )
             db.session.add(philippines)
             db.session.flush()
@@ -179,7 +213,7 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
             applicant_supporting_docs = ", ".join(alt_name_docs)
 
             db_raw = form.get('db_raw')
-            applicant_DB = datetime.datetime.strptime(db_raw, "%Y-%m-%d").date() if db_raw else None
+            applicant_DB = datetime.strptime(db_raw, "%Y-%m-%d").date() if db_raw else None
 
             applicant_cs = form.get('applicant_cs')
             if applicant_cs == "OTHERS":
@@ -199,7 +233,7 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                 home_telephone_no=form.get('home_telephone_no'),
                 applicant_email=form.get('applicant_email'),
                 applicant_occupation=form.get('applicant_occupation'),
-                work_tl_no=form.get('work_tl_No'),
+                work_tl_no=form.get('work_tl_no'),
                 work_address=form.get('work_address'),
                 ph_citizenship_id=ph_citizenship_id
             )
@@ -249,14 +283,15 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
                 for i in range(no_of_citizenship):
                     date_acquisition = (
-                            datetime.datetime.strptime(date_acquisition_raw[i], "%Y-%m-%d").date()
-                            if date_acquisition_raw[i] else None
-                        )
+                        datetime.strptime(date_acquisition_raw[i], "%Y-%m-%d").date()
+                        if date_acquisition_raw[i] else None
+                    )
                     
                     date_issuance = (
-                        datetime.datetime.strptime(date_issuance_raw[i], "%Y-%m-%d").date()
+                        datetime.strptime(date_issuance_raw[i], "%Y-%m-%d").date()
                         if date_issuance_raw[i] else None
                     )
+
                     overseas = Overseas(
                         entry_no=entry_no,
                         foreign_id=f"FC-{uuid.uuid4().hex[:8]}",
@@ -281,7 +316,7 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
                     child_name = form.getlist("child_name[]")[i] if form.getlist("child_name[]") else None
                     dob_str = form.getlist("child_dob[]")[i] if form.getlist("child_dob[]") else None
-                    child_BD = datetime.datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
+                    child_BD = datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
 
                     child_gender = form.get(f"child_gender_{idx}")
                     child_cs= form.get(f"child_status_{idx}")

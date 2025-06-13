@@ -45,7 +45,7 @@
       <p class="contact">Contact us</p>
     </div>
   </div>
-  <form class="petition" method="POST" action="{{ url_for('function.resubmit_application', entry_no=entry_no) if editing else url_for('form.petition') }}">
+  <form class="petition" method="POST" action="{{ url_for('form.edit_petition', entry_no=entry_no) if editing else url_for('form.petition') }}">
     <div class="petition-container">
     <div class="first-box">
       <button class="arrow-button" href="#">
@@ -63,17 +63,14 @@
             </div>
           </div>
             <div class="second-row-text">
-              <p class="number-2">2. ARE YOU USING A DIFFERENT NAME?</p>
-
               <input type="radio" name="has_alternative_name" id="name-yes" class="radio-button" value="yes"
-                {% if editing and applicant.has_alternative_name == 'yes' %}checked{% endif %}>
+                {% if applicant.alternative_name %}checked{% endif %}>
               <label for="name-yes">YES</label>
 
               <input type="radio" name="has_alternative_name" id="name-no" class="radio-button" value="no"
-                {% if editing and applicant.has_alternative_name == 'no' %}checked{% endif %}>
+                {% if not applicant.alternative_name %}checked{% endif %}>
               <label for="name-no">NO</label>
             </div>
-
           <div class="second-row">
             <div class="first-name">
               <p class="first-name-text">First Name - Middle Name - Last Name</p>
@@ -82,13 +79,13 @@
           </div>
           <p class="number-2-d">2d. SUPPORTING DOCUMENTS FOR CHANGE OF NAME</p>
           <div class="number-2-docs">
-            <input type="checkbox" class="name-document" value="Court Decree" name="applicant_supporting_docs[]"
+            <input type="checkbox" value="Court Decree" name="applicant_supporting_docs[]"
               {% if editing and 'Court Decree' in supporting_docs %}checked{% endif %}>
-            <p>COURT DECREE</p>
-            <input type="checkbox" class="name-document" id="others" value="Others" name="applicant_supporting_docs[]"
+
+            <input type="checkbox" value="Others" name="applicant_supporting_docs[]"
               {% if editing and others_text %}checked{% endif %}>
-            <p>OTHERS (please specify)</p>
-            <input type="text" class="name-document-input" name="applicant_supporting_docs_others"
+
+            <input type="text" name="applicant_supporting_docs_others"
               value="{{ others_text if editing else '' }}">
           </div>
           <div class="third-row-text">
@@ -137,13 +134,13 @@
             <p class="civil-status-choice">WIDOW/ER</p>
 
             <input type="radio" class="civil-status" id="o" name="applicant_cs" value="OTHERS"
-              {% if editing and applicant.applicant_cs.startswith('OTHERS') %}checked{% endif %}>
+              {% if editing and applicant.applicant_cs and applicant.applicant_cs.startswith('OTHERS') %}checked{% endif %}>
             <p class="civil-status-choice">OTHERS</p>
 
-            {% if editing and applicant.applicant_cs.startswith('OTHERS') %}
-            <input type="text" name="civil_status_others" value="{{ applicant.applicant_cs.replace('OTHERS: ', '') }}">
+            {% if editing and applicant.applicant_cs and applicant.applicant_cs.startswith('OTHERS') %}
+              <input type="text" name="civil_status_others" value="{{ applicant.applicant_cs.replace('OTHERS: ', '') }}">
             {% else %}
-            <input type="text" name="civil_status_others">
+              <input type="text" name="civil_status_others">
             {% endif %}
           </div>
         </div>
@@ -162,7 +159,7 @@
           </div>
           <div class="first-name-family">
             <p class="first-name-text">Additional Detail: Spouse Address</p>
-            <input type="text" class="first-name-family-input" name="spouse_address"
+            <input type="text" class="first-name-family-input" name="spouse_address_2"
               value="{{ spouse.spouse_details.spouse_address if editing and spouse and spouse.spouse_details else '' }}">
           </div>
         </div>
@@ -206,7 +203,6 @@
         </div>
       </div>
     </div>
-
     <div class="third-box">
       <div class="third-box-first">
         <p class="a10">10. HOW PHILIPPINE CITIZENSHIP WAS INITIALLY ACQUIRED</p>
@@ -231,17 +227,18 @@
           {% if editing and applicant.philippine.mode_ph_acquisition and applicant.philippine.mode_ph_acquisition.startswith('Others:') %}checked{% endif %}>
         <p class="philippine-citizenship-choice">OTHERS</p>
 
-          {% if editing and philippine.mode_ph_acquisition and philippine.mode_ph_acquisition.startswith('Others:') %}
-            <input type="text" class="philippine-citizenship-others" name="mode_ph_acquisition_others" value="{{ applicant.philippine.mode_ph_acquisition.replace('Others:', '').strip() }}">
-          {% else %}
-            <input type="text" name="mode_ph_acquisition_others" class="philippine-citizenship-others">
-          {% endif %}
+        {% if editing and applicant.philippine.mode_ph_acquisition and applicant.philippine.mode_ph_acquisition.startswith('Others:') %}
+          <input type="text" class="philippine-citizenship-others" name="mode_ph_acquisition_others"
+                value="{{ applicant.philippine.mode_ph_acquisition.replace('Others:', '').strip() }}">
+        {% else %}
+          <input type="text" name="mode_ph_acquisition_others" class="philippine-citizenship-others">
+        {% endif %}
       </div>
       <div class="third-box-second">
         <p class="a10">11. SUPPORTING DOCUMENTS SUBMITTED TO PROVE THAT THE APPLICANT WAS A FORMER CITIZEN OF THE PHILIPPINES: </p>
         <div class="third-box-second-choice">
           <input type="checkbox" class="citizenship-document-input" name="ph_docs[]" value="PH Birth Certificate"
-            {% if editing and applicant.philippine.ph_docs == 'PH Birth Certificate' %}checked{% endif %}>
+            {% if editing and 'PH Birth Certificate' in applicant.philippine.ph_docs %}checked{% endif %}>
           <p class="citizenship-document-choice">Philippine Birth Certificate</p>
         </div>
 
@@ -270,19 +267,25 @@
         </div>
 
        <div class="third-box-second-choice">
-        <input type="checkbox" class="citizenship-document-input" name="ph_docs[]" value="OTHERS:">
-        <p class="citizenship-document-choice">Others (specify)</p>
-        
-      {% if editing and applicant and applicant.philippine and applicant.philippine.ph_docs %}
-        {% set other_docs = applicant.philippine.ph_docs | select("starts_with", "OTHERS:") | list %}
-        {% if other_docs %}
-          <input type="text" name="ph_docs_others" value="{{ other_docs[0].replace('OTHERS: ', '') }}">
-        {% else %}
-          <input type="text" class="citizenship-document-others" name="ph_docs_others">
-        {% endif %}
-      {% else %}
-        <input type="text" class="citizenship-document-others" name="ph_docs_others">
-      {% endif %}
+          <input type="checkbox" class="citizenship-document-input" name="ph_docs[]" value="OTHERS:"
+          {% if editing and other_docs %}checked{% endif %}>
+          <p class="citizenship-document-choice">Others (specify)</p>
+
+          {% set other_docs = [] %}
+          {% if editing and applicant and applicant.philippine and applicant.philippine.ph_docs %}
+            {% for doc in applicant.philippine.ph_docs %}
+              {% if doc.startswith('OTHERS:') %}
+                {% set _ = other_docs.append(doc) %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if other_docs %}
+            <input type="text" name="ph_docs_others" value="{{ other_docs[0].replace('OTHERS:', '').strip() }}">
+          {% else %}
+            <input type="text" class="citizenship-document-others" name="ph_docs_others">
+          {% endif %}
+        </div>
        </div>
       </div>
       <div class="third-box-third">

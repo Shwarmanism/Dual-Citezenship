@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from app.form_utils import submit_petition
-from app.models import UserFunction, Applicant, Philippines
+from app.models import UserFunction, Applicant, Philippines, FamilyMember
 from app import db
 from flask_login import login_required, current_user
 from datetime import datetime
@@ -50,7 +50,24 @@ def edit_petition(entry_no):
 
     entry_no=applicant.entry_no
     philippine=applicant.philippine
-    # --- GET method: pre-fill the form for editing ---
-    return render_template("petition.html", applicant=applicant, philippine=philippine, editing=True, entry_no=entry_no)
+
+    supporting_docs = applicant.applicant_supporting_docs.split(", ") if applicant.applicant_supporting_docs else []
+    others_text = ""
+    for doc in supporting_docs:
+        if doc.lower().startswith("others:"):
+            others_text = doc.split(":", 1)[1].strip()
+            break
+    
+    family_members = FamilyMember.query.filter_by(entry_no=entry_no).all()
+    return render_template(
+    "petition.html",
+    applicant=applicant,
+    philippine=philippine,
+    editing=True,
+    entry_no=entry_no,
+    supporting_docs=supporting_docs,
+    others_text=others_text,
+    family_members=family_members
+)
 
 

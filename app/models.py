@@ -157,8 +157,8 @@ class Child(db.Model):
     entry_no = db.Column('FK_CHILD_ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
     child_name = db.Column('CHILD_NAME', db.String(50), nullable=False)
-    gender = db.Column('CHILD_GENDER', db.String(10), nullable=False)
-    civil_status = db.Column('CHILD_CIVIL_STATUS', db.String(20), nullable=False)
+    child_gender = db.Column('CHILD_GENDER', db.String(10), nullable=False)
+    child_civil_status = db.Column('CHILD_CIVIL_STATUS', db.String(20), nullable=False)
     child_BD = db.Column('CHILD_BD', db.Date, nullable=False)
     child_PB = db.Column('CHILD_BP', db.String(75), nullable=False)
     country_pa = db.Column('COUNTRY_PA', db.String(75), nullable=False)

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from app.form_utils import submit_petition
-from app.models import UserFunction, Applicant, Philippines, FamilyMember
+from app.models import UserFunction, Applicant, Philippines, FamilyMember, Overseas, Child
 from app import db
 from flask_login import login_required, current_user
 from datetime import datetime
@@ -59,6 +59,9 @@ def edit_petition(entry_no):
             break
     
     family_members = FamilyMember.query.filter_by(entry_no=entry_no).all()
+    overseas_list = Overseas.query.filter_by(entry_no=entry_no).all()
+    children = Child.query.filter_by(entry_no=entry_no).all()
+
     return render_template(
     "petition.html",
     applicant=applicant,
@@ -67,7 +70,9 @@ def edit_petition(entry_no):
     entry_no=entry_no,
     supporting_docs=supporting_docs,
     others_text=others_text,
-    family_members=family_members
-)
+    family_members=family_members,
+    overseas_list=overseas_list,
+    children=children
+    )
 
 

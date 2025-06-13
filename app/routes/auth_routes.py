@@ -76,9 +76,7 @@ def register():
         )
 
         db.session.add(new_user)
-        db.session.commit()
-
-        new_user.id_no = f"USR{new_user.id:05d}"
+        db.session.flush()
 
         db.session.commit()
 

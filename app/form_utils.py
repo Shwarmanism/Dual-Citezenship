@@ -95,55 +95,105 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                         db.session.add(existing_spouse_details[spouse_id])
 
         # --- Update Overseas ---
-        Overseas.query.filter_by(entry_no=entry_no).delete()
+        existing_overseas = Overseas.query.filter_by(entry_no=entry_no).all()
+        no_of_citizenship = int(form.get('no_of_citizenship') or 0)
 
-        if form.get("citizenship_button") == "on":
-            no_of_citizenship = int(form.get('no_of_citizenship') or 0)
-            for i in range(no_of_citizenship):
-                date_acquisition = datetime.datetime.strptime(form.getlist("date_acquisition[]")[i], "%Y-%m-%d").date() if form.getlist("date_acquisition[]")[i] else None
-                date_issuance = datetime.datetime.strptime(form.getlist("date_issuance[]")[i], "%Y-%m-%d").date() if form.getlist("date_issuance[]")[i] else None
+        for i in range(no_of_citizenship):
+            if i < len(existing_overseas):
+                overseas = existing_overseas[i]  # Update existing
+            else:
+                overseas = Overseas(entry_no=entry_no, foreign_id=f"FC-{uuid.uuid4().hex[:8]}")
+                db.session.add(overseas)  # Add new record if form has more entries
 
-                overseas = Overseas(
-                    entry_no=entry_no,
-                    foreign_id=f"FC-{i+1}",
-                    applicant_foreign_citizenship=form.getlist("applicant_foreign_citizenship[]")[i],
-                    acquisition_foreign_citizenship=form.getlist("acquisition_foreign_citizenship[]")[i],
-                    date_acquisition=date_acquisition,
-                    naturalization_no=form.getlist("naturalization_no[]")[i],
-                    foreign_passport_no=form.getlist("foreign_passport_no[]")[i],
-                    date_issuance=date_issuance,
-                    place_issuance=form.getlist("place_issuance[]")[i],
-                    foreign_supporting_docs=form.getlist("foreign_supporting_docs[]")[i]
-                )
-                db.session.add(overseas)
+            overseas.applicant_foreign_citizenship = form.getlist("applicant_foreign_citizenship[]")[i]
+            overseas.acquisition_foreign_citizenship = form.getlist("acquisition_foreign_citizenship[]")[i]
+
+            date_acquisition_raw = form.getlist("date_acquisition[]")[i]
+            overseas.date_acquisition = datetime.strptime(date_acquisition_raw, "%Y-%m-%d").date()
+
+            overseas.naturalization_no = form.getlist("naturalization_no[]")[i]
+            overseas.foreign_passport_no = form.getlist("foreign_passport_no[]")[i]
+
+            date_issuance_raw = form.getlist("date_issuance[]")[i]
+            overseas.date_issuance = datetime.strptime(date_issuance_raw, "%Y-%m-%d").date() if date_issuance_raw else None
+
+            overseas.place_issuance = form.getlist("place_issuance[]")[i]
+            overseas.foreign_supporting_docs = form.getlist("foreign_supporting_docs[]")[i]
+
 
         # --- Update Children ---
-        Child.query.filter_by(entry_no=entry_no).delete()
-
         if form.get('child_button') == 'on':
-            no_of_child_included = int(form.get('no_of_child_included') or 0)
+            child_ids = form.getlist("child_id[]")
+            child_names = form.getlist("child_name[]")
+            child_dobs = form.getlist("child_dob[]")
+            child_birthplaces = form.getlist("child_birthplace[]")
+            child_citizenships = form.getlist("child_citizenship[]")
+            child_residences = form.getlist("child_residence[]")
+            child_immigration_docs = form.getlist("child_immigration_docs[]")
+            child_status_others = form.getlist("child_status_other[]")
+
+            no_of_child_included = len(child_names)
+
             for i in range(no_of_child_included):
                 idx = i + 1
-                dob_str = form.getlist("child_dob[]")[i] if form.getlist("child_dob[]") else None
-                child_BD = datetime.datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
-                child_cs = form.get(f"child_status_{idx}")
-                child_cs_other = form.getlist("child_status_other[]")[i] if form.getlist("child_status_other[]") else None
-                final_civil_status = f"Others: {child_cs_other}" if child_cs == 'O' and child_cs_other else child_cs
+            dob_str = child_dobs[i] if child_dobs else None
+            child_BD = datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
 
-                child = Child(
-                    entry_no=entry_no,
-                    child_id=f"C-{uuid.uuid4().hex[:8]}",
-                    child_name=form.getlist("child_name[]")[i],
-                    gender=form.get(f"child_gender_{idx}"),
-                    civil_status=final_civil_status,
-                    child_BD=child_BD,
-                    child_PB=form.getlist("child_birthplace[]")[i],
-                    country_pa=form.getlist("child_residence[]")[i],
-                    child_citizenship=form.getlist("child_citizenship[]")[i],
-                    child_supporting_docs=', '.join(form.getlist(f"child_docs_{idx}[]")),
-                    immigration_docs=form.getlist("child_immigration_docs[]")[i]
-                )
-                db.session.add(child)
+            child_id = child_ids[i] if i < len(child_ids) else None
+            child_gender = form.get(f"child_gender_{idx}")
+            child_cs = form.get(f"child_status_{idx}")
+            child_cs_other = child_status_others[i] if child_status_others else None
+
+            final_civil_status = f"Others: {child_cs_other}" if child_cs == 'O' and child_cs_other else child_cs
+
+            if not child_gender:
+                return False, f"Missing gender for child #{idx}."
+
+            if not final_civil_status:
+                return False, f"Missing civil status for child #{idx}."
+
+            if child_id:
+                    child = Child.query.filter_by(entry_no=entry_no, child_id=child_id).first()
+                    if child:
+                        child.child_name = child_names[i]
+                        child.child_gender = child_gender
+                        child.child_civil_status = final_civil_status
+                        child.child_BD = child_BD
+                        child.child_PB = child_birthplaces[i]
+                        child.country_pa = child_residences[i]
+                        child.child_citizenship = child_citizenships[i]
+                        child.child_supporting_docs = ', '.join(form.getlist(f"child_docs_{idx}[]"))
+                        child.immigration_docs = child_immigration_docs[i]
+                    else:
+                        new_child = Child(
+                            entry_no=entry_no,
+                            child_id=child_id,
+                            child_name=child_names[i],
+                            child_gender=child_gender,
+                            child_civil_status=final_civil_status,
+                            child_BD=child_BD,
+                            child_PB=child_birthplaces[i],
+                            country_pa=child_residences[i],
+                            child_citizenship=child_citizenships[i],
+                            child_supporting_docs=', '.join(form.getlist(f"child_docs_{idx}[]")),
+                            immigration_docs=child_immigration_docs[i]
+                        )
+                        db.session.add(new_child)
+            else:
+                    new_child = Child(
+                        entry_no=entry_no,
+                        child_id=f"C-{uuid.uuid4().hex[:8]}",
+                        child_name=child_names[i],
+                        child_gender=child_gender,
+                        child_civil_status=final_civil_status,
+                        child_BD=child_BD,
+                        child_PB=child_birthplaces[i],
+                        country_pa=child_residences[i],
+                        child_citizenship=child_citizenships[i],
+                        child_supporting_docs=', '.join(form.getlist(f"child_docs_{idx}[]")),
+                        immigration_docs=child_immigration_docs[i]
+                    )
+                    db.session.add(new_child)
 
         user_func = UserFunction.query.get(entry_no)
 
@@ -156,15 +206,14 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
         else:
             # Fallback: record was somehow not created yet
             user_func = UserFunction(
-                entry_no=entry_no,
-                location=applicant.philippine_address,
-                transaction="Petition Update",
-                status="Active",
-                created_at=applicant.created_at,
-                date_updated=datetime.utcnow()
-            )
+                    entry_no=entry_no,
+                    location=applicant.philippine_address,
+                    transaction="Petition Update",
+                    status="Active",
+                    created_at=applicant.created_at,
+                    date_updated=datetime.utcnow()
+                )
             db.session.add(user_func)
-
         db.session.commit()
         return True, "Petition updated successfully."
     else:
@@ -311,8 +360,10 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
             if form.get('child_button') == 'on':
                 no_of_child_included = int(form.get('no_of_child_included', 0))
 
+                i = 0
+
                 for i in range(no_of_child_included):
-                    idx = i + 1  # Child numbering starts at 1
+                    idx = i + 1 
 
                     child_name = form.getlist("child_name[]")[i] if form.getlist("child_name[]") else None
                     dob_str = form.getlist("child_dob[]")[i] if form.getlist("child_dob[]") else None
@@ -335,8 +386,8 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
                         entry_no=entry_no,
                         child_id=f"C-{uuid.uuid4().hex[:8]}",
                         child_name=child_name,
-                        gender=child_gender,
-                        civil_status=final_civil_status,
+                        child_gender=child_gender,
+                        child_civil_status=final_civil_status,
                         child_BD=child_BD,
                         child_PB=child_PB,
                         country_pa=child_country,

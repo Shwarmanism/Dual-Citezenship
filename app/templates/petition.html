@@ -64,6 +64,7 @@
             </div>
           </div>
             <div class="second-row-text">
+              <p class="number-2">2. ARE YOU USING A DIFFERENT NAME?</p>
               <input type="radio" name="has_alternative_name" id="name-yes" class="radio-button" value="yes"
                 {% if applicant.alternative_name %}checked{% endif %}>
               <label for="name-yes">YES</label>
@@ -82,10 +83,10 @@
           <div class="number-2-docs">
             <input type="checkbox" value="Court Decree" name="applicant_supporting_docs[]"
               {% if editing and 'Court Decree' in supporting_docs %}checked{% endif %}>
-
+            <p>COURT DECREE</p>
             <input type="checkbox" value="Others" name="applicant_supporting_docs[]"
               {% if editing and others_text %}checked{% endif %}>
-
+            <p>OTHERS</p>
             <input type="text" name="applicant_supporting_docs_others"
               value="{{ others_text if editing else '' }}">
           </div>
@@ -488,7 +489,7 @@
           <div class="citizenship-first">
             <div class="citizenship-first-text">
               <p>19.a. APPLICANT’S CURRENT FOREIGN CITIZENSHIPS</p>
-              <p>19.b. MODE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
+              <p class="b19">19.b. MODE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
               <p>20.a. DATE OF ACQUISITION OF FOREIGN CITIZENSHIPS</p>
             </div>
             <div class="citizenship-first-input">
@@ -500,7 +501,7 @@
           <div class="citizenship-first">
             <div class="citizenship-first-text">
               <p>20.b. NATURALIZATION CERTIFICATE NUMBERS</p>
-              <p>21.a. FOREIGN PASSPORT NO.</p>
+              <p class="foreign21">21.a. FOREIGN PASSPORT NO.</p>
               <p>21.b. DATE OF ISSUANCE OF FOREIGN PASSPORT</p>
             </div>
             <div class="citizenship-first-input">
@@ -512,7 +513,7 @@
           <div class="citizenship-first">
             <div class="citizenship-first-text">
               <p>22. Place of Issuance</p>
-              <p>23. FOREIGN DOCUMENT</p>
+              <p class="foreign23">23. FOREIGN DOCUMENT</p>
             </div>
             <div class="citizenship-first-input">
               <input type="text" name="place_issuance[]" class="citizenship-input1">

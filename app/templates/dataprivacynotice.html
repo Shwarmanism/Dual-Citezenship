@@ -30,11 +30,12 @@
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Visas</a></li>
-          <li><a href="#">eServices</a></li>
+          <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
+          <li><a href="{{ url_for('home.home_index') }}">Home</a></li>
+          <li><a href="{{ url_for('home.about') }}">About</a></li>
+          <li><a href="{{ url_for('function.display_data') }}">Services</a></li>
+          <li><a href="{{ url_for('home.visa') }}">Visas</a></li>
+          <li><a href="{{ url_for('home.eservices') }}">eServices</a></li>
         </ul>
       </nav>
 
@@ -55,9 +56,9 @@
   z-index: 100;
 ">
     <nav style="text-align: center; padding: 1em 0;">
-      <a href="#directory" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Directory of Officials</a>
-      <a href="#vision-mission" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Vision and Mission</a>
-      <a href="#privacy" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Data Privacy Notice</a>
+      <a href="{{ url_for('home.about') }}" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Directory of Officials</a>
+      <a href="{{ url_for('home.intro') }}" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Vision and Mission</a>
+      <a href="{{ url_for('home.dataprivacy') }}" style="color: white; margin: 0 20px; text-decoration: none; font-weight: bold;">Data Privacy Notice</a>
     </nav>
   </div>
 </div>

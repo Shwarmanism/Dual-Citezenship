@@ -30,11 +30,12 @@
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Visas</a></li>
-          <li><a href="#">eServices</a></li>
+          <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
+          <li><a href="{{ url_for('home.home_index') }}">Home</a></li>
+          <li><a href="{{ url_for('home.about') }}">About</a></li>
+          <li><a href="{{ url_for('function.display_data') }}">Services</a></li>
+          <li><a href="{{ url_for('home.visa') }}">Visas</a></li>
+          <li><a href="{{ url_for('home.eservices') }}">eServices</a></li>
         </ul>
       </nav>
 
@@ -63,13 +64,13 @@
   </section>
 
 <div class="blue-bar">
-  <button class="image-button">
+  <button class="image-button" type="button" onclick="window.location.href='{{ url_for('home.visa') }}'">
     <img src="{{ url_for('static', filename='Images/BUTTON1.png') }}" alt="Button 1">
   </button>
-  <button class="image-button">
+  <button class="image-button" type="button" onclick="window.location.href='{{ url_for('home.eservices') }}'">
     <img src="{{ url_for('static', filename='Images/BUTTON2.png') }}" alt="Button 2">
   </button>
-  <button class="image-button">
+  <button class="image-button" type="button" onclick="window.location.href='{{ url_for('form.petition') }}'">
     <img src="{{ url_for('static', filename='Images/BUTTON3.png') }}" alt="Button 3">
   </button>
 </div>
@@ -183,6 +184,6 @@ Upon separate inspection, both women presented marriage certificates and claimed
   <img src="{{ url_for('static', filename='Images/last page.png') }}" alt="Footer Image" style="width: 1225px; height: auto; object-fit: auto;">
 
 <div class="footer" style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 20px 30px; background-color: #409be6; color: rgba(92, 157, 231, 0.938); font-size: 14px; width: 100%; margin-top: 40px; flex-wrap: wrap; text-align: center;"></div>
-  <img src="{{ url_for('static', filename='Images/footer.png') }}" alt="Footer Image" style="width: 1225px; height: auto; object-fit: auto;">
+  <img src="{{ url_for('static', filename='Images/footer.png') }}" alt="Footer Image" style="width: 100%; height: auto; object-fit: cover;">
 </body>
 </html>

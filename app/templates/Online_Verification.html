@@ -35,11 +35,12 @@
       </div>
     </div>
     <div class="below-header-center">
-      <a href="#" class="Home">Home</a>
-      <a href="#" class="About">About</a>
-      <a href="#" class="Services">Services</a>
-      <a href="#" class="Visas">Visas</a>
-      <a href="#" class="eServices">eServices</a>
+      <a href="{{ url_for('auth.login') }}" class="Home">Log in</a>
+      <a href="{{ url_for('home.home_index') }}" class="Home">Home</a>
+      <a href="{{ url_for('home.about') }}"  class="About">About</a>
+      <a href="{{ url_for('function.display_data') }}"  class="Services">Services</a>
+      <a href="{{ url_for('home.visa') }}"  class="Visas">Visas</a>
+      <a href="{{ url_for('home.eservices') }}"  class="eServices">eServices</a>
     </div>
     <div class="below-header-right">
       <img src="{{ url_for('static', filename='Images/Phone.png') }}" class="Phone">

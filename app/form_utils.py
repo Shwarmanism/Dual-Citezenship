@@ -64,7 +64,7 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
         # --- Update Family Members ---
         existing_family = {
-            f.relation.lower(): f for f in FamilyMember.query.filter_by(entry_no=entry_no).all()
+        f.relation.lower(): f for f in FamilyMember.query.filter_by(entry_no=entry_no).all()
         }
         existing_spouse_details = {
             f.spouse_id: f.spouse_details for f in existing_family.values()
@@ -75,8 +75,9 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
         for i in range(3):
             relation = form.get(f'relation_{i}', relation_default[i])
-            family_name = form.get(f'family_name_{i}', '')
-            citizenship = form.get(f'citizenship_{i}', '')
+            family_name = form.get(f'family_name_{i}', '').strip()
+            citizenship = form.get(f'citizenship_{i}', '').strip()
+            spouse_address = form.get(f'spouse_address_{i}', '').strip()
             relation_key = relation.lower()
 
             if relation_key in existing_family:
@@ -87,10 +88,36 @@ def submit_petition(form, user_id, entry_no=None, editing=False):
 
                 if relation_key == 'spouse':
                     spouse_id = family_member.spouse_id
-                    spouse_address = form.get(f'spouse_address_{i}', '')
                     if spouse_id and spouse_id in existing_spouse_details:
                         existing_spouse_details[spouse_id].spouse_address = spouse_address
                         db.session.add(existing_spouse_details[spouse_id])
+
+            else:
+                if family_name or citizenship:
+                    new_family_id = f"F-{i+1}"
+
+                    new_family_member = FamilyMember(
+                        family_id=new_family_id,
+                        entry_no=entry_no,
+                        relation=relation,
+                        family_name=family_name,
+                        citizenship=citizenship
+                    )
+
+                    if relation_key == 'spouse' and spouse_address:
+                        new_spouse_id = f"S-{uuid.uuid4().hex[:8]}"
+                        new_spouse_detail = SpouseDetails(
+                            spouse_id=new_spouse_id,
+                            spouse_address=spouse_address
+                        )
+                        db.session.add(new_spouse_detail)
+
+                        new_family_member.spouse_id = new_spouse_id
+                        new_family_member.spouse_details = new_spouse_detail
+
+                    db.session.add(new_family_member)
+
+
 
         # --- Update Overseas ---
         existing_overseas = Overseas.query.filter_by(entry_no=entry_no).all()

@@ -145,11 +145,12 @@
           </div>
         </div>
       </div>
-    {% set father = applicant.family_members | selectattr("relation", "equalto", "Father") | list | first %}
-    {% set mother = applicant.family_members | selectattr("relation", "equalto", "Mother") | list | first %}
-    {% set spouse = applicant.family_members | selectattr("relation", "equalto", "Spouse") | list | first %}
+    {% set father = family_members | selectattr("relation", "equalto", "Father") | list | first %}
+    {% set mother = family_members | selectattr("relation", "equalto", "Mother") | list | first %}
+    {% set spouse = family_members | selectattr("relation", "equalto", "Spouse") | list | first %}
     <div class="second-box">
       <div class="second-box-left">
+        <!-- SPOUSE -->
         <div class="second-box-left-first">
           <p class="a7">7.a. NAME OF APPLICANT'S SPOUSE (as written in the birth certificate)</p>
           <div class="first-name-family">
@@ -157,6 +158,8 @@
             <input type="text" class="first-name-family-input" name="family_name_2"
               value="{{ spouse.family_name if editing and spouse else '' }}">
           </div>
+          <!-- ✅ Corrected: relation_2 for Spouse -->
+          <input type="hidden" name="relation_2" value="Spouse">
           <div class="first-name-family">
             <p class="first-name-text">Additional Detail: Spouse Address</p>
             <input type="text" class="first-name-family-input" name="spouse_address_2"
@@ -164,6 +167,7 @@
           </div>
         </div>
 
+        <!-- FATHER -->
         <div class="second-box-left-second">
           <p class="a7">8.a. NAME OF APPLICANT’S FATHER (as written in the birth certificate)</p>
           <div class="first-name-family">
@@ -171,8 +175,11 @@
             <input type="text" class="first-name-family-input" name="family_name_0"
               value="{{ father.family_name if editing and father else '' }}">
           </div>
+          <!-- ✅ Corrected: relation_0 for Father -->
+          <input type="hidden" name="relation_0" value="Father">
         </div>
 
+        <!-- MOTHER -->
         <div class="second-box-left-third">
           <p class="a7">9.a. NAME OF APPLICANT’S MOTHER (as written in the birth certificate)</p>
           <div class="first-name-family">
@@ -180,9 +187,10 @@
             <input type="text" class="first-name-family-input" name="family_name_1"
               value="{{ mother.family_name if editing and mother else '' }}">
           </div>
+          <!-- ✅ Corrected: relation_1 for Mother -->
+          <input type="hidden" name="relation_1" value="Mother">
         </div>
       </div>
-
       <div class="second-box-right">
         <div class="second-box-right-first">
           <p class="b7">7.b. CITIZENSHIP OF SPOUSE AT THE TIME OF APPLICATION</p>

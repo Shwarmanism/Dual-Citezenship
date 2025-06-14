@@ -131,13 +131,13 @@ class SpouseDetails(db.Model):
 class Overseas(db.Model):
     __tablename__ = 'overseas_citizenship'
 
-    foreign_id = db.Column('FOREIGN_CITIZENSHIP_ID', db.String(50), primary_key=True)  # match varchar(7)
+    foreign_id = db.Column('FOREIGN_CITIZENSHIP_ID', db.String(50), primary_key=True)
     entry_no = db.Column('FK_OVERSEAS_ENTRY_NO', db.Integer, db.ForeignKey('applicant.ENTRY_NO'), nullable=False)
 
     applicant_foreign_citizenship = db.Column('FOREIGN_CITIZENSHIP', db.String(50), nullable=False)
     acquisition_foreign_citizenship = db.Column('ACQUISITION_FOREIGN_CITIZENSHIP', db.String(45), nullable=False)
     date_acquisition = db.Column('DATE_ACQUISITION', db.Date, nullable=False)
-    naturalization_no = db.Column('NATURALIZATION_NO', db.String(15), nullable=False)
+    naturalization_no = db.Column('NATURALIZATION_NO', db.String(15), nullable=True)
     foreign_passport_no = db.Column('FOREIGN_PASSPORT_NO', db.String(15), nullable=False)
     date_issuance = db.Column('DATE_ISSUANCE', db.Date, nullable=False)
     place_issuance = db.Column('PLACE_ISSUANCE', db.String(70), nullable=False)

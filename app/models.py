@@ -61,13 +61,13 @@ class Applicant(db.Model):
     applicant_PB = db.Column('BIRTH_PLACE', db.String(50), nullable=False)
     applicant_gender = db.Column('GENDER', db.String(5), nullable=False)
     applicant_cs = db.Column('CIVIL_STATUS', db.String(50), nullable=False)
-    philippine_address = db.Column('PHILIPPINE_ADDRESS', db.String(100), nullable=False)
-    ph_residence = db.Column('RESIDENCE_ADDRESS', db.String(100), nullable=False)
+    philippine_address = db.Column('PHILIPPINE_ADDRESS', db.String(255), nullable=False)
+    ph_residence = db.Column('RESIDENCE_ADDRESS', db.String(255), nullable=False)
     home_telephone_no = db.Column('HOME_TELEPHONE_NO', db.String(20), nullable=True)
     work_tl_no = db.Column('WORK_TELEPHONE_NO', db.String(15), nullable=True)
     applicant_email = db.Column('EMAIL_ADDRESS', db.String(100), nullable=False)
     applicant_occupation = db.Column('PRESENT_OCCUPATION', db.String(50), nullable=False)
-    work_address = db.Column('WORK_ADDRESS', db.String(100), nullable=False)
+    work_address = db.Column('WORK_ADDRESS', db.String(255), nullable=False)
 
     ph_citizenship_id = db.Column('PH_CITIZENSHIP_ID', db.String(50), db.ForeignKey('philippine_citizenship.PH_CITIZENSHIP_ID'))
     id_no = db.Column('ID_NO', db.Integer, db.ForeignKey('user.ID_NO'), nullable=False)
@@ -141,7 +141,7 @@ class Overseas(db.Model):
     foreign_passport_no = db.Column('FOREIGN_PASSPORT_NO', db.String(15), nullable=False)
     date_issuance = db.Column('DATE_ISSUANCE', db.Date, nullable=False)
     place_issuance = db.Column('PLACE_ISSUANCE', db.String(70), nullable=False)
-    foreign_supporting_docs = db.Column('FOREIGN_ACQUISITION_DOCS', db.String(40), nullable=False)
+    foreign_supporting_docs = db.Column('FOREIGN_ACQUISITION_DOCS', db.String(255), nullable=False)
 
 class Philippines(db.Model):
     __tablename__ = 'philippine_citizenship'
@@ -162,6 +162,6 @@ class Child(db.Model):
     child_BD = db.Column('CHILD_BD', db.Date, nullable=False)
     child_PB = db.Column('CHILD_BP', db.String(75), nullable=False)
     country_pa = db.Column('COUNTRY_PA', db.String(75), nullable=False)
-    child_citizenship = db.Column('CHILD_CITIZENSHIP', db.String(50), nullable=False)
-    child_supporting_docs = db.Column('SUPPORTING_DOCS', db.String(100), nullable=False)
-    immigration_docs = db.Column('IMMIGRATION_DOCS', db.String(100), nullable=False)
+    child_citizenship = db.Column('CHILD_CITIZENSHIP', db.String(255), nullable=False)
+    child_supporting_docs = db.Column('SUPPORTING_DOCS', db.String(255), nullable=False)
+    immigration_docs = db.Column('IMMIGRATION_DOCS', db.String(100), nullable=True)

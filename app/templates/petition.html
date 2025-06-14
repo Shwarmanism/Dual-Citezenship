@@ -118,24 +118,24 @@
           <div class="fourth-row">
             <p class="number-6">6. CIVIL STATUS:</p>
 
-            <input type="radio" class="civil-status" id="s" name="applicant_cs" value="SINGLE"
-              {% if editing and applicant.applicant_cs == 'SINGLE' %}checked{% endif %}>
+            <input type="radio" class="civil-status" id="s" name="applicant_cs" value="S"
+              {% if editing and applicant.applicant_cs == 'S' %}checked{% endif %}>
             <p class="civil-status-choice">SINGLE</p>
 
-            <input type="radio" class="civil-status" id="m" name="applicant_cs" value="MARRIED"
-              {% if editing and applicant.applicant_cs == 'MARRIED' %}checked{% endif %}>
+            <input type="radio" class="civil-status" id="m" name="applicant_cs" value="M"
+              {% if editing and applicant.applicant_cs == 'M' %}checked{% endif %}>
             <p class="civil-status-choice">MARRIED</p>
 
-            <input type="radio" class="civil-status" id="d" name="applicant_cs" value="DIVORCED"
-              {% if editing and applicant.applicant_cs == 'DIVORCED' %}checked{% endif %}>
+            <input type="radio" class="civil-status" id="d" name="applicant_cs" value="D"
+              {% if editing and applicant.applicant_cs == 'D' %}checked{% endif %}>
             <p class="civil-status-choice">DIVORCED</p>
 
-            <input type="radio" class="civil-status" id="w" name="applicant_cs" value="WIDOW/ER"
-              {% if editing and applicant.applicant_cs == 'WIDOW/ER' %}checked{% endif %}>
+            <input type="radio" class="civil-status" id="w" name="applicant_cs" value="W"
+              {% if editing and applicant.applicant_cs == 'W' %}checked{% endif %}>
             <p class="civil-status-choice">WIDOW/ER</p>
 
-            <input type="radio" class="civil-status" id="o" name="applicant_cs" value="OTHERS"
-              {% if editing and applicant.applicant_cs and applicant.applicant_cs.startswith('OTHERS') %}checked{% endif %}>
+            <input type="radio" class="civil-status" id="o" name="applicant_cs" value="O"
+              {% if editing and applicant.applicant_cs and applicant.applicant_cs.startswith('O') %}checked{% endif %}>
             <p class="civil-status-choice">OTHERS</p>
 
             {% if editing and applicant.applicant_cs and applicant.applicant_cs.startswith('OTHERS') %}
